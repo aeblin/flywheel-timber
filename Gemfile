@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 
 gem 'nokogiri'
 gem 'htmlentities'
+gem 'shopify_theme'
 
 group :development do
   gem 'pry'

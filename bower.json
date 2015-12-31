@@ -23,6 +23,12 @@
   "ignore": [
     ".*"
   ],
+  "dependencies": {
+    "bootstrap-sass": "latest"
+  },
+  "resolutions": {
+    "jquery": "latest"
+  },
   "homepage": "https://github.com/Shopify/Timber",
   "authors": [
     "Carson Shold <carson.shold@shopify.com>"
