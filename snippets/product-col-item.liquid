@@ -1,4 +1,3 @@
-<!-- /snippets/product-col-item.liquid -->
 {% comment %}
 
   This snippet is used to showcase each product during the loop,
@@ -10,8 +9,8 @@
   snippet will use that width. Overwrite the variable to adjust this.
 
   Example
-    - assign grid_item_width = 'large--one-quarter medium--one-half'
-
+    if using Timber Grid - {% assign grid_item_width = 'large--one-third medium--one-half' %}
+    if using Bootstrap Grid - {% assign grid_item_width = 'col-sm-12 col-md-6 col-lg-4' %}
 {% endcomment %}
 
 {% comment %}
@@ -55,7 +54,7 @@
     
     <div class="product-partial--caption">
       <h4 class="product-partial--title">{{ product.title }}</h4>
-      <p>
+      <p class="product-partial--price"> 
         {% comment %}
           You can show a leading 'from' or 'up to' by checking 'product.price_varies'
           if your variants have different prices.
