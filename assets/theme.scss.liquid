@@ -8232,11 +8232,12 @@ $zindexNavDropdowns: 5;
 $zindexDrawer: 10;
 
 /*================ Typography ================*/
+// Adding Work Sans in a dumb way TODO: AE - Fix this, thanks.
 
-$headerFontStack: 'HelveticaNeue', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-$headerFontWeight: 700;
+$headerFontStack: 'Work Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+$headerFontWeight: 600;
 
-$bodyFontStack: 'HelveticaNeue', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+$bodyFontStack: 'Work Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 $baseFontSize: 14px; // Henseforth known as 1em
 
 @font-face {
@@ -10517,20 +10518,24 @@ label.error {
 
 {% endif %} // settings.ajax_cart_method
 
+//Theme Typography
+a {
+	color: #151515;
+	transition: all 0.25s ease;
+	-webkit-transition: all 0.25s ease;
+	-moz-transition: all 0.25s ease;
+	cursor: pointer;
+	&:hover, &:focus {
+		color: #D07528;
+		text-decoration: none;
+	}
+}
+
 //Product Partials
 .product-partial {
 	padding: 50px;
 	@media (max-width: $screen-sm-max) {
 		padding: 10px;
-	}
-	&:hover {
-		text-decoration: none;
-		.product-partial--title {
-			color: #d07528;
-		}
-	}
-	&:focus {
-		text-decoration: none;
 	}
 }
 
@@ -10545,6 +10550,11 @@ label.error {
 }
 
 .product-partial--title {
-	font-weight: 300;
+	font-weight: 700;
+	text-transform: uppercase;
+}
+.product-partial--price {
+	color: #151515;
+	font-weight: 700;
 	text-transform: uppercase;
 }
