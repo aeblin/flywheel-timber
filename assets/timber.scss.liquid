@@ -1,169 +1,4 @@
 /*============================================================================
-  Shopify Timber
-  Copyright 2015 Shopify Inc.
-  Author Carson Shold @cshold
-  Built with Sass - http://sass-lang.com/
-
-  Some things to know about this file:
-    - Sass is compiled on Shopify's server so you don't need to convert it to CSS yourself
-    - The output CSS is compressed and comments are removed
-    - You cannot use @imports in this file
-        * Use grunt or gulp tasks to enable @imports - https://github.com/Shopify/shopify-css-import
-    - Helpers variables, mixins, and starter classes are provided. Change as needed.
-    - The file is prepped with a CSS reset
-    - The font icons are prepared using https://icomoon.io/app
-==============================================================================*/
-
-/*============================================================================
-  Table of Contents
-
-  #Breakpoint and Grid Variables
-  #General Variables
-  #Sass Mixins
-  #Normalize
-  #Grid Setup
-  #Basic Styles
-  #Helper Classes
-  #Typography
-  #Rich Text Editor
-  #Links and Buttons
-  #Lists
-  #Tables
-  #Reponsive Tables
-  #OOCSS Media Object
-  #Images and Iframes
-  #Forms
-  #Icons
-  #Pagination
-  #Site Header
-  #Site Nav and Dropdowns
-  #Mobile Nav
-  #Drawers
-  #Site Footer
-  #Product and Collection Grids
-  #Collection Filters
-  #Breadcrumbs
-  #Product Page
-  #Notes and Form Feedback
-  #Cart Page
-  #Ajax Cart Styles
-==============================================================================*/
-
-/*============================================================================
-  #Breakpoint and Grid Variables
-==============================================================================*/
-$viewportIncrement: 1px;
-
-$small: 480px;
-$medium: 768px;
-$large: 769px;
-
-$postSmall: $small + $viewportIncrement;
-$preMedium: $medium - $viewportIncrement;
-$preLarge: $large - $viewportIncrement;
-
-/*================ The following are dependencies of csswizardry grid ================*/
-$breakpoints: (
-  'small' '(max-width: #{$small})',
-  'medium' '(min-width: #{$postSmall}) and (max-width: #{$medium})',
-  'medium-down' '(max-width: #{$medium})',
-  'large' '(min-width: #{$large})'
-);
-$breakpoint-has-widths: ('small', 'medium', 'medium-down', 'large');
-$breakpoint-has-push:  ('medium', 'medium-down', 'large');
-$breakpoint-has-pull:  ('medium', 'medium-down', 'large');
-
-/*============================================================================
-  #General Variables
-==============================================================================*/
-
-// Timber Colors
-$colorPrimary: {{ settings.color_primary }};
-$colorSecondary: {{ settings.color_secondary }};
-
-// Button colors
-$colorBtnPrimary: $colorPrimary;
-$colorBtnPrimaryHover: darken($colorBtnPrimary, 10%);
-$colorBtnPrimaryActive: darken($colorBtnPrimaryHover, 10%);
-$colorBtnPrimaryText: #fff;
-
-$colorBtnSecondary: $colorSecondary;
-$colorBtnSecondaryHover: darken($colorBtnSecondary, 10%);
-$colorBtnSecondaryActive: darken($colorBtnSecondaryHover, 10%);
-$colorBtnSecondaryText: #fff;
-
-// Text link colors
-$colorLink: $colorPrimary;
-$colorLinkHover: lighten($colorPrimary, 15%);
-
-// Text colors
-$colorTextBody: {{ settings.color_body_text }};
-
-// Backgrounds
-$colorBody: {{ settings.color_body_bg }};
-
-// Border colors
-$colorBorder: {{ settings.color_borders }};
-
-// Nav and dropdown link background
-$colorNav: #f2f2f2;
-$colorNavText: #333;
-
-// Site Footer
-$colorFooterBg: {{ settings.color_footer_bg }};
-$colorFooterText: {{ settings.color_footer_text }};
-
-// Logo max width
-$logoMaxWidth: {{ settings.logo_max_width | default: '450' | remove: 'px' }}px;
-
-// Helper colors
-$disabledGrey: #f6f6f6;
-$disabledBorder: darken($disabledGrey, 25%);
-$errorRed: #d02e2e;
-$errorRedBg: #fff6f6;
-$successGreen: #56ad6a;
-$successGreenBg: #ecfef0;
-
-// Drawers
-$drawerNavWidth: 300px;
-$drawerCartWidth: 300px;
-$colorDrawers: #f6f6f6;
-$colorDrawerBorder: darken($colorDrawers, 5%);
-$colorDrawerText: #333;
-$drawerTransition: all 0.4s cubic-bezier(0.46, 0.01, 0.32, 1);
-
-// Sizing variables
-$siteWidth: 1180px;
-$gutter: 30px;
-$gridGutter: 30px; // can be a %, but nested grids will have smaller margins because of it
-$radius: 3px;
-
-// Z-index
-$zindexNavDropdowns: 5;
-$zindexDrawer: 10;
-
-/*================ Typography ================*/
-
-$headerFontStack: 'HelveticaNeue', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-$headerFontWeight: 700;
-
-$bodyFontStack: 'HelveticaNeue', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-$baseFontSize: 14px; // Henseforth known as 1em
-
-@font-face {
-  font-family: 'icons';
-  src: url('{{ "icons.eot" | asset_url }}');
-  src: url('{{ "icons.eot" | asset_url }}#iefix') format("embedded-opentype"),
-       url('{{ "icons.woff" | asset_url }}') format("woff"),
-       url('{{ "icons.ttf" | asset_url }}') format("truetype"),
-       url('{{ "icons.svg" | asset_url }}#timber-icons') format("svg");
-  font-weight: normal;
-  font-style: normal;
-}
-$socialIconFontStack: 'icons';
-
-
-/*============================================================================
   #Sass Mixins
 ==============================================================================*/
 .clearfix {
@@ -280,7 +115,119 @@ $max: max-width;
     }
   }
 }
+/*============================================================================
+  #Breakpoint and Grid Variables
+==============================================================================*/
+$viewportIncrement: 1px;
 
+$small: 480px;
+$medium: 768px;
+$large: 769px;
+
+$postSmall: $small + $viewportIncrement;
+$preMedium: $medium - $viewportIncrement;
+$preLarge: $large - $viewportIncrement;
+
+/*================ The following are dependencies of csswizardry grid ================*/
+$breakpoints: (
+  'small' '(max-width: #{$small})',
+  'medium' '(min-width: #{$postSmall}) and (max-width: #{$medium})',
+  'medium-down' '(max-width: #{$medium})',
+  'large' '(min-width: #{$large})'
+);
+$breakpoint-has-widths: ('small', 'medium', 'medium-down', 'large');
+$breakpoint-has-push:  ('medium', 'medium-down', 'large');
+$breakpoint-has-pull:  ('medium', 'medium-down', 'large');
+
+/*============================================================================
+  #General Variables
+==============================================================================*/
+
+// Timber Colors
+$colorPrimary: {{ settings.color_primary }};
+$colorSecondary: {{ settings.color_secondary }};
+
+// Button colors
+$colorBtnPrimary: $colorPrimary;
+$colorBtnPrimaryHover: darken($colorBtnPrimary, 10%);
+$colorBtnPrimaryActive: darken($colorBtnPrimaryHover, 10%);
+$colorBtnPrimaryText: #fff;
+
+$colorBtnSecondary: $colorSecondary;
+$colorBtnSecondaryHover: darken($colorBtnSecondary, 10%);
+$colorBtnSecondaryActive: darken($colorBtnSecondaryHover, 10%);
+$colorBtnSecondaryText: #fff;
+
+// Text link colors
+$colorLink: $colorPrimary;
+$colorLinkHover: lighten($colorPrimary, 15%);
+
+// Text colors
+$colorTextBody: {{ settings.color_body_text }};
+
+// Backgrounds
+$colorBody: {{ settings.color_body_bg }};
+
+// Border colors
+$colorBorder: {{ settings.color_borders }};
+
+// Nav and dropdown link background
+$colorNav: #f2f2f2;
+$colorNavText: #333;
+
+// Site Footer
+$colorFooterBg: {{ settings.color_footer_bg }};
+$colorFooterText: {{ settings.color_footer_text }};
+
+// Logo max width
+$logoMaxWidth: {{ settings.logo_max_width | default: '450' | remove: 'px' }}px;
+
+// Helper colors
+$disabledGrey: #f6f6f6;
+$disabledBorder: darken($disabledGrey, 25%);
+$errorRed: #d02e2e;
+$errorRedBg: #fff6f6;
+$successGreen: #56ad6a;
+$successGreenBg: #ecfef0;
+
+// Drawers
+$drawerNavWidth: 300px;
+$drawerCartWidth: 300px;
+$colorDrawers: #f6f6f6;
+$colorDrawerBorder: darken($colorDrawers, 5%);
+$colorDrawerText: #333;
+$drawerTransition: all 0.4s cubic-bezier(0.46, 0.01, 0.32, 1);
+
+// Sizing variables
+$siteWidth: 1180px;
+$gutter: 30px;
+$gridGutter: 30px; // can be a %, but nested grids will have smaller margins because of it
+$radius: 3px;
+
+// Z-index
+$zindexNavDropdowns: 5;
+$zindexDrawer: 10;
+
+/*================ Typography ================*/
+// Adding Work Sans in a dumb way TODO: AE - Fix this, thanks.
+
+$headerFontStack: 'Work Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+$headerFontWeight: 600;
+
+$bodyFontStack: 'Work Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+$baseFontSize: 14px; // Henseforth known as 1em
+
+@font-face {
+  font-family: 'icons';
+  src: url('{{ "icons.eot" | asset_url }}');
+  src: url('{{ "icons.eot" | asset_url }}#iefix') format("embedded-opentype"),
+       url('{{ "icons.woff" | asset_url }}') format("woff"),
+       url('{{ "icons.ttf" | asset_url }}') format("truetype"),
+       url('{{ "icons.svg" | asset_url }}#timber-icons') format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+$socialIconFontStack: 'icons';
 /*============================================================================
   #Normalize
 ==============================================================================*/
@@ -311,7 +258,6 @@ input[type="search"]::-webkit-search-cancel-button,
 input[type="search"]::-webkit-search-decoration {
   -webkit-appearance: none;
 }
-
 /*============================================================================
   #Grid Setup
     - Based on csswizardry grid, but with floated columns, a fixed gutter size, and BEM classes
@@ -323,17 +269,6 @@ $mobile-first:       true;
 $use-silent-classes: false;
 $push:               true;
 $pull:               false;
-
-/* Force clearfix on grids */
-.grid,
-.grid-uniform {
-  @include clearfix;
-}
-
-/* Manual grid__item clearfix */
-.grid__item.clear {
-  clear: both;
-}
 
 $class-type: unquote(".");
 
@@ -370,57 +305,6 @@ $class-type: unquote(".");
 @mixin silent-relative() {
   @if $use-silent-classes == true {
     position:relative;
-  }
-}
-
-/*============================================================================
-  Grid Setup
-    1. Allow the grid system to be used on lists.
-    2. Remove any margins and paddings that might affect the grid system.
-    3. Apply a negative `margin-left` to negate the columns' gutters.
-==============================================================================*/
-#{$class-type}grid,
-#{$class-type}grid-uniform {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  margin-left: -$gridGutter;
-}
-
-#{$class-type}grid__item {
-  box-sizing: border-box;
-  float: left;
-  min-height: 1px;
-  padding-left: $gridGutter;
-  vertical-align: top;
-  @if $mobile-first == true {
-    width: 100%;
-  }
-}
-
-/*============================================================================
-  Reversed grids allow you to structure your source in the opposite
-  order to how your rendered layout will appear.
-==============================================================================*/
-#{$class-type}grid--rev {
-  @extend #{$class-type}grid;
-  direction: rtl;
-  text-align: left;
-
-  > #{$class-type}grid__item {
-    direction: ltr;
-    text-align: left;
-    float: right;
-  }
-}
-
-/* Gutterless grids have all the properties of regular grids, minus any spacing. */
-#{$class-type}grid--full {
-  @extend #{$class-type}grid;
-  margin-left: 0;
-
-  > #{$class-type}grid__item {
-    padding-left: 0;
   }
 }
 
@@ -525,21 +409,6 @@ $class-type: unquote(".");
   #{$class-type}#{$namespace}right       { float: right!important; }
 }
 
-/*================ Our regular, non-responsive width and helper classes ================*/
-@include device-type();
-@include device-helper();
-
-/*================ Our responsive classes, if we have enabled them ================*/
-@if $responsive == true {
-  @each $name in $breakpoint-has-widths {
-    @include grid-media-query($name) {
-      @include device-type('#{$name}--');
-      @include device-helper('#{$name}--');
-      @include clearfix-helper('#{$name}--');
-    }
-  }
-}
-
 /*============================================================================
   PUSH
     - Push classes, to move grid items over to the right by certain amounts
@@ -605,20 +474,6 @@ $class-type: unquote(".");
   #{$class-type}push--#{$namespace}nine-twelfths   { left: 75%; @include silent-relative(); }
   #{$class-type}push--#{$namespace}ten-twelfths    { left: 83.333%; @include silent-relative(); }
   #{$class-type}push--#{$namespace}eleven-twelfths { left: 91.666%; @include silent-relative(); }
-}
-
-@if $push == true {
-  [class*="push--"]{ position:relative; }
-
-  @include push-setup();
-
-  @if $responsive == true {
-    @each $name in $breakpoint-has-push {
-      @include grid-media-query($name) {
-        @include push-setup('#{$name}--');
-      }
-    }
-  }
 }
 
 /*============================================================================
@@ -687,6 +542,106 @@ $class-type: unquote(".");
   #{$class-type}pull--#{$namespace}ten-twelfths    { right: 83.333%; @include silent-relative(); }
   #{$class-type}pull--#{$namespace}eleven-twelfths { right: 91.666%; @include silent-relative(); }
 }
+/* Force clearfix on grids */
+.grid,
+.grid-uniform {
+  @include clearfix;
+}
+
+/* Manual grid__item clearfix */
+.grid__item.clear {
+  clear: both;
+}
+
+/*============================================================================
+  Grid Setup
+    1. Allow the grid system to be used on lists.
+    2. Remove any margins and paddings that might affect the grid system.
+    3. Apply a negative `margin-left` to negate the columns' gutters.
+==============================================================================*/
+#{$class-type}grid,
+#{$class-type}grid-uniform {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  margin-left: -$gridGutter;
+}
+
+#{$class-type}grid__item {
+  box-sizing: border-box;
+  float: left;
+  min-height: 1px;
+  padding-left: $gridGutter;
+  vertical-align: top;
+  @if $mobile-first == true {
+    width: 100%;
+  }
+}
+
+/*============================================================================
+  Reversed grids allow you to structure your source in the opposite
+  order to how your rendered layout will appear.
+==============================================================================*/
+#{$class-type}grid--rev {
+  @extend #{$class-type}grid;
+  direction: rtl;
+  text-align: left;
+
+  > #{$class-type}grid__item {
+    direction: ltr;
+    text-align: left;
+    float: right;
+  }
+}
+
+/* Gutterless grids have all the properties of regular grids, minus any spacing. */
+#{$class-type}grid--full {
+  @extend #{$class-type}grid;
+  margin-left: 0;
+
+  > #{$class-type}grid__item {
+    padding-left: 0;
+  }
+}
+
+/*================ Our regular, non-responsive width and helper classes ================*/
+@include device-type();
+@include device-helper();
+
+/*================ Our responsive classes, if we have enabled them ================*/
+@if $responsive == true {
+  @each $name in $breakpoint-has-widths {
+    @include grid-media-query($name) {
+      @include device-type('#{$name}--');
+      @include device-helper('#{$name}--');
+      @include clearfix-helper('#{$name}--');
+    }
+  }
+}
+
+/*============================================================================
+  PUSH
+    - Push classes, to move grid items over to the right by certain amounts
+==============================================================================*/
+
+@if $push == true {
+  [class*="push--"]{ position:relative; }
+
+  @include push-setup();
+
+  @if $responsive == true {
+    @each $name in $breakpoint-has-push {
+      @include grid-media-query($name) {
+        @include push-setup('#{$name}--');
+      }
+    }
+  }
+}
+
+/*============================================================================
+  PULL
+    - Pull classes, to move grid items back to the left by certain amounts
+==============================================================================*/
 
 @if $pull == true {
   [class*="pull--"]{ position:relative; }
@@ -701,7 +656,6 @@ $class-type: unquote(".");
     }
   }
 }
-
 /*============================================================================
   #Basic Styles
 ==============================================================================*/
