@@ -1,9 +1,5 @@
 <!-- /templates/index.liquid -->
 {% comment %}
-  So here's my attempt at a slider integration.
-{% endcomment %}
-
-{% comment %}
   This is the homepage of your site.
 
   More info on global variables (available on all templates):
@@ -16,41 +12,52 @@
   each other properly at each breakpoint.
 {% endcomment %}
 
-<div class="container-fluid">
-  <div class="row">
 
-    {% comment %}
-      Loop through products in your Frontpage collection.
-      This collection is created by default, but you must add products to it.
-    {% endcomment %}
+{% if settings.hero_slider_enable %}
+  {% include 'hero' %}
+{% endif %}
 
-    {% for product in collections.frontpage.products limit:6 %}
+{% if settings.hero_subtiles_enable %}
+  {% include 'hero-subtile' %}
+{% endif %}
+
+<section class="product-collection">
+  <div class="container-fluid">
+    <div class="row">
 
       {% comment %}
-        Change the grid item width by using classes from the grid in
-        the grid_item_width variable.
-
-        Example:
-         if using Timber Grid - {% assign grid_item_width = 'large--one-third medium--one-half' %}
-         if using Bootstrap Grid - {% assign grid_item_width = 'col-sm-12 col-md-6 col-lg-4' %}
+        Loop through products in your Frontpage collection.
+        This collection is created by default, but you must add products to it.
       {% endcomment %}
 
-      {% assign grid_item_width = 'col-sm-12 col-md-6 col-lg-4' %}
-      {% include 'product-col-item' %}
+      {% for product in collections.frontpage.products limit:6 %}
 
-    {% else %}
+        {% comment %}
+          Change the grid item width by using classes from the grid in
+          the grid_item_width variable.
 
-      {% unless emptyState %}
-        {{ 'theme-onboarding.css' | global_asset_url | stylesheet_tag }}
-        {% assign emptyState = true %}
-      {% endunless %}
+          Example:
+           if using Timber Grid - {% assign grid_item_width = 'large--one-third medium--one-half' %}
+           if using Bootstrap Grid - {% assign grid_item_width = 'col-sm-12 col-md-6 col-lg-4' %}
+        {% endcomment %}
 
-      {% include 'onboarding-featured-products' %}
+        {% assign grid_item_width = 'col-sm-12 col-md-6 col-lg-4' %}
+        {% include 'product-col-item' %}
 
-    {% endfor %}
+      {% else %}
 
+        {% unless emptyState %}
+          {{ 'theme-onboarding.css' | global_asset_url | stylesheet_tag }}
+          {% assign emptyState = true %}
+        {% endunless %}
+
+        {% include 'onboarding-featured-products' %}
+
+      {% endfor %}
+
+    </div>
   </div>
-</div>
+</section>
 
 {% comment %}
   <hr>
