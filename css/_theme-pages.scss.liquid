@@ -1,0 +1,29 @@
+.page-intro {
+  position: relative;
+  height: 720px;
+  padding: 0;
+  overflow: hidden;
+}
+.bg-img-holder {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  background: $fw-black;
+  background-size: cover !important;
+  background-position: 50% 50% !important;
+  transition: all 0.3s ease;
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  opacity: 0;
+}
+
+.bg-img-holder img {
+  display: none;
+}
+
+.bg-img-holder.fadeIn {
+  opacity: 1;
+}

@@ -85,11 +85,14 @@ $drawerTransition: all 0.4s cubic-bezier(0.46, 0.01, 0.32, 1);
 $siteWidth: 1180px;
 $gutter: 30px;
 $gridGutter: 30px; // can be a %, but nested grids will have smaller margins because of it
-$radius: 3px;
+$contentTopMargin: 80px;
+$contentTopMarginSmall: 35px;
+$radius: 0;
 
 // Z-index
 $zindexNavDropdowns: 5;
 $zindexDrawer: 10;
+$zindexHeroHeader: 2;
 
 /*================ Typography ================*/
 // Adding Work Sans in a dumb way TODO: AE - Fix this, thanks.
@@ -99,6 +102,9 @@ $headerFontWeight: 600;
 
 $bodyFontStack: 'Work Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 $baseFontSize: 14px; // Henseforth known as 1em
+
+$accentFontStack: 'Work Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+$accentFontWeight: 300;
 
 @font-face {
   font-family: 'icons';

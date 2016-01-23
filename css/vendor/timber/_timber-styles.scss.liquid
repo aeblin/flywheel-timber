@@ -1076,12 +1076,14 @@ label.error {
 
 .site-header__logo {
   text-align: center;
-  margin: 0 auto;
-  max-width: 100%;
+  margin: 20px auto;
+  max-width: 350px;
 
-  @include at-query ($min, $large) {
-    text-align: left;
-  }
+  // Unnecessary as we've centered the logo.
+  //
+  // @include at-query ($min, $large) {
+  //   text-align: left;
+  // }
 
   a,
   a:hover,
@@ -1101,6 +1103,9 @@ label.error {
 .site-header__logo-link {
   max-width: $logoMaxWidth;
   margin: 0 auto;
+  &:focus {
+    outline: none;
+  }
 }
 
 .site-header__cart-toggle {
@@ -1128,12 +1133,15 @@ label.error {
 ==============================================================================*/
 .nav-bar {
   background-color: $colorNav;
+  border-top: 1px solid #151515;
 }
 
 .site-nav {
   font-size: em(16px);
   cursor: default;
-  margin: 0 0 0 (-$gutter / 2);
+  margin: 0 auto;
+  text-align: center;
+  text-transform: uppercase;
 
   li {
     margin: 0;
@@ -1176,7 +1184,8 @@ label.error {
   }
 
   .site-nav--active > & {
-    font-weight: bold;
+    // Disable Active Style for right now 1/11/16 - AE
+    // font-weight: bold;
   }
 
   .site-nav--mobile & {

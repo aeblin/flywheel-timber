@@ -1,0 +1,55 @@
+.nav-logo {
+	background-color: $fw-black;
+}
+
+.nav-linkbar {
+	background-color: $fw-black;
+	border-top: 1px solid $fw-grey;
+	text-align: center;
+}
+
+.site-nav {
+	@include workSans-n6;
+	margin: 0 auto;
+	display: inline-block;
+}
+
+.site-nav__link {
+	color: rgb(255,255,255);
+	&:hover, &:focus {
+		color: $fw-orange;
+	}
+}
+
+.collection-nav--active > .site-nav__link {
+	color: $fw-orange;
+	&:hover {
+		color: $fw-orange;
+	}
+}
+
+// Sub Nav //------
+.sub-navbar {
+	background-color: $fw-slate;
+}
+.sub-nav {
+	@include workSans-n6;
+  font-size: em(16px);
+  cursor: default;
+  margin: 0 0 0 (-$gutter / 2);
+  text-align: center;
+  text-transform: uppercase;
+
+  li {
+    margin: 0;
+    display: block;
+  }
+
+  > li {
+    position: relative;
+    display: inline-block;
+  }
+}
+.sub-nav .site-nav__link {
+	padding: 10px 15px; 
+}
