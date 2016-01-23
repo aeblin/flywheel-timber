@@ -56,9 +56,9 @@ var slickTheme = (function(module, $) {
       // Private settings
       isTouch        : slickTheme.cache.$html.hasClass('supports-touch') ? true : false,
 
-      // Slack options
-      arrows         : false,
-      dots           : true,
+      // Slick options
+      arrows         : true,
+      dots           : false,
       adaptiveHeight : true
     };
 
@@ -96,11 +96,9 @@ var slickTheme = (function(module, $) {
       fixIE8();
     }
 
-    if (settings.parallax && slickTheme.cache.$html.hasClass('supports-csstransforms3d')) {
-      setParallax();
-      console.log('this might work?')
-    }
-    console.log("INITIALIZINGGGGG")
+    // if (settings.parallax && slickTheme.cache.$html.hasClass('supports-csstransforms3d')) {
+    //   setParallax();
+    // }
   };
 
   checkFirstOnIndex = function () {
@@ -134,7 +132,6 @@ var slickTheme = (function(module, $) {
     if (settings.parallax && slickTheme.cache.$html.hasClass('supports-csstransforms3d')) {
       setParallax();
     }
-    console.log("hey man")
   };
 
   beforeChange = function (evt, currentSlide, nextSlide) {
