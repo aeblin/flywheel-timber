@@ -1,5 +1,30 @@
 <header class="layout-header" role="banner">
-  <div class="container-fluid">
+  {% comment %}
+    <div class="row">
+        <div class="grid">
+          <div class="grid__item one-half">
+            <div class="site-nav--mobile">
+              <button type="button" class="icon-fallback-text site-nav__link js-drawer-open-left" aria-controls="NavDrawer" aria-expanded="false">
+                <span class="icon icon-hamburger" aria-hidden="true"></span>
+                <span class="fallback-text">{{ 'layout.navigation.menu' | t }}</span>
+              </button>
+            </div>
+          </div>
+          <div class="grid__item one-half text-right">
+            <div class="site-nav--mobile">
+              <a href="/cart" class="js-drawer-open-right site-nav__link" aria-controls="CartDrawer" aria-expanded="false">
+                <span class="icon-fallback-text">
+                  <span class="icon icon-cart" aria-hidden="true"></span>
+                  <span class="fallback-text">{{ 'layout.cart.title' | t }}</span>
+                </span>
+              </a>
+            </div>
+          </div>
+        </div>
+    </div>
+  {% endcomment %}
+  <div class="row nav-logo">
+    <div class="col-sm-12 col-md-8 col-md-push-2">
       {% comment %}
         Use the uploaded logo from theme settings if enabled.
         Site name gets precedence with H1 tag on homepage, div on other pages.
@@ -13,7 +38,7 @@
 
       {% if settings.logo_use_image %}
         <a href="/" itemprop="url" class="site-header__logo-link">
-          <img src="//cdn.shopify.com/s/files/1/1080/7300/files/logo-block-white.svg?7414229604964038908" alt="{{ shop.name }}" itemprop="logo" onerror="this.onerror=null; this.src='//cdn.shopify.com/s/files/1/1080/7300/files/logo-block-white.png?5882798101472764954'">>
+          <img src="//cdn.shopify.com/s/files/1/1080/7300/files/logo-block-white.svg?7414229604964038908" alt="{{ shop.name }}" itemprop="logo" onerror="this.onerror=null; this.src='//cdn.shopify.com/s/files/1/1080/7300/files/logo-block-white.png?5882798101472764954'">
         </a>
       {% else %}
         <a href="/" itemprop="url">{{ shop.name }}</a>
@@ -24,6 +49,11 @@
       {% else %}
         </div>
       {% endif %}
+    </div>
+    <div class="col-md-2 col-md-pull-8">
+    </div>
+    <div class="col-md-2">
+    </div>
   </div>
 
   {% comment %}
@@ -61,24 +91,21 @@
     </div>
   {% endcomment %}
 
-  <nav class="nav-bar" role="navigation">
+  <nav class="nav-bar nav-linkbar" role="navigation">
     <div class="wrapper">
     <div class="medium-down--hide">
-      {% comment %}
-        List out your main-menu linklist (default)
-
-        More info on linklists:
-          - http://docs.shopify.com/themes/liquid-variables/linklists
-      {% endcomment %}
-      <!-- begin site-nav -->
+      <ul class="site-nav">
+        {% for link in linklists.shopping-menu.links %}
+          <li {% if link.active %}class="site-nav--active"{% endif %}>
+            <a href="{{ link.url }}" class="site-nav__link">{{ link.title }}</a>
+          </li>
+        {% endfor %}
+      </ul>
+      <ul class="site-nav">
+        <li class="u-lightcopy"> | </li>
+      </ul>
       <ul class="site-nav" id="AccessibleNav">
         {% for link in linklists.main-menu.links %}
-          {% comment %}
-            Create a dropdown menu by naming a linklist the same as a link in the parent nav
-
-            More info on dropdowns:
-              - http://docs.shopify.com/manual/your-website/navigation/create-drop-down-menu
-          {% endcomment %}
 
           {% assign child_list_handle = link.title | handleize %}
 
@@ -103,7 +130,6 @@
           {% endif %}
         {% endfor %}
       </ul>
-      <!-- //site-nav -->
     </div>
     <div class="large--hide medium-down--show">
       <div class="grid">
