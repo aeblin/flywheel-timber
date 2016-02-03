@@ -1,4 +1,3 @@
-<!-- /templates/cart.liquid -->
 {% comment %}
 
   For info on test orders:
@@ -9,15 +8,18 @@
 
 {% if cart.item_count > 0 %}
 
-  <h1>{{ 'cart.general.title' | t }}</h1>
+<div class="wrapper cart-wrapper">
+  <h1 class="uppercase u-letterspacing text-right">{{ 'cart.general.title' | t }}</h1>
   <form action="/cart" method="post" novalidate class="cart table-wrap">
     <table class="cart-table full table--responsive">
+    {% comment %}
       <thead class="cart__row cart__header-labels">
         <th colspan="2" class="text-center">{{ 'cart.label.product' | t }}</th>
         <th class="text-center">{{ 'cart.label.price' | t }}</th>
         <th class="text-center">{{ 'cart.label.quantity' | t }}</th>
         <th class="text-right">{{ 'cart.label.total' | t }}</th>
       </thead>
+    {% endcomment %}
       <tbody>
         {% for item in cart.items %}
           <tr class="cart__row table__section">
@@ -27,11 +29,11 @@
                   More image size options at:
                     - http://docs.shopify.com/themes/filters/product-img-url
                 {% endcomment %}
-                <img src="{{ item | img_url: 'medium' }}" alt="{{ item.title | escape }}">
+                <img src="{{ item | img_url: 'small' }}" alt="{{ item.title | escape }}">
               </a>
             </td>
             <td>
-              <a href="{{ item.url }}" class="h4">
+              <a href="{{ item.url }}" class="h4 uppercase">
                 {{ item.product.title }}
               </a>
               {% unless item.variant.title contains 'Default' %}
@@ -68,10 +70,6 @@
                   {% endunless %}
                 {% endfor %}
               {% endif %}
-
-              <a href="/cart/change?line={{ forloop.index }}&amp;quantity=0" class="cart__remove">
-                <small>{{ 'cart.general.remove' | t }}</small>
-              </a>
             </td>
             <td data-label="{{ 'cart.label.price' | t }}">
               <span class="h3">
@@ -79,12 +77,18 @@
               </span>
             </td>
             <td data-label="{{ 'cart.label.quantity' | t }}">
-              <input type="number" name="updates[]" id="updates_{{ item.id }}" value="{{ item.quantity }}" min="0">
+              <label class="hidden-xs hidden-sm">QTY</label>
+              <input type="text" name="updates[]" id="updates_{{ item.id }}" class="fw-quantity-input u-lightcopy" value="{{ item.quantity }}" min="0">
             </td>
             <td data-label="{{ 'cart.label.total' | t }}" class="text-right">
               <span class="h3">
                 {{ item.line_price | money }}
               </span>
+            </td>
+            <td data-label="{{ 'cart.general.remove' | t }}">
+              <a href="/cart/change?line={{ forloop.index }}&amp;quantity=0" class="cart__remove u-lightcopy">
+                <span class="fa fa-times" aria-hidden="true"></span>
+              </a>
             </td>
           </tr>
         {% endfor %}
@@ -103,11 +107,14 @@
           <span class="h3 cart__subtotal">{{ cart.total_price | money }}</span>
         </p>
         <p><em>{{ 'cart.general.shipping_at_checkout' | t }}</em></p>
-        <input type="submit" name="update" class="btn--secondary update-cart" value="{{ 'cart.general.update' | t }}">
-        <input type="submit" name="checkout" class="btn" value="{{ 'cart.general.checkout' | t }}">
+        <div class="fw-btn-group">
+          <input type="submit" name="update" class="fw-btn btn-light update-cart" value="{{ 'cart.general.update' | t }}">
+          <input type="submit" name="checkout" class="fw-btn btn-light" value="{{ 'cart.general.checkout' | t }}">
+        </div>
       </div>
     </div>
   </form>
+</div>
 {% else %}
   {% comment %}
     The cart is empty
