@@ -1,7 +1,6 @@
 /*============================================================================
  	Frameworks
 ==============================================================================*/
-
 //Bootstrap Import
 @import url('_bootstrap-import.scss');
 
@@ -22,19 +21,37 @@
 @import url('_theme-utilities.scss.liquid');
 
 /*============================================================================
-  Theme Layout
+  Theme Components
 ==============================================================================*/
+
 //Body Classes
 @import url('_body-classes.scss.liquid');
 
+//Buttons & Inputs
+@import url('_theme-components.scss.liquid');
+
+/*============================================================================
+  Theme Layout
+==============================================================================*/
+
 //Navbar
 @import url('_navbar.scss.liquid');
+
+//Footer
+@import url('_theme-footer.scss.liquid');
 
 //Hero Subtiles
 @import url('_hero-subtiles.scss.liquid');
 
 //Product Partials
 @import url('_product-partials.scss.liquid');
+
+/*============================================================================
+  Theme Pages
+==============================================================================*/
+
+//Cart
+@import url('_theme-cart.scss.liquid');
 
 //Products
 @import url('_theme-products.scss.liquid');
@@ -43,8 +60,11 @@
 @import url('_theme-pages.scss.liquid');
 
 /*============================================================================
-  Vendor
+  Vendor & Vendor Extensions
 ==============================================================================*/
 
 //Slick Slider
 @import url('_slick.scss.liquid');
+
+//Bootstrap Additions
+@import url('_theme-bootstrap-extensions.scss.liquid');

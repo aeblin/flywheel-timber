@@ -1,0 +1,40 @@
+<section class="hero-subtiles clearfix" id="Hero-Subtiles">
+  {% assign subtile_count = 0 %}
+  
+  {% for i in (1..4) %}
+    {% capture subtiles_enabled %}hero_subtile_{{ i }}_enable{% endcapture %}
+    {% if settings[subtiles_enabled] %}
+      {% assign subtile_count = subtile_count | plus: 1 %}
+    {% endif %}
+  {% endfor %}
+
+  {% for i in (1..4) %}
+    {% capture subtile %}hero_subtile_{{ i }}_enable{% endcapture %}
+    {% capture subtile_img %}hero_subtile_{{ i }}.jpg{% endcapture %}
+    {% capture subtile_heading %}hero_subtile_{{ i }}_heading{% endcapture %}
+    {% capture subtile_subheading %}hero_subtile_{{ i }}_subheading{% endcapture %}
+    {% capture subtile_link %}hero_subtile_{{ i }}_link{% endcapture %}
+    {% if settings[subtile] %}
+      <div class="{% if subtile_count < 2 %}col-sm-12{% endif %}{% if subtile_count == 2 %}col-md-6{% endif %}{% if subtile_count == 3 %}col-md-4{% endif %}{% if subtile_count == 4 %}col-md-3{% endif %} hero-subtile">
+        {% unless settings[subtile_link] == blank %}
+          <a href="{{ settings[subtile_link] }}">
+        {% endunless %}
+        {% comment %} It looks like adding a blank catch for this breaks it. {% endcomment %}
+        <img src="{{ subtile_img | asset_url }}" alt="{{ settings[subtile_heading] }}">
+        {% unless settings[subtile_heading] == blank and settings[subtile_subheading] == blank %}
+          <div class="hero-subtile--caption">
+            {% unless settings[subtile_heading] == blank %}
+              <h1 class="text-center">{{ settings[subtile_heading] }}</h1>
+            {% endunless %}
+            {% unless settings[subtile_subheading] == blank %}
+              <h4 class="text-center">{{ settings[subtile_subheading] }}</h4>
+            {% endunless %}
+          </div>
+        {% endunless %}
+        {% unless settings[subtile_link] == blank %}
+          </a>
+        {% endunless %}
+      </div>
+    {% endif %}
+  {% endfor %}
+</section>
