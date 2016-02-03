@@ -19,8 +19,8 @@
       {% if current_tags %}
         {% assign meta_tags = current_tags | join: ', ' %} &ndash; {{ 'general.meta.tags' | t: tags: meta_tags }}
       {% endif %}
-      {% if current_page != 1 %} &ndash; {{ 'general.meta.page' | t: page: current_page }}{% endif %}
-      {% unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless %}
+      {% if current_page != 1 %} | {{ 'general.meta.page' | t: page: current_page }}{% endif %}
+      {% unless page_title contains shop.name %} | {{ shop.name }}{% endunless %}
     </title>
 
     {% if page_description %}
@@ -35,8 +35,10 @@
 
     <!-- CSS ================================================== -->
     {{ 'theme.scss.css' | asset_url | stylesheet_tag }}
+    <!-- Font Imports ================================================== -->
     <link href='https://fonts.googleapis.com/css?family=Work+Sans:300,400,600' rel='stylesheet' type='text/css'>
-
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    
     <!-- Header hook for plugins ================================================== -->
     {{ content_for_header }}
     {% include 'oldIE-js' %}
@@ -158,7 +160,7 @@
     <div id="PageContainer" class="is-moved-by-drawer">
       {% include 'header-nav' %}
 
-      <main class="main-content" role="main">
+      <main role="main">
         {{ content_for_layout }}
       </main>
 
@@ -173,13 +175,31 @@
     {% comment %}
       Template-specific js
     {% endcomment %}
-    <script>
-      {% if resetPassword %}
-        $(function() {
-          timber.resetPasswordSuccess();
+
+    {% if resetPassword %}
+      <script>
+          $(function() {
+            timber.resetPasswordSuccess();
+          });
+      </script>
+    {% endif %}
+    
+
+    {% comment %}Load slick.js only if we're using a hero slider.{% endcomment %}
+    {% if hero_enabled %}
+      {{ 'slick.min.js' | asset_url | script_tag }}
+      {{ 'slick-theme.js' | asset_url | script_tag }}
+      <script>   
+        jQuery(function($) {
+          slickTheme.init({
+            $element     : $('#Hero'),
+            $headerclass : null,
+            fullscreen   : true,
+            parallax     : true
+          });
         });
-      {% endif %}
-    </script>
+      </script>
+    {% endif %}
 
     {% comment %}
       Ajaxify your cart with this plugin.
