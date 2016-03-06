@@ -1,5 +1,4 @@
 {% comment %}
-
   This snippet is used to showcase each product during the loop,
   'for product in collection.products' in collection.liquid.
 
@@ -13,28 +12,24 @@
     if using Bootstrap Grid - {% assign grid_item_width = 'col-sm-12 col-md-6 col-lg-4' %}
 {% endcomment %}
 
-{% comment %}
-  Set the default grid_item_width if no variable is set
-{% endcomment %}
+{% comment %} Set the default grid_item_width if no variable is set {% endcomment %}
 {% unless grid_item_width %}
   {% assign grid_item_width = 'col-sm-12 col-md-6 col-lg-4' %}
 {% endunless %}
 
-{% comment %}
-  Check if the product is on sale and set a variable to be used below.
-{% endcomment %}
+{% comment %} Check if the product is on sale and set a variable to be used below. {% endcomment %}
 {% assign on_sale = false %}
 {% if product.compare_at_price > product.price %}
   {% assign on_sale = true %}
 {% endif %}
 
-{% comment %}
-  Check if the product is sold out and set a variable to be used below.
-{% endcomment %}
+{% comment %} Check if the product is sold out and set a variable to be used below. {% endcomment %}
 {% assign sold_out = true %}
 {% if product.available %}
   {% assign sold_out = false %}
 {% endif %}
+
+
 
 <div class="{{ grid_item_width }}">
   {% comment %}
@@ -47,15 +42,14 @@
 
     For more info on navigation within a collection
       - http://docs.shopify.com/support/your-store/collections/how-to-navigate-within-a-collection
-
   {% endcomment %}
   {% if in_related_products %}
     <a href="{{ product.url | within: collection }}" class="product-partial grid__image">
-      <img src="{{ product.featured_image.src | img_url: 'medium' }}" alt="{{ product.featured_image.alt | escape }}">
+      <img src="{{ product.featured_image.src | img_url: 'large' }}" alt="{{ product.featured_image.alt | escape }}">
       
       <div class="product-partial--caption">
-        <h3 class="product-partial--title">{{ product.title }}</h3>
-        <p class="product-partial--price"> 
+        <h3 class="product-partial--title u-letterSpacing2 u-line-clamp u-line-clamp-1">{{ product.title }}</h3>
+        <h4 class="product-partial--price"> 
           {% comment %}
             You can show a leading 'from' or 'up to' by checking 'product.price_varies'
             if your variants have different prices.
@@ -66,7 +60,7 @@
               {% assign sale_price = product.price | money %}
               {{ 'products.product.on_sale_from_html' | t: price: sale_price }}
             {% else %}
-              <strong>{{ 'products.product.on_sale' | t }}</strong>
+              <strong>| {{ 'products.product.on_sale' | t }}</strong>
               {{ product.price | money }}
             {% endif %}
           {% else %}
@@ -86,7 +80,7 @@
             <span class="visually-hidden">{{ 'products.general.regular_price' | t }}</span>
             <br><s>{{ product.compare_at_price | money }}</s>
           {% endif %}
-        </p>
+        </h4>
       </div>
     </a>
   {% else %}

@@ -1,7 +1,97 @@
+// Logo, Search, and Cart // ------
+
+// Logo // ---
+.nav-top {
+	background-color: rgb(255,255,255);
+	color: $fw-black;
+	font-size: 1.35em;
+}
 .nav-logo {
-	background-color: $fw-black;
+	text-align: center;
+	line-height: 0;
+	margin: 30px auto;
+	max-width: 300px;
+}
+.nav-logo a, .nav-logo a:hover, .nav-logo a:focus{
+	text-decoration: none;
 }
 
+// Search and Cart Icons // ---
+.site-search--desktop {
+	float: left;
+	margin-left: 30px;
+	overflow: hidden;
+  max-width: none;
+}
+.site-search--desktop *:focus {
+	outline: none;
+}
+.site-cart--desktop {
+	float: right;
+	margin-right: 30px;
+}
+.site-nav--mobile {
+	float: left;
+}
+.site-cart--mobile {
+	float: right;
+}
+
+// Desktop Search Animation // ---
+.search-toggle {
+	font-size: inherit;
+	transition: color 0.25s;
+	position: relative;
+	z-index: 10;
+}
+.search-toggle:hover {
+	color: $fw-orange;
+}
+.search-toggle:focus {
+	outline: none;
+}
+
+.search-input-group {
+	display: inline-block;
+	position: relative;
+  opacity: 0;
+  -webkit-transition: -webkit-transform 0.25s, opacity 0.25s;
+  transition: transform 0.25s, opacity 0.25s;
+  -webkit-transform: translateX(-50px);
+  -ms-transform: translateX(-50px);
+  transform: translateX(-50px);
+  max-width: 200px;
+}
+.search-input-group.is-open{
+	opacity: 1;
+  -webkit-transition: -webkit-transform 0.25s, opacity 0.25s;
+  transition: transform 0.25s, opacity 0.25s;
+	-webkit-transform: translateX(0);
+	-ms-transform: translateX(0);
+	transform: translateX(0);
+	z-index: auto;
+}
+.search-input {
+	border: none;
+	border-bottom: 1px solid $fw-black;
+	background: transparent;
+	padding: 0;
+}
+.search-input:focus {
+	border: none;
+	border-bottom: 1px solid $fw-black;
+}
+.search-submit {
+  padding: 3px 0;
+  position: absolute;
+  right: 0;
+  bottom: 2px;
+  transition: color .25s;
+}
+.search-submit:hover {
+	color: $fw-orange;
+}
+// Nav Links // ------
 .nav-linkbar {
 	background-color: $fw-black;
 	border-top: 1px solid $fw-grey;

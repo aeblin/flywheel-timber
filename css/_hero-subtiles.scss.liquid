@@ -2,9 +2,13 @@
 	padding: 5px;
 }
 
-.hero-subtile {
+.hero-subtile--container {
 	padding: 5px;
 	cursor: pointer;
+}
+
+.hero-subtile {
+  position: relative;
 }
 
 .hero-subtile--caption {
@@ -25,7 +29,10 @@
 	margin-bottom: 0px;
 	padding: 0px;
 }
+.hero-subtile--caption h1 {
+  @include workSans-n5;
+}
 
 .hero-subtile--caption h4 {
-	font-weight: 400;
+	@include workSans-n4;
 }

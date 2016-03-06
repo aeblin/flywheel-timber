@@ -8,9 +8,9 @@
   }
 }
 
-//Product Detail Card
+// Product Detail Card // ------
 .product-details {
-  border: 3px solid $fw-black;
+  border: $border-default solid $fw-black;
   padding: 40px;
   @media screen and (max-width: $screen-sm-max) {
     text-align: center; 
@@ -21,13 +21,16 @@
 }
 .product-description {
   font-size: 1.25em;
+  margin: 30px 0;
 }
 .product-description h1 {
   text-transform: uppercase;
   letter-spacing: .3rem;
 }
 
-//Related Products
-.related-products {
-  border-top: 4px solid $fw-black;
+// Add to Cart Row // ------
+label {
+  display: inline-block;
+  max-width: 100%;
+  font-weight: 500;
 }

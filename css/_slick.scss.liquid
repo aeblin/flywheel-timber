@@ -284,8 +284,8 @@ $slick-font-family: "slick-icons, sans-serif";
 $slick-arrow-color: $colorPrimary;
 $slick-dot-color: $colorPrimary;
 $slick-dot-color-active: $slick-dot-color;
-$slick-prev-character: '\2190';
-$slick-next-character: '\2192';
+$slick-prev-character: '\f3d2';
+$slick-next-character: '\f3d3';
 $slick-dot-character: '\2022';
 $slick-dot-size: 6px;
 $slick-opacity-default: 0.75;
@@ -425,8 +425,8 @@ $slick-opacity-not-active: 0.25;
 .slick-next {
   position: absolute;
   display: block;
-  height: 20px;
-  width: 20px;
+  height: 40px;
+  width: 40px;
   line-height: 0;
   font-size: 0;
   cursor: pointer;
@@ -437,6 +437,7 @@ $slick-opacity-not-active: 0.25;
   padding: 0;
   border: none;
   outline: none;
+  z-index: 2;
   &:hover, &:focus {
     outline: none;
     background: transparent;
@@ -450,10 +451,10 @@ $slick-opacity-not-active: 0.25;
   }
 }
 .slick-prev:before, .slick-next:before {
-  font-family: $slick-font-family;
-  font-size: 20px;
+  font-family: Ionicons;
+  font-size: 70px;
   line-height: 1;
-  color: $slick-arrow-color;
+  color: rgb(255,255,255);
   opacity: $slick-opacity-default;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

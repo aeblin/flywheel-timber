@@ -1,3 +1,7 @@
+// Font Definitions // ------
+$fontFamily--workSans: 'Work Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+$lineHeight--default: 1.6;
+
 // Font Mixins // ------
 @mixin workSans-n2 {
   font-family: $fontFamily--workSans;
@@ -23,6 +27,12 @@
   font-family: $fontFamily--workSans;
   font-style: normal;
   font-weight: 600;
+}
+
+body {
+  @include workSans-n4;
+  font-size: 14px;
+  line-height: $lineHeight--default;
 }
 
 a {

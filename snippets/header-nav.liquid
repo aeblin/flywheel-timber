@@ -4,7 +4,7 @@
         <div class="grid">
           <div class="grid__item one-half">
             <div class="site-nav--mobile">
-              <button type="button" class="icon-fallback-text site-nav__link js-drawer-open-left" aria-controls="NavDrawer" aria-expanded="false">
+              <button type="button" class="icon-fallback-text js-drawer-open-left" aria-controls="NavDrawer" aria-expanded="false">
                 <span class="icon icon-hamburger" aria-hidden="true"></span>
                 <span class="fallback-text">{{ 'layout.navigation.menu' | t }}</span>
               </button>
@@ -23,36 +23,79 @@
         </div>
     </div>
   {% endcomment %}
-  <div class="row nav-logo">
-    <div class="col-sm-12 col-md-8 col-md-push-2">
-      {% comment %}
-        Use the uploaded logo from theme settings if enabled.
-        Site name gets precedence with H1 tag on homepage, div on other pages.
-      {% endcomment %}
-    
-      {% if template == 'index' %}
-        <h1 class="site-header__logo" itemscope itemtype="http://schema.org/Organization">
-      {% else %}
-        <div class="h1 site-header__logo" itemscope itemtype="http://schema.org/Organization">
-      {% endif %}
-
-      {% if settings.logo_use_image %}
-        <a href="/" itemprop="url" class="site-header__logo-link">
-          <img src="//cdn.shopify.com/s/files/1/1080/7300/files/logo-block-white.svg?7414229604964038908" alt="{{ shop.name }}" itemprop="logo" onerror="this.onerror=null; this.src='//cdn.shopify.com/s/files/1/1080/7300/files/logo-block-white.png?5882798101472764954'">
-        </a>
-      {% else %}
-        <a href="/" itemprop="url">{{ shop.name }}</a>
-      {% endif %}
-
-      {% if template == 'index' %}
-        </h1>
-      {% else %}
+  <div class="container-fluid">
+    <div class="row nav-top u-vertical-align">
+      <div class="col-xs-2 col-sm-2 hidden-md hidden-lg">
+        <div class="site-nav--mobile">
+          <a class="icon-fallback-text js-drawer-open-left" aria-controls="NavDrawer" aria-expanded="false">
+            <span class="ion-navicon" aria-hidden="true"></span>
+            <span class="fallback-text">{{ 'layout.navigation.menu' | t }}</span>
+          </a>
         </div>
-      {% endif %}
-    </div>
-    <div class="col-md-2 col-md-pull-8">
-    </div>
-    <div class="col-md-2">
+      </div>
+      <div class="col-md-3 hidden-xs hidden-sm">
+        <div class="site-search--desktop">
+          <form action="/search" method="get" role="search">
+            <button type="button" class="js-search-toggle search-toggle">
+              <span class="ion-ios-search-strong" aria-hidden="true"></span>
+            </button>
+            <div class="js-search-input search-input-group">
+              <input type="hidden" name="type" value="product" />
+              <input placeholder="{{ 'general.search.placeholder | t }}" type="search" value="" name="q" id="search" class="search-input">
+              <button type="button" class="js-search-submit search-submit">
+                <span class="ion-android-arrow-forward" aria-hidden="true"></span>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="col-xs-8 col-sm-8 col-md-6">
+        {% comment %}
+          Use the uploaded logo from theme settings if enabled.
+          Site name gets precedence with H1 tag on homepage, div on other pages.
+        {% endcomment %}
+      
+        {% if template == 'index' %}
+          <h1 class="nav-logo" itemscope itemtype="http://schema.org/Organization">
+        {% else %}
+          <div class="h1 nav-logo" itemscope itemtype="http://schema.org/Organization">
+        {% endif %}
+
+        {% if settings.logo_use_image %}
+          <a href="/" itemprop="url" class="site-header__logo-link">
+            <img src="//cdn.shopify.com/s/files/1/1080/7300/files/logo-block-fwblack.svg?9051788085209243607" alt="{{ shop.name }}" itemprop="logo" onerror="this.onerror=null; this.src='//cdn.shopify.com/s/files/1/1080/7300/files/logo-block-fwblack.png?9051788085209243607'">
+          </a>
+        {% else %}
+          <a href="/" itemprop="url">{{ shop.name }}</a>
+        {% endif %}
+
+        {% if template == 'index' %}
+          </h1>
+        {% else %}
+          </div>
+        {% endif %}
+      </div>
+      <div class="col-md-3 hidden-xs hidden-sm">
+        <div class="site-cart--desktop">
+          <a href="/cart">
+            <span>({{ cart.item_count }})</span>
+            <span class="icon-fallback-text">
+              <span class="ion-ios-cart" aria-hidden="true"></span>
+              <span class="fallback-text">{{ 'layout.cart.title' | t }}</span>
+            </span>
+          </a>
+        </div>
+      </div>
+      <div class="col-xs-2 col-sm-2 hidden-md hidden-lg">
+        <div class="site-cart--mobile">
+          <a href="/cart" class="js-drawer-open-right" aria-controls="CartDrawer" aria-expanded="false">
+            <span class="icon-fallback-text">
+              <span class="ion-ios-cart" aria-hidden="true"></span>
+              <span class="fallback-text">{{ 'layout.cart.title' | t }}</span>
+            </span>
+          </a>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -93,66 +136,44 @@
 
   <nav class="nav-bar nav-linkbar" role="navigation">
     <div class="wrapper">
-    <div class="medium-down--hide">
-      <ul class="site-nav">
-        {% for link in linklists.shopping-menu.links %}
-          <li {% if link.active %}class="site-nav--active"{% endif %}>
-            <a href="{{ link.url }}" class="site-nav__link">{{ link.title }}</a>
-          </li>
-        {% endfor %}
-      </ul>
-      <ul class="site-nav">
-        <li class="u-lightcopy"> | </li>
-      </ul>
-      <ul class="site-nav" id="AccessibleNav">
-        {% for link in linklists.main-menu.links %}
-
-          {% assign child_list_handle = link.title | handleize %}
-
-          {% if linklists[child_list_handle].links != blank %}
-            <li class="site-nav--has-dropdown{% if link.active %} site-nav--active{% endif %}" aria-haspopup="true">
-              <a href="{{ link.url }}" class="site-nav__link">
-                {{ link.title }}
-                <span class="icon icon-arrow-down" aria-hidden="true"></span>
-              </a>
-              <ul class="site-nav__dropdown">
-                {% for childlink in linklists[child_list_handle].links %}
-                  <li{% if childlink.active %} class="site-nav--active"{% endif %}>
-                    <a href="{{ childlink.url }}" class="site-nav__link">{{ childlink.title | escape }}</a>
-                  </li>
-                {% endfor %}
-              </ul>
-            </li>
-          {% else %}
+      <div class="medium-down--hide">
+        <ul class="site-nav">
+          {% for link in linklists.shopping-menu.links %}
             <li {% if link.active %}class="site-nav--active"{% endif %}>
               <a href="{{ link.url }}" class="site-nav__link">{{ link.title }}</a>
             </li>
-          {% endif %}
-        {% endfor %}
-      </ul>
-    </div>
-    <div class="large--hide medium-down--show">
-      <div class="grid">
-        <div class="grid__item one-half">
-          <div class="site-nav--mobile">
-            <button type="button" class="icon-fallback-text site-nav__link js-drawer-open-left" aria-controls="NavDrawer" aria-expanded="false">
-              <span class="icon icon-hamburger" aria-hidden="true"></span>
-              <span class="fallback-text">{{ 'layout.navigation.menu' | t }}</span>
-            </button>
-          </div>
-        </div>
-        <div class="grid__item one-half text-right">
-          <div class="site-nav--mobile">
-            <a href="/cart" class="js-drawer-open-right site-nav__link" aria-controls="CartDrawer" aria-expanded="false">
-              <span class="icon-fallback-text">
-                <span class="icon icon-cart" aria-hidden="true"></span>
-                <span class="fallback-text">{{ 'layout.cart.title' | t }}</span>
-              </span>
-            </a>
-          </div>
-        </div>
+          {% endfor %}
+        </ul>
+        <ul class="site-nav u-padding--3x">
+          <li class="u-lightCopy"> | </li>
+        </ul>
+        <ul class="site-nav" id="AccessibleNav">
+          {% for link in linklists.main-menu.links %}
+
+            {% assign child_list_handle = link.title | handleize %}
+
+            {% if linklists[child_list_handle].links != blank %}
+              <li class="site-nav--has-dropdown{% if link.active %} site-nav--active{% endif %}" aria-haspopup="true">
+                <a href="{{ link.url }}" class="site-nav__link">
+                  {{ link.title }}
+                  <span class="icon icon-arrow-down" aria-hidden="true"></span>
+                </a>
+                <ul class="site-nav__dropdown">
+                  {% for childlink in linklists[child_list_handle].links %}
+                    <li{% if childlink.active %} class="site-nav--active"{% endif %}>
+                      <a href="{{ childlink.url }}" class="site-nav__link">{{ childlink.title | escape }}</a>
+                    </li>
+                  {% endfor %}
+                </ul>
+              </li>
+            {% else %}
+              <li {% if link.active %}class="site-nav--active"{% endif %}>
+                <a href="{{ link.url }}" class="site-nav__link">{{ link.title }}</a>
+              </li>
+            {% endif %}
+          {% endfor %}
+        </ul>
       </div>
-    </div>
     </div>
   </nav>
 </header>

@@ -115,6 +115,39 @@ $max: max-width;
     }
   }
 }
+
+//Font Stack Mixins
+@mixin headerFontStack {
+  font-family: $headerFontStack;
+  font-weight: $headerFontWeight;
+}
+
+@mixin accentFontStack {
+  font-family: $accentFontStack;
+  font-weight: $accentFontWeight;
+  font-style: normal;
+  {% if settings.type_accent_spacing %}
+    letter-spacing: 0.1em;
+  {% endif %}
+  {% if settings.type_accent_transform %}
+    text-transform: uppercase;
+  {% endif %}
+}
+
+@mixin bodyFontItalic {
+  {% if settings.type_base_italize_titles %}
+    font-style: italic;
+  {% endif %}
+}
+
+@mixin visuallyHidden {
+  clip: rect(0 0 0 0);
+  clip: rect(0, 0, 0, 0);
+  overflow: hidden;
+  position: absolute;
+  height: 1px;
+  width: 1px;
+}
 /*============================================================================
   #Breakpoint and Grid Variables
 ==============================================================================*/
@@ -202,11 +235,14 @@ $drawerTransition: all 0.4s cubic-bezier(0.46, 0.01, 0.32, 1);
 $siteWidth: 1180px;
 $gutter: 30px;
 $gridGutter: 30px; // can be a %, but nested grids will have smaller margins because of it
-$radius: 3px;
+$contentTopMargin: 80px;
+$contentTopMarginSmall: 35px;
+$radius: 0;
 
 // Z-index
 $zindexNavDropdowns: 5;
 $zindexDrawer: 10;
+$zindexHeroHeader: 2;
 
 /*================ Typography ================*/
 // Adding Work Sans in a dumb way TODO: AE - Fix this, thanks.
@@ -216,6 +252,9 @@ $headerFontWeight: 600;
 
 $bodyFontStack: 'Work Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 $baseFontSize: 14px; // Henseforth known as 1em
+
+$accentFontStack: 'Work Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+$accentFontWeight: 300;
 
 @font-face {
   font-family: 'icons';
@@ -1734,12 +1773,14 @@ label.error {
 
 .site-header__logo {
   text-align: center;
-  margin: 0 auto;
-  max-width: 100%;
+  margin: 20px auto;
+  max-width: 350px;
 
-  @include at-query ($min, $large) {
-    text-align: left;
-  }
+  // Unnecessary as we've centered the logo.
+  //
+  // @include at-query ($min, $large) {
+  //   text-align: left;
+  // }
 
   a,
   a:hover,
@@ -1759,6 +1800,9 @@ label.error {
 .site-header__logo-link {
   max-width: $logoMaxWidth;
   margin: 0 auto;
+  &:focus {
+    outline: none;
+  }
 }
 
 .site-header__cart-toggle {
@@ -1786,12 +1830,15 @@ label.error {
 ==============================================================================*/
 .nav-bar {
   background-color: $colorNav;
+  border-top: 1px solid #151515;
 }
 
 .site-nav {
   font-size: em(16px);
   cursor: default;
-  margin: 0 0 0 (-$gutter / 2);
+  margin: 0 auto;
+  text-align: center;
+  text-transform: uppercase;
 
   li {
     margin: 0;
@@ -1834,7 +1881,8 @@ label.error {
   }
 
   .site-nav--active > & {
-    font-weight: bold;
+    // Disable Active Style for right now 1/11/16 - AE
+    // font-weight: bold;
   }
 
   .site-nav--mobile & {

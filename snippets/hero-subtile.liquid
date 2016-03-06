@@ -15,7 +15,8 @@
     {% capture subtile_subheading %}hero_subtile_{{ i }}_subheading{% endcapture %}
     {% capture subtile_link %}hero_subtile_{{ i }}_link{% endcapture %}
     {% if settings[subtile] %}
-      <div class="{% if subtile_count < 2 %}col-sm-12{% endif %}{% if subtile_count == 2 %}col-md-6{% endif %}{% if subtile_count == 3 %}col-md-4{% endif %}{% if subtile_count == 4 %}col-md-3{% endif %} hero-subtile">
+      <div class="{% if subtile_count < 2 %}col-sm-12{% endif %}{% if subtile_count == 2 %}col-md-6{% endif %}{% if subtile_count == 3 %}col-md-4{% endif %}{% if subtile_count == 4 %}col-md-3{% endif %} hero-subtile--container">
+       <div class="hero-subtile u-bgFilterLight">
         {% unless settings[subtile_link] == blank %}
           <a href="{{ settings[subtile_link] }}">
         {% endunless %}
@@ -24,7 +25,7 @@
         {% unless settings[subtile_heading] == blank and settings[subtile_subheading] == blank %}
           <div class="hero-subtile--caption">
             {% unless settings[subtile_heading] == blank %}
-              <h1 class="text-center">{{ settings[subtile_heading] }}</h1>
+              <h1 class="text-center u-letterSpacing2">{{ settings[subtile_heading] }}</h1>
             {% endunless %}
             {% unless settings[subtile_subheading] == blank %}
               <h4 class="text-center">{{ settings[subtile_subheading] }}</h4>
@@ -35,6 +36,7 @@
           </a>
         {% endunless %}
       </div>
+    </div>
     {% endif %}
   {% endfor %}
 </section>

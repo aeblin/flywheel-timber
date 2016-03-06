@@ -1,3 +1,6 @@
+// Timber functions
+window.timber = window.timber || {};
+
 /* Jonathan Snook - MIT License - https://github.com/snookca/prepareTransition */
 (function(a){a.fn.prepareTransition=function(){return this.each(function(){var b=a(this);b.one("TransitionEnd webkitTransitionEnd transitionend oTransitionEnd",function(){b.removeClass("is-transitioning")});var c=["transition-duration","-moz-transition-duration","-webkit-transition-duration","-o-transition-duration"];var d=0;a.each(c,function(a,c){d=parseFloat(b.css(c))||d});if(d!=0){b.addClass("is-transitioning");b[0].offsetWidth}})}})(jQuery);
 
@@ -61,8 +64,28 @@ if (!Shopify.formatMoney) {
   };
 }
 
-// Timber functions
-window.timber = window.timber || {};
+// Returns a function which adds a vendor prefix to any CSS property name
+// Source https://github.com/markdalgleish/stellar.js/blob/master/src/jquery.stellar.js
+timber.vendorPrefix = (function () {
+  var prefixes = /^(Moz|Webkit|Khtml|O|ms|Icab)(?=[A-Z])/,
+      style = $('script')[0].style,
+      prefix = '',
+      prop;
+
+  for (prop in style) {
+    if (prefixes.test(prop)) {
+      prefix = prop.match(prefixes)[0];
+      break;
+    }
+  }
+
+  if ('WebkitOpacity' in style) { prefix = 'Webkit'; }
+  if ('KhtmlOpacity' in style) { prefix = 'Khtml'; }
+
+  return function (property) {
+    return prefix + (prefix.length > 0 ? property.charAt(0).toUpperCase() + property.slice(1) : property);
+  };
+}());
 
 timber.cacheSelectors = function () {
   timber.cache = {
@@ -477,6 +500,32 @@ timber.Drawers = (function () {
 
   return Drawer;
 })();
+
+//Initializes Slick Slider
+timber.createImageCarousel = function () {
+  if (!timber.cache.$productImages.length || timber.cache.$productImagePhoto.length < 2) {
+    return;
+  }
+
+  timber.cache.$productImages.slick({
+    arrows         : false,
+    dots           : true,
+    adaptiveHeight : true
+  });
+};
+
+timber.destroyImageCarousel = function () {
+  if (!timber.cache.$productImages.length) {
+    return;
+  }
+
+  timber.cache.$productImages.unslick();
+};
+
+/* Debounce function
+ * based on unminified version from http://davidwalsh.name/javascript-debounce-function
+ */
+timber.debounce = function(n,t,u){var e;return function(){var a=this,r=arguments,i=function(){e=null,u||n.apply(a,r)},o=u&&!e;clearTimeout(e),e=setTimeout(i,t),o&&n.apply(a,r)}}
 
 // Initialize Timber's JS on docready
 $(timber.init);

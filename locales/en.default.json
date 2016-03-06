@@ -13,13 +13,13 @@
       "home_link_title": "Back to the frontpage"
     },
     "newsletter_form": {
-      "newsletter_email": "email@example.com",
+      "newsletter_email": "Get Flywheel Updates",
       "submit": "Subscribe"
     },
     "search": {
-      "no_results_html": "Your search for \"{{ terms }}\" did not yield any results.",
-      "results_for_html": "Your search for \"{{ terms }}\" revealed the following:",
-      "title": "Search for products on our site",
+      "no_results_html": "Didn't find anything for \"{{ terms }}\". Search for something else?",
+      "results_for_html": "Here are your search results",
+      "title": "Looking for something?",
       "placeholder": "Search our store",
       "submit": "Search"
     }
@@ -54,13 +54,13 @@
   },
   "cart": {
     "general": {
-      "title": "Shopping Cart",
+      "title": "Your Cart",
       "remove": "Remove",
       "note": "Special instructions for seller",
       "subtotal": "Subtotal",
       "shipping_at_checkout": "Shipping & taxes calculated at checkout",
       "update": "Update Cart",
-      "checkout": "Check Out",
+      "checkout": "CheckOut",
       "empty": "Your cart is currently empty.",
       "continue_browsing_html": "Continue browsing <a href=\"/collections/all\">here</a>.",
       "close_cart": "Close Cart"
@@ -254,7 +254,7 @@
       "create_account": "Create account"
     },
     "footer": {
-      "social_title": "Get Connected",
+      "social_title_yo": "Socialize With Us",
       "newsletter_title": "Newsletter",
       "accepted_payments": "Accepted Payments"
     }
