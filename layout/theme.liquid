@@ -185,6 +185,13 @@
     <script>
       function initMap() {
         var mapDiv = document.getElementById('map');
+        var markerImg = new google.maps.MarkerImage(
+          'https://s3-us-west-1.amazonaws.com/ae-clients/flywheel/fwl-map-marker-inverse.png',
+          null, /* size is determined at runtime */
+          null, /* origin is 0,0 */
+          null, /* anchor is bottom center of the scaled image */
+          new google.maps.Size(40, 60)
+        ); 
         var map = new google.maps.Map(mapDiv, {
           // Center on Flywheel Coffee Roasters
           center: {lat: 37.769, lng: -122.453},
@@ -209,6 +216,16 @@
           ],
           // Disable the default ui
           disableDefaultUI: true
+        });
+        var flywheelMarker = new google.maps.Marker({
+          position: {lat: 37.769, lng: -122.453},
+          map: map,
+          title: 'Here we are.',
+          icon: markerImg,
+          opacity: 0.9
+        });
+        flywheelMarker.addListener('click', function(){
+          window.open('https://goo.gl/maps/o2XJkHfRwLA2');
         });
         // Disable Pan on Map
         map.setOptions({draggable: false, scrollwheel: false});
