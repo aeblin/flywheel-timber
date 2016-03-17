@@ -3,7 +3,29 @@ $(".js-search-toggle").click(function(){
 	$(".js-search-input").toggleClass("is-open");
 });
 
+// Quantity Increment/Decrement
+$(".js-qty-adjust").on("click", function() {
+	
+  var $button = $(this);
+  var oldValue = $(".js-qty-num").val();
+
+  if ($button.hasClass("js-qty-adjust-plus")) {
+	  var newVal = parseFloat(oldValue) + 1;
+	} else {
+   // Don't allow decrementing below zero
+    if (oldValue > 0) {
+      var newVal = parseFloat(oldValue) - 1;
+    } else {
+      newVal = 0;
+    }
+  }
+
+  $(".js-qty-num").val(newVal);
+});
+
 // Submit Search Click
-var e = jQuery.Event("keypress");
-e.which = 13
-$(".js-search-submit").onclick().trigger(e);
+// var e = jQuery.Event("keypress");
+// e.which = 13
+// $(".js-search-submit").click(function(){
+
+// }).trigger(e);
