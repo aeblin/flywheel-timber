@@ -47,6 +47,7 @@
     {{ '//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js' | script_tag }}
     {{ 'modernizr.min.js' | asset_url | script_tag }}
     {{ 'jquery.pick.js' | asset_url | script_tag }}
+    {{ '//cdnjs.cloudflare.com/ajax/libs/datejs/1.0/date.min.js' | script_tag }}
 
     {% comment %}
       If you store has customer accounts disabled, you can remove the following JS file
@@ -179,9 +180,7 @@
       Template-specific js
     {% endcomment %}
 
-    {% comment %}
-      Google Maps
-    {% endcomment %}
+    {% comment %}Google Maps for Footer{% endcomment %}
     <script>
       function initMap() {
         var mapDiv = document.getElementById('map');
@@ -231,8 +230,11 @@
         map.setOptions({draggable: false, scrollwheel: false});
       }
     </script>
-    <script src="https://maps.googleapis.com/maps/api/js?callback=initMap"
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD5uN3RZ3sUUI_cZBzYAQZ5P0ntDuZ0snA&callback=initMap"
         async defer></script>
+
+    {% comment %}Google Calendar API for Footer Upcoming Events{% endcomment %}
+    {{ 'gcal-noauth.js' | asset_url | script_tag }}
 
     {% if resetPassword %}
       <script>
@@ -241,7 +243,6 @@
           });
       </script>
     {% endif %}
-    
 
     {% comment %}Load slick.js only if we're using a hero slider.{% endcomment %}
     {% if hero_enabled %}

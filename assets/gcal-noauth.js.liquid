@@ -1,0 +1,66 @@
+var gcalKey    = 'AIzaSyCslx7F6tpuw5gY6l0fHjw6kK-JyGwSwGI'; //API Key from Google Developer Console
+var calendarId = 'mftubof1nudo95jknva6o4stp0@group.calendar.google.com'; //Calendar ID from news@flywheelcoffee.com's calendar acc't
+var timeMin = (new Date()).toISOString(); //Today
+var maxResults = 3; //Number of items to return.
+
+$.ajax({
+  type: 'GET',
+  url: encodeURI('https://www.googleapis.com/calendar/v3/calendars/' + calendarId + '/events?maxResults=' + maxResults + '&orderBy=startTime&singleEvents=true&timeMin=' + timeMin + '&key=' + gcalKey),
+  dataType: 'json',
+  success: function(response) {
+      var events = response.items;
+      if (events.length > 0) {
+        for (i in response['items']) {
+          var event = response['items'][i];
+          var when = event.start.dateTime;
+          if (!when) {
+            when = event.start.date;
+          }
+          var parsedMon = Date.parse(when).toString('MMM');
+          var parsedDay = Date.parse(when).toString('dd');
+          var parsedTime = Date.parse(when).toString('h:mmtt');
+          if (event.end.dateTime) {
+            var parsedEndTime = Date.parse(event.end.dateTime).toString('h:mmtt');
+            var parsedTime = parsedTime + ' - ' + parsedEndTime;
+          }
+          $(".js-gcal-output").append(
+            '<div class="calEvent">' +
+              '<div class="calDateSquare">' +
+                '<h4 class="calDateMonth">' + 
+                  parsedMon +
+                '</h4>' +
+                '<h4 class="calDateDate">' +
+                  parsedDay +
+                '</h4>' +
+              '</div>' +
+              '<div class="calDateDetails">' +
+                '<h4>' +
+                event.summary +
+                '</h4>' +
+                '<p>' +
+                parsedTime +
+                '</p>' +
+              '</div>' +
+            '</div>' + '<br/>');
+        }
+      } else {
+        $(".js-gcal-output").append('No Events Found');
+      }
+
+  },
+  error: function (response) {
+    console.log('GCal feed failed to load');
+  }
+});
+
+/**
+ * Append a pre element to the body containing the given message
+ * as its text node.
+ *
+ * @param {string} message Text to be placed in pre element.
+ */
+function appendCalOutput(message) {
+  var calOutput = document.getElementsByClassName('js-gcal-output');
+  var textContent = document.createTextNode(message + '\n');
+  calOutput.appendChild(textContent);
+}
