@@ -1,10 +1,40 @@
+
 .pre-footer {
 	border-top: 2px solid $fw-slate;
 	padding: 60px 0px 60px 0px;
 }
+// Styles for GMap
 .pre-footer #map {
 	width: auto;
 	height: 500px;
+}
+
+// Styles for GCal
+.calEvent a {
+	color: rgb(255,255,255);
+}
+.calEvent a:hover {
+	color: $fw-orange;
+	.calDateSquare {
+		background: $fw-orange;
+		color: rgb(255,255,255);
+	}
+}
+.calDateSquare {
+	float: left;
+	background: rgb(255,255,255);
+	color: $fw-black;
+	width: 50px;
+	height: 50px;
+	padding: 5px;
+	text-align: right;
+	text-transform: uppercase;
+	transition: all .25s ease;
+}
+.calDateSquare h4 {
+	font-size: 1.3em;
+	line-height: 1;
+	margin: 0;
 }
 
 .footer-content {

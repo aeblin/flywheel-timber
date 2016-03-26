@@ -23,30 +23,38 @@ $.ajax({
             var parsedEndTime = Date.parse(event.end.dateTime).toString('h:mmtt');
             var parsedTime = parsedTime + ' - ' + parsedEndTime;
           }
+          if(event.location) {
+            var where = event.location;
+          }
+          var link = event.htmlLink;
+          // We're calling and appending the events one at a time, here.
           $(".js-gcal-output").append(
             '<div class="calEvent">' +
-              '<div class="calDateSquare">' +
-                '<h4 class="calDateMonth">' + 
-                  parsedMon +
-                '</h4>' +
-                '<h4 class="calDateDate">' +
-                  parsedDay +
-                '</h4>' +
-              '</div>' +
-              '<div class="calDateDetails">' +
-                '<h4>' +
-                event.summary +
-                '</h4>' +
-                '<p>' +
-                parsedTime +
-                '</p>' +
-              '</div>' +
-            '</div>' + '<br/>');
+              '<a href="' + 
+                link +
+                '">' +
+                  '<div class="calDateSquare">' +
+                    '<h4 class="calDateMonth">' + 
+                      parsedMon +
+                    '</h4>' +
+                    '<h4 class="calDateDate">' +
+                      parsedDay +
+                    '</h4>' +
+                  '</div>' +
+                  '<div class="calDateDetails">' +
+                    '<h4>' +
+                    event.summary +
+                    '</h4>' +
+                    '<p>' +
+                    parsedTime +
+                    '</p>' +
+                  '</div>' +
+                '</a>' + 
+            '</div>').children(':last').hide().fadeIn(1000);
         }
       } else {
         $(".js-gcal-output").append('No Events Found');
       }
-
   },
   error: function (response) {
     console.log('GCal feed failed to load');
