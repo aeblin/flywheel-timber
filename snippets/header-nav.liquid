@@ -139,9 +139,11 @@
       <div class="medium-down--hide">
         <ul class="site-nav">
           {% for link in linklists.shopping-menu.links %}
-            <li {% if link.active %}class="site-nav--active"{% endif %}>
-              <a href="{{ link.url }}" class="site-nav__link">{{ link.title }}</a>
-            </li>
+            {% unless link.type == 'collection_link' and link.object.products_count == 0 %}
+              <li {% if link.active %}class="site-nav--active"{% endif %}>
+                <a href="{{ link.url }}" class="site-nav__link">{{ link.title }}</a>
+              </li>
+            {% endunless %}
           {% endfor %}
         </ul>
         <ul class="site-nav u-padding--3x">
