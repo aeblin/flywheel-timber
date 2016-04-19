@@ -12,8 +12,6 @@
     - Or manually add type=product to the search URL as a query parameter
     - Uncomment hidden input with value="product" below
 
-{% endcomment %}
-
 <form action="/search" method="get" class="input-group search-bar" role="search">
   <input type="hidden" name="type" value="product">
   <input type="search" name="q" value="{{ search.terms | escape }}" placeholder="{{ 'general.search.placeholder' | t }}" class="input-group-field" aria-label="{{ 'general.search.placeholder' | t }}">
@@ -23,4 +21,18 @@
       <span class="fallback-text">{{ 'general.search.submit' | t }}</span>
     </button>
   </span>
+</form>
+{% endcomment %}
+
+<form action="/search" method="get" role="search" class="js-search-form">
+  <button type="button" class="search-toggle">
+    <span class="ion-ios-search-strong" aria-hidden="true"></span>
+  </button>
+  <div class="search-input-group--no-animation">
+    <input type="hidden" name="type" value="product" />
+    <input placeholder="{{ 'general.search.placeholder | t }}" type="search" value="" name="q" id="search" class="search-input--no-animation">
+    <button type="button" class="js-search-submit search-submit">
+      <span class="ion-android-arrow-forward" aria-hidden="true"></span>
+    </button>
+  </div>
 </form>
