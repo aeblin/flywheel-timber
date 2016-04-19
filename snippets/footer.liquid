@@ -81,7 +81,7 @@
           </div>
         {% endif %}
       </div>
-      <div class="col-md-4 u-textCenter">
+      <div class="col-md-4 copyright">
         {% comment %}
           Loop through available payment methods and show their icons.
         {% endcomment %}
@@ -100,8 +100,11 @@
         {% endunless %}
         <small>© {{ shop.name }} {{ 'now' | date: "%Y" }}</small>
       </div>
-      <div class="col-md-4 u-textCenter">
-        <small>Made by <a href="http://andyeblin.com">Andy Eblin</a></small>
+      <div class="col-md-4 dev-by">
+        <a href="//andyeblin.com">
+          <small>Developed By</small>
+          <img src="https://s3-us-west-1.amazonaws.com/ae-clients/general/aeblock-white.svg">
+        </a>
       </div>
     </div>
   </div>
