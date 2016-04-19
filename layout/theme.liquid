@@ -98,7 +98,7 @@
       </script>
     {% endif %}
 
-    {% comment %}Load slick.js only if we're using a hero slider.{% endcomment %}
+    {% comment %}Load slick.js and initialize for hero slider.{% endcomment %}
     {% if hero_enabled %}
       {{ 'slick.min.js' | asset_url | script_tag }}
       {{ 'slick-theme.js' | asset_url | script_tag }}
@@ -110,6 +110,17 @@
             fullscreen   : true,
             parallax     : true
           });
+        });
+      </script>
+    {% endif %}
+
+    {% comment %}Load slick.js and initialize for product images slider.{% endcomment %}
+    {% if product.images.size > 1 %}
+      {{ 'slick.min.js' | asset_url | script_tag }}
+      <script type="text/javascript">
+        $('.product-image-carousel').slick({
+          dots: true,
+          fade: true
         });
       </script>
     {% endif %}
