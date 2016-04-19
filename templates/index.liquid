@@ -7,12 +7,6 @@
   <h2>{{ 'homepage.sections.frontpage_title' | t }}</h2>
 {% endcomment %}
 
-{% comment %}
-  Use class grid-uniform to have evenly sized columns clear
-  each other properly at each breakpoint.
-{% endcomment %}
-
-
 {% if settings.hero_slider_enable %}
   {% include 'hero' %}
 {% endif %}
@@ -33,8 +27,7 @@
       {% for product in collections.frontpage.products limit:6 %}
 
         {% comment %}
-          Change the grid item width by using classes from the grid in
-          the grid_item_width variable.
+          Change the grid item width by using classes from the grid in the grid_item_width variable.
 
           Example:
            if using Timber Grid - {% assign grid_item_width = 'large--one-third medium--one-half' %}

@@ -10900,7 +10900,7 @@ a {
   z-index: 1001;
   cursor: pointer;
 }
-
+// Drawer Itself
 .cart-drawer {
   @include workSans-n5;
   position: fixed;
@@ -11064,50 +11064,7 @@ a {
   }
 }
 
-// Allbirds Input
-.allbirds-qty {
-  display: -webkit-flex;
-  display: -moz-flex;
-  display: -ms-flexbox;
-  display: flex;
-  margin-top: 5px;
-  margin-bottom: 10px;
-
-  .allbirds-qty__adjust {
-    display: inline-block;
-    height: 56px;
-    border: 0 none;
-    -webkit-appearance: none;
-    padding: 0 20px;
-    background-color: white;
-    border: 1px solid #dedede;
-    cursor: pointer;
-    z-index: 1;
-
-    &:focus {
-      outline: none;
-    }
-
-    &:hover {
-      span {
-        opacity: 1;
-      }
-    }
-
-    span {
-      font-size: 30px;
-      line-height: 60px;
-      opacity: 0.3;
-      @include transition(opacity 0.25s);
-    }
-    .allbirds-qty__adjust--plus {
-      border-left: none;
-    }
-    .allbirds-qty__adjust--minus {
-      border-right: none;
-    }
-  }
-}
+// Cart Inputs
 .cart-qty-wrapper {
   display: -webkit-flex;
   display: -moz-flex;
@@ -11256,6 +11213,20 @@ a {
 }
 .bg-img-holder.fadeIn {
   opacity: 1;
+}
+
+// Search Bar (no-animation)
+.search-input-group--no-animation {
+  display: inline-block;
+  position: relative;
+  width: 90%;
+}
+.search-input--no-animation {
+  border: none;
+  border-bottom: 1px solid #16161a;
+  background: transparent;
+  padding: 0;
+  width: 100%;
 }
 
 /*============================================================================
@@ -11614,7 +11585,7 @@ li.mobile-nav--item {
 	background-color: $fw-slate;
 }
 .sub-nav {
-	@include workSans-n6;
+	@include workSans-n5;
   font-size: em(16px);
   cursor: default;
   margin: 0 0 0 (-$gutter / 2);
@@ -11785,6 +11756,31 @@ li.mobile-nav--item {
 			color: rgb(255,255,255);
 		}
 	}
+}
+
+// Copyright
+.copyright {
+	padding-top: 8px;
+	padding-bottom: 8px;
+	@media screen and (max-width: $screen-sm-max) {
+		margin: 15px 0;
+	}
+}
+// Dev By
+.dev-by {
+	padding-top: 6px;
+	padding-bottom: 6px;
+	text-transform: uppercase;
+	text-align: right;
+	@media screen and (max-width: $screen-sm-max) {
+		text-align: center;
+	}
+}
+.dev-by a {
+	color: rgb(255,255,255);
+}
+.dev-by img {
+	max-width: 30px;
 }
 
 //Hero Subtiles
@@ -11975,6 +11971,48 @@ li.mobile-nav--item {
   @media screen and (min-width: $screen-md-min) {
     margin: 90px 0;
   }
+  @media screen and (max-width: $screen-sm-max) {
+    margin-bottom: 30px;
+  }
+}
+
+// Product Images // ------
+.product-image-carousel {
+  @include transition(opacity .3s ease);
+  visibility: hidden;
+  opacity: 0;
+  @media screen and (max-width: $screen-sm-max) {
+    margin-bottom: 30px;
+  }
+}
+// For FadeIn
+.product-image-carousel.fadeIn {
+  visibility: visible;
+  opacity: 1;
+}
+.product-slide img {
+  margin: 0 auto;
+}
+.product-image-carousel .slick-prev {
+  @media screen and (min-width: $screen-md-min) {
+    left: 25px;
+  }
+}
+.product-image-carousel .slick-next {
+  @media screen and (min-width: $screen-md-min) {
+    right: 25px;
+  }
+}
+.product-image-carousel .slick-prev:before, .product-image-carousel .slick-next:before {
+  color: $fw-black;
+  font-size: 45px;
+}
+.product-image-carousel .slick-dots {
+}
+
+.product-image img {
+  display: block;
+  margin: auto;
   @media screen and (max-width: $screen-sm-max) {
     margin-bottom: 30px;
   }
@@ -12508,6 +12546,8 @@ h4.brew-guide--method {
 
   a.hero__cta {
     display: inline-block;
+    box-shadow: 0px 10px 1px 0px rgba(0,0,0,0.3);
+    text-shadow: 0px 1px rgba(0,0,0,0.3);
     margin-top: 30px;
     margin-bottom: 0;
   }

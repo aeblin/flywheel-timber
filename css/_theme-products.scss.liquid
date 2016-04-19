@@ -7,6 +7,48 @@
   }
 }
 
+// Product Images // ------
+.product-image-carousel {
+  @include transition(opacity .3s ease);
+  visibility: hidden;
+  opacity: 0;
+  @media screen and (max-width: $screen-sm-max) {
+    margin-bottom: 30px;
+  }
+}
+// For FadeIn
+.product-image-carousel.fadeIn {
+  visibility: visible;
+  opacity: 1;
+}
+.product-slide img {
+  margin: 0 auto;
+}
+.product-image-carousel .slick-prev {
+  @media screen and (min-width: $screen-md-min) {
+    left: 25px;
+  }
+}
+.product-image-carousel .slick-next {
+  @media screen and (min-width: $screen-md-min) {
+    right: 25px;
+  }
+}
+.product-image-carousel .slick-prev:before, .product-image-carousel .slick-next:before {
+  color: $fw-black;
+  font-size: 45px;
+}
+.product-image-carousel .slick-dots {
+}
+
+.product-image img {
+  display: block;
+  margin: auto;
+  @media screen and (max-width: $screen-sm-max) {
+    margin-bottom: 30px;
+  }
+}
+
 // Product Detail Card // ------
 .product-details {
   border: $border-default solid $fw-black;

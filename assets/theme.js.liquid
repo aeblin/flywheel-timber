@@ -43,9 +43,16 @@ jQuery(document).ready(function($) {
     }, 500);   
   };
 
+  // Open Cloak when mobile nav open
   $(".js-cloak").on("click", function() {
     timber.RightDrawer.close();
   });
+
+  // Height Sync for Product Images
+  var heightSet = $(".js-height-sync.product-details-container").height();
+  if ($(window).width() > 991) {
+    $(".js-height-sync.product-image").css('max-height', [(heightSet), 'px'].join(''));
+  }
 
   // Smooth-Scroll for links with class
   $(function() {
@@ -64,3 +71,6 @@ jQuery(document).ready(function($) {
   });
 
 });
+
+// Except this, which we want to happen before the page loads.
+$(".product-image").hide(0).delay(500).fadeIn('fast');  
