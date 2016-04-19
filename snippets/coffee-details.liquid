@@ -1,0 +1,77 @@
+<section class="coffee-details{% if coffee_africa %} coffee-africa{% endif %}{% if coffee_latinamerica %} coffee-latinamerica{% endif %}{% if coffee_pacific %} coffee-pacific{% endif %}{% if coffee_espresso %} coffee-espresso{% endif %}">
+  <div class="container container-90 u-padding--4y">
+    <h3 class="u-letterSpacing3 u-padding--4y">Coffee Details</h3>
+    <div class="coffee-details--clear row">
+      {% if product.metafields.coffee.tasting_notes %}
+        <div class="coffee-details--section col-xs-6 col-sm-4 col-md-4">
+          <div class="coffee-details--icon">
+            <img src="//cdn.shopify.com/s/files/1/1080/7300/files/coffee-taste.svg">
+          </div>
+          <h4 class="coffee-details--title">Tasting Notes</h4>
+          <p class="coffee-details--copy">
+            {{ product.metafields.coffee.tasting_notes }}
+          </p>
+        </div>
+      {% endif %}
+
+      {% if product.metafields.coffee.cultivar and product.metafields.coffee.process %}
+        <div class="coffee-details--section col-xs-6 col-sm-4 col-md-4">
+          <div class="coffee-details--icon">
+            <img src="//cdn.shopify.com/s/files/1/1080/7300/files/coffee-cultivar.svg">
+          </div>
+          <h4 class="coffee-details--title">Cultivar & Process</h4>
+          <p class="coffee-details--copy">
+            {{ product.metafields.coffee.cultivar }} / {{ product.metafields.coffee.process }}
+          </p>
+        </div>
+      {% endif %}
+
+      {% if product.metafields.coffee.country %}
+        <div class="coffee-details--section col-xs-6 col-sm-4 col-md-4">
+          <div class="coffee-details--icon">
+            <img src="//cdn.shopify.com/s/files/1/1080/7300/files/coffee-region.svg">
+          </div>
+          <h4 class="coffee-details--title">Region & Country</h4>
+          <p class="coffee-details--copy">
+            {% if product.metafields.coffee.region %}{{ product.metafields.coffee.region }}, {% endif %}{{ product.metafields.coffee.country }}
+          </p>
+        </div>
+      {% endif %}   
+
+      {% if product.metafields.coffee.producer %}
+        <div class="coffee-details--section col-xs-6 col-sm-4 col-md-4">
+          <div class="coffee-details--icon">
+            <img src="//cdn.shopify.com/s/files/1/1080/7300/files/coffee-producer.svg">
+          </div>
+          <h4 class="coffee-details--title">Producer</h4>
+          <p class="coffee-details--copy">
+            {{ product.metafields.coffee.producer }}
+          </p>
+        </div>
+      {% endif %}    
+
+      {% if product.metafields.coffee.elevation %}
+        <div class="coffee-details--section col-xs-6 col-sm-4 col-md-4">
+          <div class="coffee-details--icon">
+            <img src="//cdn.shopify.com/s/files/1/1080/7300/files/coffee-elevation.svg">
+          </div>
+          <h4 class="coffee-details--title">Growing Elevation</h4>
+          <p class="coffee-details--copy">
+            {{ product.metafields.coffee.elevation }}
+          </p>
+        </div>
+      {% endif %}
+
+      {% if product.metafields.coffee.harvest %}
+        <div class="coffee-details--section col-xs-6 col-sm-4 col-md-4">
+          <div class="coffee-details--icon">
+            <img src="//cdn.shopify.com/s/files/1/1080/7300/files/coffee-harvest.svg">
+          </div>
+          <h4 class="coffee-details--title">Harvest Season</h4>
+          <p class="coffee-details--copy">
+            {{ product.metafields.coffee.harvest }}
+          </p>
+        </div>
+      {% endif %}
+  </div>
+</section>

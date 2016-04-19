@@ -18,6 +18,28 @@
   {% endif %}
 {% endfor %}
 
+{% comment %}
+ If the product is coffee, find out if it's Africa, Latin America, Pacific, or Espresso
+{% endcomment %}
+{% assign coffee_africa = false %}
+{% assign coffee_latinamerica = false %}
+{% assign coffee_pacific = false %}
+{% assign coffee_espresso = false %}
+{% for collection in product.collections %}
+  {% if in_coffee_collection and collection.title == "Africa" %}
+    {% assign coffee_africa = true %} 
+  {% endif %}
+  {% if in_coffee_collection and collection.title == "Latin America" %}
+    {% assign coffee_latinamerica = true %} 
+  {% endif %}
+  {% if in_coffee_collection and collection.title == "Pacific" %}
+    {% assign coffee_pacific = true %} 
+  {% endif %}
+  {% if in_coffee_collection and collection.title == "Espresso" %}
+    {% assign coffee_espresso = true %} 
+  {% endif %}
+{% endfor %}
+
 {% include 'sub-nav' %}
 
 {% comment %}
@@ -73,7 +95,7 @@
               <meta itemprop="priceCurrency" content="{{ shop.currency }}">
               <link itemprop="availability" href="http://schema.org/{% if product.available %}InStock{% else %}OutOfStock{% endif %}">
               <span class="visually-hidden">{{ 'products.general.regular_price' | t }}</span>
-              <span id="ProductPrice" class="h2" itemprop="price">
+              <span id="ProductPrice" class="h3" itemprop="price">
                 {{ current_variant.price | money }}
               </span>
 
@@ -91,61 +113,59 @@
 
             <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
      
-              {% comment %}
-                ID addToCartForm is a selector for the ajax cart plugin
-              {% endcomment %}
-              <form action="/cart/add" method="post" enctype="multipart/form-data" id="AddToCartForm">
-
-                {% comment %}
-                  Add product variants as a dropdown.
-                    - By default, each variant (or combination of variants) will display as its own <option>
-                    - To separate these into multiple steps, which we suggest, use option_selection.js (see below)
-
-                  You can leverage jQuery to add a callback on page load and each time the select element changes:
-                    - Include option_selection.js (as seen at the bottom of this file)
-                    - This allows you to use JavaScript anytime the variant dropdown changes
-                    - This also separates out your variant options (ie. size, color, etc.) to separate select elements
-
-                  For more information on products with multiple options, visit:
-                    - http://docs.shopify.com/support/your-website/themes/can-i-make-my-theme-use-products-with-multiple-options#update-product-liquid
-                {% endcomment %}
-                <select name="id" id="productSelect" class="product-single__variants">
-                  {% for variant in product.variants %}
-                    {% if variant.available %}
-
-                      {% comment %}
-                        Note: if you use option_selection.js, your <select> tag will be overwritten, meaning what you have inside <option> will not reflect what you coded below.
-                      {% endcomment %}
-                      <option {% if variant == product.selected_or_first_available_variant %} selected="selected" {% endif %} data-sku="{{ variant.sku }}" value="{{ variant.id }}">{{ variant.title }} - {{ variant.price | money_with_currency }}</option>
-
-                    {% else %}
-                      <option disabled="disabled">
-                        {{ variant.title }} - {{ 'products.product.sold_out' | t }}
-                      </option>
-                    {% endif %}
-                  {% endfor %}
-                </select>
-
-                <div class="add-row">
-                  <label for="Quantity" class="u-capitalize">{{ 'products.product.quantity' | t }}</label>
-                  <div class="quantity fw-quantity-input">
-                    <button type="button" class="js-qty--adjust-minus">
-                      <span class="ion-ios-minus-empty"></span>
-                    </button>
-                    <input type="text" id="Quantity" class="js-qty--num" name="quantity" value="1" min="1" pattern="[0-9]*">
-                    <button type="button" class="js-qty--adjust-plus">
-                      <span class="ion-ios-plus-empty"></span>
-                    </button>
+              {% comment %}ID addToCartForm is a selector for the ajax cart plugin - probably don't remove it.{% endcomment %}
+              <form action="/cart/add" method="post" enctype="multipart/form-data" id="AddToCartForm" class="form-atc">
+                <div class="flex-container flex-row-reverse">
+                  <div class="qty-wrapper">
+                    <label for="Quantity" class="u-capitalize">{{ 'products.product.quantity' | t }}</label>
+                    <div class="quantity fw-quantity-input">
+                      <button type="button" class="js-qty-adjust-minus js-qty-adjust qty-adjust">
+                        <span class="ion-ios-minus-empty"></span>
+                      </button>
+                      <input type="text" id="Quantity" class="js-qty-num qty-num" name="quantity" value="1" min="1" pattern="[0-9]*">
+                      <button type="button" class="js-qty-adjust-plus js-qty-adjust qty-adjust">
+                        <span class="ion-ios-plus-empty"></span>
+                      </button>
+                    </div>
                   </div>
-                  <button type="submit" name="add" id="AddToCart" class="fw-btn btn-dark">
-                    <span id="AddToCartText">{{ 'products.product.add_to_cart' | t }}</span>
-                  </button>
+
+                  {% comment %}
+                    Add product variants as a dropdown.
+                      - By default, each variant (or combination of variants) will display as its own <option>
+                      - To separate these into multiple steps, which we suggest, use option_selection.js (see below)
+
+                    You can leverage jQuery to add a callback on page load and each time the select element changes:
+                      - Include option_selection.js (as seen at the bottom of this file)
+                      - This allows you to use JavaScript anytime the variant dropdown changes
+                      - This also separates out your variant options (ie. size, color, etc.) to separate select elements
+
+                    For more information on products with multiple options, visit:
+                      - http://docs.shopify.com/support/your-website/themes/can-i-make-my-theme-use-products-with-multiple-options#update-product-liquid
+                  {% endcomment %}
+
+                  <select name="id" id="productSelect" class="product-single__variants">
+                    {% for variant in product.variants %}
+                      {% if variant.available %}
+
+                        {% comment %}
+                          Note: if you use option_selection.js, your <select> tag will be overwritten, meaning what you have inside <option> will not reflect what you coded below.
+                        {% endcomment %}
+                        <option {% if variant == product.selected_or_first_available_variant %} selected="selected" {% endif %} data-sku="{{ variant.sku }}" value="{{ variant.id }}">{{ variant.title }} - {{ variant.price | money_with_currency }}</option>
+
+                      {% else %}
+                        <option disabled="disabled">
+                          {{ variant.title }} - {{ 'products.product.sold_out' | t }}
+                        </option>
+                      {% endif %}
+                    {% endfor %}
+                  </select>
                 </div>
+                <button type="submit" name="add" id="AddToCart" class="fw-btn btn-dark btn-atc">
+                  <span id="AddToCartText">{{ 'products.product.add_to_cart' | t }}</span>
+                </button>
               </form>
 
             </div>
-
-
 
             {% comment %}
               If the user is on a collection product page (ie with /collections/collection-handle/products/product-handle)
@@ -174,6 +194,10 @@
   </div>
 
 </section>
+
+{% if in_coffee_collection and product.metafields.coffee.tasting_notes %}
+  {% include 'coffee-details' %}
+{% endif %}
 
 {% include 'related-products' %}
 
@@ -211,7 +235,7 @@
 
     // Add label if only one product option and it isn't 'Title'. Could be 'Size'.
     {% if product.options.size == 1 and product.options.first != 'Title' %}
-      $('.selector-wrapper:eq(0)').prepend('<label for="productSelect-option-0">{{ product.options.first | escape }}</label>');
+      $('.selector-wrapper:eq(0)').prepend('<label for="productSelect-option-0" class="u-capitalize">{{ product.options.first | escape }}</label>');
     {% endif %}
 
     // Hide selectors if we only have 1 variant and its title contains 'Default'.
