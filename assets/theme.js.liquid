@@ -1,31 +1,66 @@
-// Open Search
-$(".js-search-toggle").click(function(){
-	$(".js-search-input").toggleClass("is-open");
-});
+// Make sure all of this only happens once the page is loaded.
+jQuery(document).ready(function($) {
 
-// Quantity Increment/Decrement
-$(".js-qty-adjust").on("click", function() {
-	
-  var $button = $(this);
-  var oldValue = $(".js-qty-num").val();
+  // Search open/close in Header
+  $(".js-search-toggle").click(function(){
+  	$(".js-search-input").toggleClass("is-open");
+  });
 
-  if ($button.hasClass("js-qty-adjust-plus")) {
-	  var newVal = parseFloat(oldValue) + 1;
-	} else {
-   // Don't allow decrementing below zero
-    if (oldValue > 0) {
-      var newVal = parseFloat(oldValue) - 1;
-    } else {
-      newVal = 0;
+  // Submit Search Click
+  $(".js-search-submit").click(function(){
+    $(".js-search-form").submit();
+  });
+
+  // Open Mobile Nav
+  $(".js-mobile-nav-toggle").click(function(){
+    $(".navigation").toggleClass("is-open");
+  })
+
+  // Quantity Increment/Decrement for Product Page
+  $(".js-qty-adjust").on("click", function() {
+  	
+    var $button = $(this);
+    var oldValue = $(".js-qty-num").val();
+
+    if ($button.hasClass("js-qty-adjust-plus")) {
+  	  var newVal = parseFloat(oldValue) + 1;
+  	} else {
+     // Don't allow decrementing below one
+      if (oldValue > 1) {
+        var newVal = parseFloat(oldValue) - 1;
+      } else {
+        newVal = 1;
+      }
     }
-  }
 
-  $(".js-qty-num").val(newVal);
+    $(".js-qty-num").val(newVal);
+  });
+
+  // Fade-in for images with class
+  if($(".js-fadeIn").length) {
+    setTimeout(function() {
+      $(".js-fadeIn").addClass("fadeIn");  
+    }, 500);   
+  };
+
+  $(".js-cloak").on("click", function() {
+    timber.RightDrawer.close();
+  });
+
+  // Smooth-Scroll for links with class
+  $(function() {
+    $('.js-smoothScroll').click(function() {
+      if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
+        var target = $(this.hash);
+        target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
+        if (target.length) {
+          $('html,body').animate({
+            scrollTop: target.offset().top
+          }, 500); // The number here represents the speed of the scroll in milliseconds
+          return false;
+        }
+      }
+    });
+  });
+
 });
-
-// Submit Search Click
-// var e = jQuery.Event("keypress");
-// e.which = 13
-// $(".js-search-submit").click(function(){
-
-// }).trigger(e);

@@ -1,0 +1,38 @@
+<div class="mobile-nav-wrapper hidden-md hidden-lg">
+  {% for link in linklists.sidebar-menu.links %}
+    {% assign child_list_handle = link.title | handleize %}
+    {% if linklists[child_list_handle].links != blank %}
+      <li class="mobile-nav--item{% if link.active %} mobile-nav--item--active{% endif %}" aria-haspopup="true">
+        <div class="mobile-nav--has-sublist">
+          <a href="{{ link.url }}" class="mobile-nav--link">{{ link.title }}</a>
+          <div class="mobile-nav--sublist-toggle">
+            <button type="button" class="icon-fallback-text mobile-nav--toggle-open">
+              <span class="icon icon-plus" aria-hidden="true"></span>
+              <span class="fallback-text">See More</span>
+            </button>
+            <button type="button" class="icon-fallback-text mobile-nav--toggle-close">
+              <span class="icon icon-minus" aria-hidden="true"></span>
+              <span class="fallback-text">{{ 'cart.general.close_cart' | t | json }}</span>
+            </button>
+          </div>
+        </div>
+        <ul class="mobile-nav--sublist">
+          {% for childlink in linklists[child_list_handle].links %}
+            {% unless childlink.type == 'collection_link' and childlink.object.products_count == 0 %}
+              <li class="mobile-nav--item {% if childlink.active %} mobile-nav--item--active{% endif %}">
+                <a href="{{ childlink.url }}" class="mobile-nav--link">{{ childlink.title | escape }}</a>
+              </li>
+            {% endunless %}
+          {% endfor %}
+        </ul>
+      </li>
+    {% else %}
+      <li class="mobile-nav--item{% if link.active %} mobile-nav--item--active{% endif %}">
+        <a href="{{ link.url }}" class="mobile-nav--link">{{ link.title }}</a>
+      </li>
+    {% endif %}
+  {% endfor %}
+  <li>
+    {% include 'search-bar' %}
+  </li>
+</div>
