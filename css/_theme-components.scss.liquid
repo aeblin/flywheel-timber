@@ -1,8 +1,148 @@
-//Inputs
+// Cart Drawer // ------
+
+// Drawer Open Class
+.drawer-is-open{
+  overflow: hidden;
+}
+// Cart Cloak
+.cloak {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.6);
+  @include transition(opacity 0.3s ease-in-out);
+  z-index: -10;
+}
+.drawer-is-open .cloak {
+  display: block;
+  opacity: 1;
+  z-index: 1001;
+  cursor: pointer;
+}
+
+.cart-drawer {
+  @include workSans-n5;
+  position: fixed;
+  width: 480px;
+  height: 100%;
+  right: 0px;
+  border-left: 0px;
+  @include transform(translateX(480px));
+  @include transition(all 0.3s ease-in-out);
+  background: rgb(255,255,255);
+  z-index: 1001;
+  @media screen and (max-width: 480px) {
+    width: 100%;
+  }
+}
+.cart-drawer .ajaxcart__inner {
+  overflow-y: scroll;
+  height: 100vh;
+  padding: 0 15px 200px;
+}
+.js-drawer-open-right .cart-drawer {
+  @include transform(translateX(0));
+}
+
+// Cart Header
+.cart-drawer--header {
+  position: relative;
+}
+.cart-drawer--title {
+  @include workSans-n5;
+  font-size: 1.75em;
+  text-transform: uppercase;
+  text-align: center;
+  letter-spacing: 0.2rem;
+  padding: 20px 0;
+}
+.cart-drawer--close {
+  position: absolute;
+  display: block;
+  top: 23px;
+  right: 15px;
+}
+.cart-drawer--close .line-wrapper {
+  @include transform(rotate(45deg) translate(-5px, 5px));
+  &:hover {
+    .line {
+      background-color: $fw-accent;
+    }
+  }
+  &:focus {
+    outline: none;
+  }
+}
+.cart-drawer--close .line-wrapper {
+  .line {
+    width: 20px;
+    height: 2px;
+    background-color: $fw-black;
+    @include transition(all 0.25s ease);
+    margin: 14px 0;
+  }
+  .line2 {
+    @include transform(rotate(90deg) translateX(-16px));
+  }
+}
+
+// Cart Entries
+.cart-drawer--product {
+  position: relative;
+  padding: 15px 0;
+  border-bottom: 1px solid $fw-accent;
+}
+.cart-drawer--product:first-child {
+  border-top: 1px solid $fw-accent;
+}
+
+.cart-drawer--product-name {
+  display: block;
+  @include workSans-n5;
+  font-size: 1.25em;
+  text-transform: uppercase;
+  line-height: 1.2;
+  letter-spacing: 0.1rem;
+}
+.cart-drawer--product-price {
+  display: block;
+  @include workSans-n5;
+  padding: 10px 0;
+  white-space: nowrap;
+}
+.cart-drawer--product-meta {
+  display: block;
+  @include workSans-n4;
+  font-size: 1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+// Cart Footer
+.cart-drawer--footer {
+  position: absolute;
+  width: 100%;
+  left: 0;
+  bottom: 0;
+  box-shadow: 0px 1px 10px 0px rgba(0,0,0,0.1);
+  background-color: rgb(255,255,255);
+}
+.cart-drawer--footer .subtotal {
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.1rem;
+  padding: 30px 0;
+}
+
+// Inputs
+.flex-group {
+ display: flex;
+}
+
 .fw-quantity-input {
-  display: -webkit-box;
-  display: -moz-box;
-  display: box;
   display: -webkit-flex;
   display: -moz-flex;
   display: -ms-flexbox;
@@ -10,8 +150,6 @@
   background: transparent;
   border: 2px solid $fw-black;
   color: $fw-black;
-  font-size: 2rem;
-  font-weight: 400;
   outline: none;
   &:focus {
   	border: 2px solid $fw-black;
@@ -26,10 +164,20 @@
 }
 .fw-quantity-input button {
   display: inline-block;
+  flex-grow: 1;
   background: transparent;
   -webkit-appearance: none;
-  padding: 0 15px;
   cursor: pointer;
+  color: $fw-black;
+  opacity: 0.75;
+  -webkit-transition: opacity .25s;
+  transition: opacity .25s;
+  &:hover {
+    opacity: 1;
+  }
+  &:focus {
+    outline: none;
+  }
 }
 .fw-quantity-input input {
   text-align: center;
@@ -38,16 +186,107 @@
   }
 }
 
-//Buttons
+// Allbirds Input
+.allbirds-qty {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: flex;
+  margin-top: 5px;
+  margin-bottom: 10px;
+
+  .allbirds-qty__adjust {
+    display: inline-block;
+    height: 56px;
+    border: 0 none;
+    -webkit-appearance: none;
+    padding: 0 20px;
+    background-color: white;
+    border: 1px solid #dedede;
+    cursor: pointer;
+    z-index: 1;
+
+    &:focus {
+      outline: none;
+    }
+
+    &:hover {
+      span {
+        opacity: 1;
+      }
+    }
+
+    span {
+      font-size: 30px;
+      line-height: 60px;
+      opacity: 0.3;
+      @include transition(opacity 0.25s);
+    }
+    .allbirds-qty__adjust--plus {
+      border-left: none;
+    }
+    .allbirds-qty__adjust--minus {
+      border-right: none;
+    }
+  }
+}
+.cart-qty-wrapper {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: flex;
+  border: 2px solid $fw-black;
+  margin: 0 auto;
+}
+.cart-qty-adjust {
+  display: inline-block;
+  border: none;
+  background-color: transparent;
+  height: 55px;
+  padding: 0 15px;
+  cursor: pointer;
+  -webkit-appearance: none;
+  &:focus {
+    outline: none;
+  }
+  &:hover {
+    span {
+      opacity: 0.3;
+    }
+  }
+  span {
+    font-size: 30px;
+    line-height: 60px;
+    opacity: 1;
+    @include transition(opacity 0.25s);
+  }
+}
+.cart-qty-num {
+  display: inline-block;
+  background: transparent;
+  width: 100%;
+  height: 55px;
+  padding: 20px 5px 18px;
+  border: none;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 500;
+  &:focus {
+    outline: none;
+    border: none;
+  }
+}
+// Buttons
 .fw-btn {
   @include workSans-n5;
   background-color: transparent;
   border: 2px solid $fw-black;
   border-radius: 0px;
   color: $fw-black;
+  display: inline-block;
 	padding: 10px 15px;
   text-transform: uppercase;
-  transition: all .25s;
+  @include transition(all .25s);
   &:hover {
   	color: rgb(255,255,255);
   	background-color: $fw-black;
@@ -75,13 +314,39 @@
   }
 }
 
+.fw-btn.btn-atc {
+  font-size: 1.15em;
+  margin-top: 3%;
+  width: 100%;
+}
+
 .fw-btn.btn-small {
   padding: 4px 10px;
 }
+
+.fw-btn.btn-lg {
+  width: 100%;
+  font-size: 1.5em;
+  letter-spacing: 0.2rem;
+  padding: 20px 30px;
+}
+
 .fw-btn.btn-align {
   vertical-align: 13%;
 }
-//Button Groups
+
+.fw-btn.disabled {
+  background-color: rgba(22,22,26,0.75);
+  border-color: rgba(22,22,26,0.75);
+  cursor: not-allowed;
+  &:hover {
+    color: rgb(255,255,255);
+    background-color: rgba(22,22,26,0.75);
+    border-color: rgba(22,22,26,0.75);
+  }
+}
+
+// Button Groups
 .fw-btn-group > .fw-btn {
 	margin: 0 1rem;
 }
@@ -90,4 +355,27 @@
 }
 .fw-btn-group > .fw-btn:last-child {
 	margin-right: 0;
+}
+
+// Images (Mostly for Pages)
+.bg-img-holder {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  background: $fw-black;
+  background-size: cover !important;
+  background-position: 50% 50% !important;
+  transition: all 0.5s ease;
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  opacity: 0;
+}
+.bg-img-holder img {
+  display: none;
+}
+.bg-img-holder.fadeIn {
+  opacity: 1;
 }

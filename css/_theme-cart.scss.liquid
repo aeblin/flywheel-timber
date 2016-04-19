@@ -1,12 +1,50 @@
 .cart-wrapper {
 	background-color: $fw-black;
 	color: rgb(255,255,255);
-	margin-top: 60px;
-	margin-bottom: 60px;
+	margin-top: 100px;
+	margin-bottom: 100px;
 	padding: 30px 40px;
+	@media screen and (max-width: $screen-sm-max) {
+		margin: 0;
+	}
+}
+.cart-wrapper .cart-qty-wrapper {
+	background-color: rgb(255,255,255);
+	max-width: 190px;
+}
+.cart-header th {
+	@include workSans-n5;
+	font-size: 1.25em;
+	letter-spacing: 0.2rem;
+	text-transform: uppercase;
+	border-bottom: 1px solid $fw-accent;
 }
 
+.cart-row {
+	margin-top: 15px;
+	padding-top: 15px;
+	border-top: 1px solid $fw-accent;
+}
+.cart-row:first-child {
+	margin-top: 0px;
+	padding-top: 0px;
+	border-top: none;
+}
+
+.cart-row td:first-child, .cart-row th:first-child {
+	padding-left: 0;
+}
+.cart-row td:last-child {
+	padding-right: 0;
+}
 // This is an ugly hack, really. TODO AE: Find something nicer.
-td > span.h3 {
-	margin: 0;
+.cart__row > h4 {
+	margin-bottom: 0px;
+}
+
+// Cart Sidebar // -----
+
+.ajaxcart--footer {
+	position: absolute;
+	background-color: rgb(255,255,255);
 }

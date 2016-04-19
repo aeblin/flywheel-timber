@@ -1,41 +1,20 @@
-<header class="layout-header" role="banner">
-  {% comment %}
-    <div class="row">
-        <div class="grid">
-          <div class="grid__item one-half">
-            <div class="site-nav--mobile">
-              <button type="button" class="icon-fallback-text js-drawer-open-left" aria-controls="NavDrawer" aria-expanded="false">
-                <span class="icon icon-hamburger" aria-hidden="true"></span>
-                <span class="fallback-text">{{ 'layout.navigation.menu' | t }}</span>
-              </button>
-            </div>
-          </div>
-          <div class="grid__item one-half text-right">
-            <div class="site-nav--mobile">
-              <a href="/cart" class="js-drawer-open-right site-nav__link" aria-controls="CartDrawer" aria-expanded="false">
-                <span class="icon-fallback-text">
-                  <span class="icon icon-cart" aria-hidden="true"></span>
-                  <span class="fallback-text">{{ 'layout.cart.title' | t }}</span>
-                </span>
-              </a>
-            </div>
-          </div>
-        </div>
-    </div>
-  {% endcomment %}
-  <div class="container-fluid">
-    <div class="row nav-top u-vertical-align">
+<header class="navigation" role="banner">
+  <div class="container-90-md container-fluid">
+    <div class="row nav-top u-verticalAlign">
       <div class="col-xs-2 col-sm-2 hidden-md hidden-lg">
         <div class="site-nav--mobile">
-          <a class="icon-fallback-text js-drawer-open-left" aria-controls="NavDrawer" aria-expanded="false">
-            <span class="ion-navicon" aria-hidden="true"></span>
-            <span class="fallback-text">{{ 'layout.navigation.menu' | t }}</span>
-          </a>
+          <div class="navburger js-mobile-nav-toggle">
+            <div class="line-wrapper">
+              <div class="line"></div>
+              <div class="line"></div>
+              <div class="line"></div>
+            </div>
+          </div>
         </div>
       </div>
       <div class="col-md-3 hidden-xs hidden-sm">
         <div class="site-search--desktop">
-          <form action="/search" method="get" role="search">
+          <form action="/search" method="get" role="search" class="js-search-form">
             <button type="button" class="js-search-toggle search-toggle">
               <span class="ion-ios-search-strong" aria-hidden="true"></span>
             </button>
@@ -77,105 +56,72 @@
       </div>
       <div class="col-md-3 hidden-xs hidden-sm">
         <div class="site-cart--desktop">
-          <a href="/cart">
-            <span>({{ cart.item_count }})</span>
+          <a href="/cart" class="navbar-cart js-drawer-open-right" aria-controls="CartDrawer" aria-expanded="false">
             <span class="icon-fallback-text">
-              <span class="ion-ios-cart" aria-hidden="true"></span>
-              <span class="fallback-text">{{ 'layout.cart.title' | t }}</span>
+              <span class="u-capitalize u-letterSpacing2">{{ 'layout.cart.title' | t }}</span>
+              <span class="cart-quantity">{{ cart.item_count }}</span>
+              <span class="fallback-text">{{ 'layout.cart.title' | t }} {{ cart.item_count }}</span>
             </span>
           </a>
         </div>
       </div>
       <div class="col-xs-2 col-sm-2 hidden-md hidden-lg">
         <div class="site-cart--mobile">
-          <a href="/cart" class="js-drawer-open-right" aria-controls="CartDrawer" aria-expanded="false">
+          <a href="/cart" class="navbar-cart js-drawer-open-right" aria-controls="CartDrawer" aria-expanded="false">
             <span class="icon-fallback-text">
-              <span class="ion-ios-cart" aria-hidden="true"></span>
-              <span class="fallback-text">{{ 'layout.cart.title' | t }}</span>
+              <span class="cart-quantity">{{ cart.item_count }}</span>
+              <span class="fallback-text">{{ 'layout.cart.title' | t }}  {{ cart.item_count }}</span>
             </span>
           </a>
         </div>
       </div>
     </div>
   </div>
+ 
+  <div class="container-90-md container-fluid">
+    {% include 'mobile-nav' %}
+  </div>
+  
+  <nav class="nav-linkbar hidden-xs hidden-sm" role="navigation">    
+    <div class="container container-90">
+      <ul class="site-nav">
+        {% for link in linklists.shopping-menu.links %}
+          {% unless link.type == 'collection_link' and link.object.products_count == 0 %}
+            <li {% if link.active %}class="site-nav--active"{% endif %}>
+              <a href="{{ link.url }}" class="site-nav__link">{{ link.title }}</a>
+            </li>
+          {% endunless %}
+        {% endfor %}
+      </ul>
+      <ul class="site-nav u-padding--3x">
+        <li class="u-lightCopy"> | </li>
+      </ul>
+      <ul class="site-nav" id="AccessibleNav">
+        {% for link in linklists.main-menu.links %}
 
-  {% comment %}
-    <div class="grid__item large--one-half large--text-right medium-down--hide">
-      {% comment %}
-        Show number of items in the cart and total cost in the /cart link
+          {% assign child_list_handle = link.title | handleize %}
 
-        Ajax Cart Notes:
-          - #cartCount updates the total number of items in the cart
-          - #cartCost updates the total cost of the cart
-          - Documentation:  http://shopify.com/timber#ajax-cart
-      {% endcomment %}
-
-      {% comment %}
-        If customer accounts are enabled, provide login and create account links
-      {% endcomment %}
-      {% if shop.customer_accounts_enabled %}
-        <div>
-          {% if customer %}
-            {% if customer.first_name != blank %}
-              {% capture first_name %}<a href="/account">{{ customer.first_name }}</a>{% endcapture %}
-              {{ 'layout.customer.logged_in_as_html' | t: first_name: first_name }}
-            {% else %}
-              <a href="/account">{{ 'layout.customer.account' | t }}</a>
-            {% endif %}
-            | {{ 'layout.customer.log_out' | t | customer_logout_link }}
+          {% if linklists[child_list_handle].links != blank %}
+            <li class="site-nav--has-dropdown{% if link.active %} site-nav--active{% endif %}" aria-haspopup="true">
+              <a href="{{ link.url }}" class="site-nav__link">
+                {{ link.title }}
+                <span class="icon icon-arrow-down" aria-hidden="true"></span>
+              </a>
+              <ul class="site-nav__dropdown">
+                {% for childlink in linklists[child_list_handle].links %}
+                  <li{% if childlink.active %} class="site-nav--active"{% endif %}>
+                    <a href="{{ childlink.url }}" class="site-nav__link">{{ childlink.title | escape }}</a>
+                  </li>
+                {% endfor %}
+              </ul>
+            </li>
           {% else %}
-            {{ 'layout.customer.log_in' | t | customer_login_link }}
-            {% if shop.customer_accounts_optional %}
-            | {{ 'layout.customer.create_account' | t | customer_register_link }}
-            {% endif %}
+            <li {% if link.active %}class="site-nav--active"{% endif %}>
+              <a href="{{ link.url }}" class="site-nav__link">{{ link.title }}</a>
+            </li>
           {% endif %}
-        </div>
-      {% endif %}
-    </div>
-  {% endcomment %}
-
-  <nav class="nav-bar nav-linkbar" role="navigation">
-    <div class="wrapper">
-      <div class="medium-down--hide">
-        <ul class="site-nav">
-          {% for link in linklists.shopping-menu.links %}
-            {% unless link.type == 'collection_link' and link.object.products_count == 0 %}
-              <li {% if link.active %}class="site-nav--active"{% endif %}>
-                <a href="{{ link.url }}" class="site-nav__link">{{ link.title }}</a>
-              </li>
-            {% endunless %}
-          {% endfor %}
-        </ul>
-        <ul class="site-nav u-padding--3x">
-          <li class="u-lightCopy"> | </li>
-        </ul>
-        <ul class="site-nav" id="AccessibleNav">
-          {% for link in linklists.main-menu.links %}
-
-            {% assign child_list_handle = link.title | handleize %}
-
-            {% if linklists[child_list_handle].links != blank %}
-              <li class="site-nav--has-dropdown{% if link.active %} site-nav--active{% endif %}" aria-haspopup="true">
-                <a href="{{ link.url }}" class="site-nav__link">
-                  {{ link.title }}
-                  <span class="icon icon-arrow-down" aria-hidden="true"></span>
-                </a>
-                <ul class="site-nav__dropdown">
-                  {% for childlink in linklists[child_list_handle].links %}
-                    <li{% if childlink.active %} class="site-nav--active"{% endif %}>
-                      <a href="{{ childlink.url }}" class="site-nav__link">{{ childlink.title | escape }}</a>
-                    </li>
-                  {% endfor %}
-                </ul>
-              </li>
-            {% else %}
-              <li {% if link.active %}class="site-nav--active"{% endif %}>
-                <a href="{{ link.url }}" class="site-nav__link">{{ link.title }}</a>
-              </li>
-            {% endif %}
-          {% endfor %}
-        </ul>
-      </div>
+        {% endfor %}
+      </ul>
     </div>
   </nav>
 </header>
