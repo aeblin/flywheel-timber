@@ -71,12 +71,12 @@
       </div>
 
       <div class="cart-drawer--footer ajaxcart__footer">
-          <div class="col-xs-12">
-            <p>{% endraw %}{{ 'cart.general.subtotal' | t }}{% raw %} {{{totalPrice}}}</p>
-          </div>
-          <button type="submit" class="fw-btn btn-dark btn-lg" name="checkout">
-            {% endraw %}{{ 'cart.general.checkout' | t }}{% raw %}
-          </button>
+        <div class="col-xs-12 subtotal">
+          <span>{% endraw %}{{ 'cart.general.subtotal' | t }}{% raw %} {{{totalPrice}}}</span>
+        </div>
+        <button type="submit" class="fw-btn btn-dark btn-lg" name="checkout">
+          {% endraw %}{{ 'cart.general.checkout' | t }}{% raw %}
+        </button>
         {% endraw %}{% if additional_checkout_buttons %}
           <div class="additional_checkout_buttons">{{ content_for_additional_checkout_buttons }}</div>
         {% endif %}{% raw %}

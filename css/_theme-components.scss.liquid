@@ -22,7 +22,7 @@
   z-index: 1001;
   cursor: pointer;
 }
-
+// Drawer Itself
 .cart-drawer {
   @include workSans-n5;
   position: fixed;
@@ -131,6 +131,7 @@
   background-color: rgb(255,255,255);
 }
 .cart-drawer--footer .subtotal {
+  font-size: 1.25em;
   text-align: center;
   text-transform: uppercase;
   letter-spacing: 0.1rem;
@@ -186,50 +187,7 @@
   }
 }
 
-// Allbirds Input
-.allbirds-qty {
-  display: -webkit-flex;
-  display: -moz-flex;
-  display: -ms-flexbox;
-  display: flex;
-  margin-top: 5px;
-  margin-bottom: 10px;
-
-  .allbirds-qty__adjust {
-    display: inline-block;
-    height: 56px;
-    border: 0 none;
-    -webkit-appearance: none;
-    padding: 0 20px;
-    background-color: white;
-    border: 1px solid #dedede;
-    cursor: pointer;
-    z-index: 1;
-
-    &:focus {
-      outline: none;
-    }
-
-    &:hover {
-      span {
-        opacity: 1;
-      }
-    }
-
-    span {
-      font-size: 30px;
-      line-height: 60px;
-      opacity: 0.3;
-      @include transition(opacity 0.25s);
-    }
-    .allbirds-qty__adjust--plus {
-      border-left: none;
-    }
-    .allbirds-qty__adjust--minus {
-      border-right: none;
-    }
-  }
-}
+// Cart Inputs
 .cart-qty-wrapper {
   display: -webkit-flex;
   display: -moz-flex;
@@ -378,4 +336,18 @@
 }
 .bg-img-holder.fadeIn {
   opacity: 1;
+}
+
+// Search Bar (no-animation)
+.search-input-group--no-animation {
+  display: inline-block;
+  position: relative;
+  width: 90%;
+}
+.search-input--no-animation {
+  border: none;
+  border-bottom: 1px solid #16161a;
+  background: transparent;
+  padding: 0;
+  width: 100%;
 }
