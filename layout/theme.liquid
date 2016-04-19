@@ -8,17 +8,14 @@
     <!-- Basic page needs ================================================== -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-
-    {% if settings.favicon_enable %}
-      <link rel="shortcut icon" href="{{ 'favicon.png' | asset_url }}" type="image/png" />
-    {% endif %}
+    <link rel="icon" type="image/png" sizes="96x96" href="{{'favicon-96x96.png' | asset_url }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ 'favicon-32x32.png' | asset_url }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{'favicon-16x16.png' | asset_url }}">
 
     <!-- Title and description ================================================== -->
     <title>
       {{ page_title }}
-      {% if current_tags %}
-        {% assign meta_tags = current_tags | join: ', ' %} &ndash; {{ 'general.meta.tags' | t: tags: meta_tags }}
-      {% endif %}
+      {% if current_tags %}{% assign meta_tags = current_tags | join: ', ' %} &ndash; {{ 'general.meta.tags' | t: tags: meta_tags }}{% endif %}
       {% if current_page != 1 %} | {{ 'general.meta.page' | t: page: current_page }}{% endif %}
       {% unless page_title contains shop.name %} | {{ shop.name }}{% endunless %}
     </title>
@@ -62,105 +59,10 @@
   {% endcomment %}
 
   <body id="{{ page_title | handle }}" class="{% if customer %}customer-logged-in {% endif %}template-{{ template | replace: '.', ' ' | truncatewords: 1, '' | handle }}" >
-
-    <div id="NavDrawer" class="drawer drawer--left">
-      <div class="drawer__header">
-        <div class="drawer__title h3">{{ 'layout.drawers.browse' | t }}</div>
-        <div class="drawer__close js-drawer-close">
-          <button type="button" class="icon-fallback-text">
-            <span class="icon icon-x" aria-hidden="true"></span>
-            <span class="fallback-text">{{ 'layout.drawers.close_menu' | t }}</span>
-          </button>
-        </div>
-      </div>
-      <!-- begin mobile-nav -->
-      <ul class="mobile-nav">
-        <li class="mobile-nav__item mobile-nav__search">
-          {% include 'search-bar' %}
-        </li>
-        {% for link in linklists.main-menu.links %}
-          {% comment %}
-            Create a dropdown menu by naming a linklist the same as a link in the parent nav
-
-            More info on dropdowns:
-              - http://docs.shopify.com/manual/your-website/navigation/create-drop-down-menu
-          {% endcomment %}
-          {% assign child_list_handle = link.title | handleize %}
-          {% if linklists[child_list_handle].links != blank %}
-            <li class="mobile-nav__item{% if link.active %} mobile-nav__item--active{% endif %}" aria-haspopup="true">
-              <div class="mobile-nav__has-sublist">
-                <a href="{{ link.url }}" class="mobile-nav__link">{{ link.title }}</a>
-                <div class="mobile-nav__toggle">
-                  <button type="button" class="icon-fallback-text mobile-nav__toggle-open">
-                    <span class="icon icon-plus" aria-hidden="true"></span>
-                    <span class="fallback-text">See More</span>
-                  </button>
-                  <button type="button" class="icon-fallback-text mobile-nav__toggle-close">
-                    <span class="icon icon-minus" aria-hidden="true"></span>
-                    <span class="fallback-text">{{ 'cart.general.close_cart' | t | json }}</span>
-                  </button>
-                </div>
-              </div>
-              <ul class="mobile-nav__sublist">
-                {% for childlink in linklists[child_list_handle].links %}
-                  <li class="mobile-nav__item {% if childlink.active %} mobile-nav__item--active{% endif %}">
-                    <a href="{{ childlink.url }}" class="mobile-nav__link">{{ childlink.title | escape }}</a>
-                  </li>
-                {% endfor %}
-              </ul>
-            </li>
-          {% else %}
-            <li class="mobile-nav__item{% if link.active %} mobile-nav__item--active{% endif %}">
-              <a href="{{ link.url }}" class="mobile-nav__link">{{ link.title }}</a>
-            </li>
-          {% endif %}
-        {% endfor %}
-
-        {% comment %}
-          If customer accounts are enabled, provide login and create account links
-        {% endcomment %}
-        {% if shop.customer_accounts_enabled %}
-          {% if customer %}
-            <li class="mobile-nav__item">
-              {% if customer.first_name != blank %}
-                {% capture first_name %}<a href="/account">{{ customer.first_name }}</a>{% endcapture %}
-                {{ 'layout.customer.logged_in_as_html' | t: first_name: first_name }}
-              {% else %}
-                <a href="/account">{{ 'layout.customer.account' | t }}</a>
-              {% endif %}
-            </li>
-            <li class="mobile-nav__item">
-              {{ 'layout.customer.log_out' | t | customer_logout_link }}
-            </li>
-          {% else %}
-            <li class="mobile-nav__item">
-              {{ 'layout.customer.log_in' | t | customer_login_link }}
-            </li>
-            {% if shop.customer_accounts_optional %}
-            <li class="mobile-nav__item">
-              {{ 'layout.customer.create_account' | t | customer_register_link }}
-            </li>
-            {% endif %}
-          {% endif %}
-        {% endif %}
-      </ul>
-      <!-- //mobile-nav -->
-    </div>
+    <div class="cloak js-cloak"></div>
+    {% include 'cart-drawer' %}
     
-    <div id="CartDrawer" class="drawer drawer--right">
-      <div class="drawer__header">
-        <div class="drawer__title h3">{{ 'cart.general.title' | t }}</div>
-        <div class="drawer__close js-drawer-close">
-          <button type="button" class="icon-fallback-text">
-            <span class="icon icon-x" aria-hidden="true"></span>
-            <span class="fallback-text">{{ 'cart.general.close_cart' | t | json }}</span>
-          </button>
-        </div>
-      </div>
-      <div id="CartContainer"></div>
-    </div>
-    
-    <div id="PageContainer" class="is-moved-by-drawer">
+    <div id="PageContainer">
       {% include 'header-nav' %}
 
       <main role="main">
@@ -181,55 +83,7 @@
     {% endcomment %}
 
     {% comment %}Google Maps for Footer{% endcomment %}
-    <script>
-      function initMap() {
-        var mapDiv = document.getElementById('map');
-        var markerImg = new google.maps.MarkerImage(
-          'https://s3-us-west-1.amazonaws.com/ae-clients/flywheel/fwl-map-marker-inverse.png',
-          null, /* size is determined at runtime */
-          null, /* origin is 0,0 */
-          null, /* anchor is bottom center of the scaled image */
-          new google.maps.Size(40, 60)
-        ); 
-        var map = new google.maps.Map(mapDiv, {
-          // Center on Flywheel Coffee Roasters
-          center: {lat: 37.769, lng: -122.453},
-          // Zoom to Street Level
-          zoom: 15,
-          // Style it in a nice monochrome
-          styles: [
-            {"stylers":[{"visibility":"on"},{"saturation":-100},{"gamma":0.54}]},
-            {"featureType":"landscape","elementType":"geometry.fill","stylers":[{"color":"#2a2a34"}]},
-            {"featureType":"landscape","elementType":"geometry.stroke","stylers":[{"color":"#16161a"}]},
-            {"featureType":"road","elementType":"labels.text.fill","stylers":[{"color":"#ffffff"}]},
-            {"featureType":"road","elementType":"labels.text.stroke","stylers":[{"color":"#3d3d3d"},{"weight":"0.75"}]},
-            {"featureType":"road","elementType":"labels.icon","stylers":[{"visibility":"off"}]},
-            {"featureType":"road","elementType":"geometry.fill","stylers":[{"color":"#16161a"}]},
-            {"featureType":"road","elementType":"geometry.stroke","stylers":[{"gamma":7.18}]},
-            {"featureType":"water","stylers":[{"color":"#4d4946"}]},
-            {"featureType":"water","elementType":"labels.text.fill","stylers":[{"color":"#ffffff"}]},
-            {"featureType":"poi","elementType":"labels.icon","stylers":[{"visibility":"off"}]},
-            {"featureType":"poi","elementType":"labels.text","stylers":[{"visibility":"simplified"}]},
-            {"featureType":"transit.line","elementType":"geometry","stylers":[{"gamma":0.33}]},
-            {"featureType":"transit.station","elementType":"labels.icon","stylers":[{"visibility":"off"}]}
-          ],
-          // Disable the default ui
-          disableDefaultUI: true
-        });
-        var flywheelMarker = new google.maps.Marker({
-          position: {lat: 37.769, lng: -122.453},
-          map: map,
-          title: 'Here we are.',
-          icon: markerImg,
-          opacity: 0.9
-        });
-        flywheelMarker.addListener('click', function(){
-          window.open('https://goo.gl/maps/o2XJkHfRwLA2');
-        });
-        // Disable Pan on Map
-        map.setOptions({draggable: false, scrollwheel: false});
-      }
-    </script>
+    {{ 'gmap.js' | asset_url | script_tag }}
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD5uN3RZ3sUUI_cZBzYAQZ5P0ntDuZ0snA&callback=initMap"
         async defer></script>
 
@@ -275,7 +129,7 @@
             formSelector: '#AddToCartForm',
             cartContainer: '#CartContainer',
             addToCartSelector: '#AddToCart',
-            cartCountSelector: '#CartCount',
+            cartCountSelector: '.cart-quantity',
             cartCostSelector: '#CartCost',
             moneyFormat: {{ shop.money_format | json }}
           });

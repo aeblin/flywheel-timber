@@ -1,16 +1,40 @@
 // Logo, Search, and Cart // ------
+.navigation {
+	background: rgb(255,255,255);
+	@include transition (height 0.25s ease);
+	@media screen and (max-width: $screen-sm-max) {
+	  position: fixed;
+	  z-index: 999;
+	  width: 100%;
+  	height: 80px;
+	  top: 0px;
+	  box-shadow: 0px 1px 10px 0px rgba(0,0,0,0.1);
+	}
+}
+// Margin top for Main when navbar fixed for mobile. // ------
+main {
+	@media screen and (max-width: $screen-sm-max) {
+		margin-top: 80px;
+	}
+}
 
 // Logo // ---
 .nav-top {
 	background-color: rgb(255,255,255);
 	color: $fw-black;
-	font-size: 1.35em;
 }
 .nav-logo {
 	text-align: center;
 	line-height: 0;
 	margin: 30px auto;
 	max-width: 300px;
+	@media screen and (min-width: $screen-lg-min) {
+		height: 58px;
+	}
+	@media screen and (max-width: $screen-sm-max) {
+		margin: 20.5px auto; // AE: Keeps the height of the navbar a nice, clean 80px
+		max-width: 200px;
+	}
 }
 .nav-logo a, .nav-logo a:hover, .nav-logo a:focus{
 	text-decoration: none;
@@ -19,22 +43,168 @@
 // Search and Cart Icons // ---
 .site-search--desktop {
 	float: left;
-	margin-left: 30px;
 	overflow: hidden;
   max-width: none;
+	font-size: 1.6em;
 }
 .site-search--desktop *:focus {
 	outline: none;
 }
 .site-cart--desktop {
 	float: right;
-	margin-right: 30px;
+	font-size: 1.2em;
 }
 .site-nav--mobile {
 	float: left;
+	font-size: 2em;
 }
 .site-cart--mobile {
 	float: right;
+}
+
+// Mobile Nav Toggle
+.navburger {
+	cursor: pointer	
+}
+.line-wrapper {
+	@include transition(all 0.25s ease);
+}
+.line {
+	width: 20px;
+	height: 2px;
+	background-color: $fw-black;
+	@include transition(all 0.25s ease);
+	&:nth-child(2) {
+		margin-top: 6px;
+		margin-bottom: 6px;
+	}
+}
+.navburger:hover {
+	.line {
+		background-color: $fw-accent;
+	}
+}
+// Nav Icon Active State 
+.navigation.is-open {
+	@media screen and (max-width: $screen-sm-max) {
+		height: 100vh;
+		overflow: scroll;
+	}
+}
+.navigation.is-open {
+	.line-wrapper {
+		@include transform(rotate(45deg));
+	}
+	.line:first-child {
+		@include transform(translateY(8px));
+	}
+	.line:nth-child(3) {
+		@include transform(translateY(-8px) rotate(90deg));
+	}
+}
+
+// Mobile Nav // ------
+.mobile-nav-wrapper {
+	max-height: 0;
+	overflow: hidden;
+	margin-top: 30px;
+	font-size: 1.25em;
+	text-align: center;
+	text-transform: uppercase;
+	letter-spacing: 0.1rem;
+	list-style: none;
+	@include transition(all 0.25 ease);
+}
+.navigation.is-open {
+	.mobile-nav-wrapper {
+		max-height: 1000px;
+		@media screen and (min-width: $screen-md-min) {
+			max-height: 0;
+		}
+	}
+}
+
+.mobile-nav--item {
+	position: relative;
+	display: block;
+	border-bottom: 1px solid $fw-accent;
+	&:last-child {
+		border-bottom: 0;
+	}
+}
+.mobile-nav--item a {
+	display: block;
+	padding: 15px;
+}
+li.mobile-nav--item {
+	margin-bottom: 0;
+}
+
+.mobile-nav--link {
+	color: $fw-black;
+	text-decoration: none;
+}
+
+// Mobile Nav Dropdowns
+.mobile-nav--has-sublist {
+	position: relative;
+	@include transition(all 0.25s cubic-bezier(0.57, 0.06, 0.05, 0.95));
+}
+.mobile-nav--expanded+.mobile-nav--sublist {
+	visibility: visible;
+	max-height: 100vh;
+	@include transition(all 0.25s cubic-bezier(0.57, 0.06, 0.05, 0.95));
+}
+.mobile-nav--has-sublist.mobile-nav--expanded {
+	background-color: $fw-black;
+}
+.mobile-nav--has-sublist.mobile-nav--expanded .mobile-nav--link {
+	color: rgb(255,255,255);
+}
+
+// Dropdown Toggle
+.mobile-nav--sublist-toggle {
+	position: absolute;
+	top: 5%;
+	right: 0;
+	button {
+		padding: 15px;
+		text-decoration: none;
+	}
+}
+.mobile-nav--toggle-open {
+	&:focus {
+		outline: none;
+	}
+  .mobile-nav--expanded & {
+    display: none;
+  }
+}
+
+.mobile-nav--toggle-close {
+  color: rgb(255,255,255);
+  display: none;
+	&:focus {
+		outline: none;
+	}
+  .mobile-nav--expanded & {
+    display: block;
+  }
+}
+
+.mobile-nav--sublist {
+	margin: 0;
+	max-height: 0;
+	visibility: hidden;
+	overflow: hidden;
+	@include transition(all 0.25s ease);
+	-webkit-backface-visibility: hidden;
+	backface-visibility: hidden;
+	font-size: .75em;
+}
+.mobile-nav--sublist .mobile-nav--item {
+	background-color: $fw-accent;
+	border-color: rgb(255,255,255);
 }
 
 // Desktop Search Animation // ---
@@ -45,7 +215,7 @@
 	z-index: 10;
 }
 .search-toggle:hover {
-	color: $fw-orange;
+	color: $fw-accent;
 }
 .search-toggle:focus {
 	outline: none;
@@ -89,32 +259,61 @@
   transition: color .25s;
 }
 .search-submit:hover {
-	color: $fw-orange;
+	color: $fw-accent;
 }
+
+// Cart Quantity Indicator // ------
+.cart-quantity {
+	display: inline-block;
+	background-color: $fw-black;
+	color: rgb(255,255,255);
+	border-radius: 50%;
+	font-size: 18.9px;
+	width: 30px;
+	height: 30px;
+	text-align: center;
+	vertical-align: middle;
+	line-height: 28px;
+	@include transition(all .25s ease);
+}
+.navbar-cart {
+	cursor: pointer;
+}
+.navbar-cart:hover {
+	.cart-quantity {
+		background-color: $fw-accent;
+	}
+}
+
 // Nav Links // ------
 .nav-linkbar {
 	background-color: $fw-black;
 	border-top: 1px solid $fw-grey;
 	text-align: center;
 }
-
 .site-nav {
-	@include workSans-n6;
+	@include workSans-n5;
 	margin: 0 auto;
 	display: inline-block;
 }
-
 .site-nav__link {
 	color: rgb(255,255,255);
+	letter-spacing: 0.1rem;
+	padding: 15px 0 13px 0;
+	margin: 0 15px;
+	border-bottom: 2px solid transparent;
+	@include transition(all 0.25s ease);
 	&:hover, &:focus {
-		color: $fw-orange;
+		color: $fw-accent;
+		border-color: $fw-accent
 	}
 }
-
-.collection-nav--active > .site-nav__link {
-	color: $fw-orange;
+.collection-nav--active > .site-nav__link, .site-nav--active > .site-nav__link {
+	color: $fw-accent;
+	border-color: $fw-accent;
 	&:hover {
-		color: $fw-orange;
+		color: $fw-accent;
+		border-color: $fw-accent;
 	}
 }
 
@@ -141,5 +340,5 @@
   }
 }
 .sub-nav .site-nav__link {
-	padding: 10px 15px; 
+	padding: 10px 0px 8px 0px; 
 }

@@ -28,26 +28,23 @@
     {% capture slide_link %}hero_slide_{{ i }}_link{% endcapture %}
     {% if settings[slide] %}
       <div class="hero__slide {{ settings[slide_text_color] }}" data-color="{{ settings[slide_text_color] }}">
-        <div class="hero__image u-bgFilterLight" style="background-image: url('{{ slide_img | asset_url }}');" data-image="{{ slide_img | asset_url }}"></div>
-        <div class="hero__text-wrap">
-          <div class="hero__text-align">
-            <div class="hero__text-content">
-              {% unless settings[slide_subheading] == blank %}
-                <h4 class="hero__subtitle">
-                  {{ settings[slide_subheading] }}
-                </h4>
-              {% endunless %}
-              {% unless settings[slide_heading] == blank %}
-                <h1 class="hero__title u-capitalize u-letterSpacing3">
-                  {{ settings[slide_heading] }}
-                </h1>
-              {% endunless %}
-              {% unless settings[slide_cta] == blank %}
-                <a href="{{ settings[slide_link] }}" class="fw-btn btn-light hero__cta">
-                  {{ settings[slide_cta] }}</span>
-                </a>
-              {% endunless %}
-            </div>
+        <div class="hero__image u-verticalAlign" style="background-image: url('{{ slide_img | asset_url }}');" data-image="{{ slide_img | asset_url }}">
+          <div class="hero__text-content">
+            {% unless settings[slide_subheading] == blank %}
+              <h4 class="hero__subtitle">
+                {{ settings[slide_subheading] }}
+              </h4>
+            {% endunless %}
+            {% unless settings[slide_heading] == blank %}
+              <h1 class="intro-header">
+                {{ settings[slide_heading] }}
+              </h1>
+            {% endunless %}
+            {% unless settings[slide_cta] == blank %}
+              <a href="{{ settings[slide_link] }}" class="fw-btn btn-light hero__cta">
+                {{ settings[slide_cta] }}</span>
+              </a>
+            {% endunless %}
           </div>
         </div>
       </div>

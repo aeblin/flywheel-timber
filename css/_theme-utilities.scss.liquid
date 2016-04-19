@@ -8,6 +8,9 @@
 .u-letterSpacing4 {
 	letter-spacing: 0.4rem;
 }
+.u-letterSpacing5 {
+	letter-spacing: 0.5rem;
+}
 .u-lightCopy {
 	color: rgb(255,255,255);
 }
@@ -16,11 +19,19 @@
 }
 
 // Layout Utils // ------
-.u-vertical-align {
+.u-verticalAlign {
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: row;
+}
+.u-verticalAlign--lgMin{
+	@media screen and (min-width: $screen-lg-min) {
+	  display: flex;
+	  align-items: center;
+	  justify-content: center;
+	  flex-direction: row;
+	}
 }
 .u-padding--noleft {
 	padding-left: 0px !important;
@@ -41,7 +52,22 @@
 		clear: left;
 	}
 }
+// Text Align // ------
+.u-textLeft {
+	text-align: left;
+}
+.u-textRight {
+	text-align: right;
+}
+.u-textCenter {
+	text-align: center;
+}
+
 // Padding Classes // ------
+.u-noPadding--x {
+	padding-left: 0px;
+	padding-right: 0px;
+}
 .u-padding--1 {
 	padding: 5px;
 }
@@ -138,10 +164,11 @@
     position: absolute;
     content:" ";
     top: 0;
+    right: 0;
+    bottom: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: 0;
     background-color: rgba(255,255,255,0.25);
   }
 }
@@ -152,61 +179,35 @@
 	}
 }
 
+.u-bgFilterLightHover {
+	&:before {
+		position: absolute;
+    content:" ";
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255,255,255,0);
+    transition: all .25s ease;
+    -webkit-transition: all .25s ease;
+	}
+}
+.u-bgFilterLightHover:hover, .u-bgFilterLightHover:focus {
+  &:before {
+    background-color: rgba(255,255,255,0.25);
+  }
+}
 // Line Clamp // ------
 /* Begin required CSS. */
-.u-line-clamp
-{
+.u-lineClamp {
 	display            : block;
-	display            : -webkit-box;
-	-webkit-box-orient : vertical;
+	height             : 1.2em;
 	position           : relative;
-
 	line-height        : 1.2;
 	overflow           : hidden;
 	text-overflow      : ellipsis;
 	padding            : 0 !important;
-}
-.u-line-clamp:after
-{
-	content    : '...';
-	text-align : right;
-	bottom     : 0;
-	right      : 0;
-	width      : 25%;
-	display    : block;
-	position   : absolute;
-	height     : calc(1em * 1.2);
-	background : linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1) 75%);
-}
-@supports (-webkit-line-clamp: 1)
-{
-	.u-line-clamp:after
-	{
-		display : none !important;
-	}
-}
-.u-line-clamp-1
-{
-	-webkit-line-clamp : 1;
-	height             : calc(1em * 1.2 * 1);
-}
-.u-line-clamp-2
-{
-	-webkit-line-clamp : 2;
-	height             : calc(1em * 1.2 * 2);
-}
-.u-line-clamp-3
-{
-	-webkit-line-clamp : 3;
-	height             : calc(1em * 1.2 * 3);
-}
-.u-line-clamp-4
-{
-	-webkit-line-clamp : 4;
-	height             : calc(1em * 1.2 * 4);
-}
-.u-line-clamp-5
-{
-	-webkit-line-clamp : 5;
-	height             : calc(1em * 1.2 * 5);
+	white-space: nowrap;
 }

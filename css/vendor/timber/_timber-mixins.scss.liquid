@@ -83,6 +83,7 @@
 
 /*============================================================================
   Layer promotion mixin for creating smoother animations with higher FPS.
+  AE: Has fun side-effect of breaking fixed positioning.
 ==============================================================================*/
 @mixin promote-layer($properties: transform) {
   -webkit-transform: translateZ(0); // translateZ hack

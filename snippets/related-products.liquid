@@ -16,6 +16,9 @@
 {% assign same_vendor = false %}
 {% assign same_type = false %}
 
+{% comment %} Set to true to exclude items that are sold out {% endcomment %}
+{% assign not_sold_out = true %}
+
 {% comment %} Collections to ignore. Never pick related items from those. {% endcomment %}
 
 {% comment %} Looking for a relevant collection. {% endcomment %}
@@ -68,14 +71,16 @@
   {% capture related_items %}
     {% for product in collection.products %}
       {% unless product.handle == current_product.handle %}
-         {% unless same_vendor and current_product.vendor != product.vendor %}
-           {% unless same_type and current_product.type != product.type %}
-             {% include 'product-col-item' %}
-             {% assign counter = counter | plus: 1 %}
-             {% if counter == break_at %}
+        {% unless same_vendor and current_product.vendor != product.vendor %}
+          {% unless same_type and current_product.type != product.type %}
+            {% unless not_sold_out and product.available == false %}
+              {% include 'product-col-item' %}
+              {% assign counter = counter | plus: 1 %}
+              {% if counter == break_at %}
                {% break %}
-             {% endif %}
-           {% endunless %}
+              {% endif %}
+            {% endunless %}
+          {% endunless %}
         {% endunless %}
       {% endunless %}
     {% endfor %}
@@ -85,18 +90,23 @@
 
   {% unless related_items == blank %}
 
-    <section class="related-products" style="background-image: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.5)), url(
-          {% if product.metafields.related_products.bg_img %}
-            '{{ product.metafields.related_products.bg_img }}'
+    <section class="related-products"
+          {% unless in_coffee_collection and product.metafields.coffee.tasting_notes %}
+            style="background-image: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.5)), url(
+            {% if product.metafields.related_products.bg_img %}
+              '{{ product.metafields.related_products.bg_img }}'
+            {% else %}
+              'https://cdn.shopify.com/s/files/1/1080/7300/files/frontofshop-obviicat.jpg?5099436614005486729'
+            {% endif %}
+            );">
           {% else %}
-            'https://cdn.shopify.com/s/files/1/1080/7300/files/frontofshop-obviicat.jpg?5099436614005486729'
-          {% endif %}
-          );">
+           style="background-color: rgb(255,255,255); border-top: 0px;">
+          {% endunless %}
 
       <div class="container container-90">
         {% unless heading == blank %}
           <header class="section-header">
-            <h1 class="section-header__title u-capitalize text-right u-letterSpacing3">{{ heading }}</h1>
+            <h1 class="section-header__title u-capitalize u-textRight u-letterSpacing3">{{ heading }}</h1>
           </header>
         {% endunless %}
         <div class="row">

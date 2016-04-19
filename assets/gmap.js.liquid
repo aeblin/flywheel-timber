@@ -44,4 +44,9 @@ function initMap() {
   });
   // Disable Pan on Map
   map.setOptions({draggable: false, scrollwheel: false});
+  // Recenter on Resize
+  google.maps.event.addDomListener(window, 'resize', function() {
+    map.setCenter({lat: 37.769, lng: -122.453});
+    console.log('map resized');
+  });
 }

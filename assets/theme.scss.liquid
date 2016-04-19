@@ -8023,7 +8023,7 @@ button.close {
 }
 
 
-//Timber Import
+//Timber Import (change back to @import('timber.scss.liquid') file if this breaks)
 /*============================================================================
   #Sass Mixins
 ==============================================================================*/
@@ -8109,6 +8109,7 @@ button.close {
 
 /*============================================================================
   Layer promotion mixin for creating smoother animations with higher FPS.
+  AE: Has fun side-effect of breaking fixed positioning.
 ==============================================================================*/
 @mixin promote-layer($properties: transform) {
   -webkit-transform: translateZ(0); // translateZ hack
@@ -9042,8 +9043,6 @@ hr {
   #Rich Text Editor
 ==============================================================================*/
 .rte {
-  margin-bottom: $gutter / 2;
-
   a {
     text-decoration: underline;
   }
@@ -9082,11 +9081,6 @@ a,
   color: $colorLink;
   text-decoration: none;
   background: transparent;
-}
-
-a:hover,
-a:focus {
-  color: $colorLinkHover;
 }
 
 button {
@@ -9386,12 +9380,12 @@ form {
 }
 
 /*================ Prevent zoom on touch devices in active inputs ================*/
-@include at-query($max, $medium) {
-  input,
-  textarea {
-    font-size: 16px;
-  }
-}
+// @include at-query($max, $medium) {
+//   input,
+//   textarea {
+//     font-size: 16px;
+//   }
+// }
 
 input,
 textarea,
@@ -9826,6 +9820,9 @@ label.error {
 .site-header__logo-link {
   max-width: $logoMaxWidth;
   margin: 0 auto;
+  &:focus {
+    outline: none;
+  }
 }
 
 .site-header__cart-toggle {
@@ -9859,7 +9856,7 @@ label.error {
 .site-nav {
   font-size: em(16px);
   cursor: default;
-  margin: 0 0 0 (-$gutter / 2);
+  margin: 0 auto;
   text-align: center;
   text-transform: uppercase;
 
@@ -9904,7 +9901,8 @@ label.error {
   }
 
   .site-nav--active > & {
-    font-weight: bold;
+    // Disable Active Style for right now 1/11/16 - AE
+    // font-weight: bold;
   }
 
   .site-nav--mobile & {
@@ -10082,7 +10080,6 @@ label.error {
 ==============================================================================*/
 .js-drawer-open {
   overflow: hidden;
-  height: 100%;
 }
 
 .drawer {
@@ -10151,7 +10148,6 @@ label.error {
 }
 
 .is-moved-by-drawer {
-  @include promote-layer();
   transition: $drawerTransition;
 
   .js-drawer-open-left & {
@@ -10290,8 +10286,8 @@ label.error {
   margin-bottom: $gutter / 2;
   border: 1px solid transparent;
   font-size: 0.9em;
-  text-align: left;
-
+  text-align: center;
+  text-transform: uppercase;
   ul,
   ol {
     margin-top: 0;
@@ -10535,8 +10531,7 @@ label.error {
 /*================ Quantity Selectors in Ajax Cart ================*/
 .ajaxcart__qty {
   @extend .js-qty;
-  margin: 0;
-
+  margin-bottom: 0;
   .is-loading & {
     opacity: 0.5;
     transition: none;
@@ -10568,19 +10563,33 @@ label.error {
 /*============================================================================
   Theme Base
 ==============================================================================*/
-	
+
 //Theme Variables
 // Theme Colors // ------
 $fw-black: rgb(22,22,26);
 $fw-grey: rgb(82,82,86);
 $fw-slate: rgb(42,42,52);
+$fw-accent: rgb(192,192,192);
 $fw-orange: rgb(210,82,39);
 $fw-accentOrange: rgb(255,119,73);
+
+// Coffee Colors // ------
+$coffee-africa: rgb(31,181,92);
+$coffee-latinamerica: rgb(41,128,185);
+$coffee-pacific: rgb(231,76,60);
+$coffee-espresso: rgb(22,22,26); // Same as FW Black
 
 // Theme Components // ------
 $border-thick: 4px;
 $border-default: 3px;
 $border-thin: 2px; 
+
+// Drawers // ------
+$drawerCartWidth: 480px;
+$colorDrawers: rgb(192,192,192);
+$colorDrawerBorder: darken($colorDrawers, 5%);
+$colorDrawerText: rgb(22,22,26);
+$drawerTransition: all 0.4s cubic-bezier(0.46, 0.01, 0.32, 1);
 
 //Theme Typography
 // Font Definitions // ------
@@ -10620,16 +10629,30 @@ body {
   line-height: $lineHeight--default;
 }
 
+h1 {
+  @media screen and (max-width: $screen-sm-max) {
+    font-size: 2.5em;
+  }
+}
+
+p {
+  font-size: 16px;
+}
+
 a {
 	color: $fw-black;
 	transition: all 0.25s ease;
 	-webkit-transition: all 0.25s ease;
 	-moz-transition: all 0.25s ease;
 	cursor: pointer;
-	&:hover, &:focus {
-		color: $fw-orange;
+	&:hover {
+		color: $fw-accent;
 		text-decoration: none;
 	}
+  &:focus {
+    color: $fw-black;
+    text-decoration: none;
+  }
 }
 
 
@@ -10644,6 +10667,9 @@ a {
 .u-letterSpacing4 {
 	letter-spacing: 0.4rem;
 }
+.u-letterSpacing5 {
+	letter-spacing: 0.5rem;
+}
 .u-lightCopy {
 	color: rgb(255,255,255);
 }
@@ -10652,11 +10678,19 @@ a {
 }
 
 // Layout Utils // ------
-.u-vertical-align {
+.u-verticalAlign {
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: row;
+}
+.u-verticalAlign--lgMin{
+	@media screen and (min-width: $screen-lg-min) {
+	  display: flex;
+	  align-items: center;
+	  justify-content: center;
+	  flex-direction: row;
+	}
 }
 .u-padding--noleft {
 	padding-left: 0px !important;
@@ -10667,8 +10701,32 @@ a {
 .u-margincenter {
 	margin: 0 auto;
 }
+@media screen and (min-width: $screen-md-min) and (max-width: $screen-md-max) {
+	.clear-after--lg-3>*:nth-child(2n+1) {
+		clear: left;
+	}
+}
+@media screen and (min-width: $screen-lg-min) {
+	.clear-after--lg-3>*:nth-child(3n+1) {
+		clear: left;
+	}
+}
+// Text Align // ------
+.u-textLeft {
+	text-align: left;
+}
+.u-textRight {
+	text-align: right;
+}
+.u-textCenter {
+	text-align: center;
+}
 
 // Padding Classes // ------
+.u-noPadding--x {
+	padding-left: 0px;
+	padding-right: 0px;
+}
 .u-padding--1 {
 	padding: 5px;
 }
@@ -10765,10 +10823,11 @@ a {
     position: absolute;
     content:" ";
     top: 0;
+    right: 0;
+    bottom: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: 0;
     background-color: rgba(255,255,255,0.25);
   }
 }
@@ -10779,63 +10838,37 @@ a {
 	}
 }
 
+.u-bgFilterLightHover {
+	&:before {
+		position: absolute;
+    content:" ";
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255,255,255,0);
+    transition: all .25s ease;
+    -webkit-transition: all .25s ease;
+	}
+}
+.u-bgFilterLightHover:hover, .u-bgFilterLightHover:focus {
+  &:before {
+    background-color: rgba(255,255,255,0.25);
+  }
+}
 // Line Clamp // ------
 /* Begin required CSS. */
-.u-line-clamp
-{
+.u-lineClamp {
 	display            : block;
-	display            : -webkit-box;
-	-webkit-box-orient : vertical;
+	height             : 1.2em;
 	position           : relative;
-
 	line-height        : 1.2;
 	overflow           : hidden;
 	text-overflow      : ellipsis;
 	padding            : 0 !important;
-}
-.u-line-clamp:after
-{
-	content    : '...';
-	text-align : right;
-	bottom     : 0;
-	right      : 0;
-	width      : 25%;
-	display    : block;
-	position   : absolute;
-	height     : calc(1em * 1.2);
-	background : linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1) 75%);
-}
-@supports (-webkit-line-clamp: 1)
-{
-	.u-line-clamp:after
-	{
-		display : none !important;
-	}
-}
-.u-line-clamp-1
-{
-	-webkit-line-clamp : 1;
-	height             : calc(1em * 1.2 * 1);
-}
-.u-line-clamp-2
-{
-	-webkit-line-clamp : 2;
-	height             : calc(1em * 1.2 * 2);
-}
-.u-line-clamp-3
-{
-	-webkit-line-clamp : 3;
-	height             : calc(1em * 1.2 * 3);
-}
-.u-line-clamp-4
-{
-	-webkit-line-clamp : 4;
-	height             : calc(1em * 1.2 * 4);
-}
-.u-line-clamp-5
-{
-	-webkit-line-clamp : 5;
-	height             : calc(1em * 1.2 * 5);
+	white-space: nowrap;
 }
 
 /*============================================================================
@@ -10843,11 +10876,151 @@ a {
 ==============================================================================*/
 
 //Buttons & Inputs
-//Inputs
+// Cart Drawer // ------
+
+// Drawer Open Class
+.drawer-is-open{
+  overflow: hidden;
+}
+// Cart Cloak
+.cloak {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.6);
+  @include transition(opacity 0.3s ease-in-out);
+  z-index: -10;
+}
+.drawer-is-open .cloak {
+  display: block;
+  opacity: 1;
+  z-index: 1001;
+  cursor: pointer;
+}
+
+.cart-drawer {
+  @include workSans-n5;
+  position: fixed;
+  width: 480px;
+  height: 100%;
+  right: 0px;
+  border-left: 0px;
+  @include transform(translateX(480px));
+  @include transition(all 0.3s ease-in-out);
+  background: rgb(255,255,255);
+  z-index: 1001;
+  @media screen and (max-width: 480px) {
+    width: 100%;
+  }
+}
+.cart-drawer .ajaxcart__inner {
+  overflow-y: scroll;
+  height: 100vh;
+  padding: 0 15px 200px;
+}
+.js-drawer-open-right .cart-drawer {
+  @include transform(translateX(0));
+}
+
+// Cart Header
+.cart-drawer--header {
+  position: relative;
+}
+.cart-drawer--title {
+  @include workSans-n5;
+  font-size: 1.75em;
+  text-transform: uppercase;
+  text-align: center;
+  letter-spacing: 0.2rem;
+  padding: 20px 0;
+}
+.cart-drawer--close {
+  position: absolute;
+  display: block;
+  top: 23px;
+  right: 15px;
+}
+.cart-drawer--close .line-wrapper {
+  @include transform(rotate(45deg) translate(-5px, 5px));
+  &:hover {
+    .line {
+      background-color: $fw-accent;
+    }
+  }
+  &:focus {
+    outline: none;
+  }
+}
+.cart-drawer--close .line-wrapper {
+  .line {
+    width: 20px;
+    height: 2px;
+    background-color: $fw-black;
+    @include transition(all 0.25s ease);
+    margin: 14px 0;
+  }
+  .line2 {
+    @include transform(rotate(90deg) translateX(-16px));
+  }
+}
+
+// Cart Entries
+.cart-drawer--product {
+  position: relative;
+  padding: 15px 0;
+  border-bottom: 1px solid $fw-accent;
+}
+.cart-drawer--product:first-child {
+  border-top: 1px solid $fw-accent;
+}
+
+.cart-drawer--product-name {
+  display: block;
+  @include workSans-n5;
+  font-size: 1.25em;
+  text-transform: uppercase;
+  line-height: 1.2;
+  letter-spacing: 0.1rem;
+}
+.cart-drawer--product-price {
+  display: block;
+  @include workSans-n5;
+  padding: 10px 0;
+  white-space: nowrap;
+}
+.cart-drawer--product-meta {
+  display: block;
+  @include workSans-n4;
+  font-size: 1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+// Cart Footer
+.cart-drawer--footer {
+  position: absolute;
+  width: 100%;
+  left: 0;
+  bottom: 0;
+  box-shadow: 0px 1px 10px 0px rgba(0,0,0,0.1);
+  background-color: rgb(255,255,255);
+}
+.cart-drawer--footer .subtotal {
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.1rem;
+  padding: 30px 0;
+}
+
+// Inputs
+.flex-group {
+ display: flex;
+}
+
 .fw-quantity-input {
-  display: -webkit-box;
-  display: -moz-box;
-  display: box;
   display: -webkit-flex;
   display: -moz-flex;
   display: -ms-flexbox;
@@ -10855,8 +11028,6 @@ a {
   background: transparent;
   border: 2px solid $fw-black;
   color: $fw-black;
-  font-size: 2rem;
-  font-weight: 400;
   outline: none;
   &:focus {
   	border: 2px solid $fw-black;
@@ -10871,10 +11042,20 @@ a {
 }
 .fw-quantity-input button {
   display: inline-block;
+  flex-grow: 1;
   background: transparent;
   -webkit-appearance: none;
-  padding: 0 15px;
   cursor: pointer;
+  color: $fw-black;
+  opacity: 0.75;
+  -webkit-transition: opacity .25s;
+  transition: opacity .25s;
+  &:hover {
+    opacity: 1;
+  }
+  &:focus {
+    outline: none;
+  }
 }
 .fw-quantity-input input {
   text-align: center;
@@ -10883,16 +11064,107 @@ a {
   }
 }
 
-//Buttons
+// Allbirds Input
+.allbirds-qty {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: flex;
+  margin-top: 5px;
+  margin-bottom: 10px;
+
+  .allbirds-qty__adjust {
+    display: inline-block;
+    height: 56px;
+    border: 0 none;
+    -webkit-appearance: none;
+    padding: 0 20px;
+    background-color: white;
+    border: 1px solid #dedede;
+    cursor: pointer;
+    z-index: 1;
+
+    &:focus {
+      outline: none;
+    }
+
+    &:hover {
+      span {
+        opacity: 1;
+      }
+    }
+
+    span {
+      font-size: 30px;
+      line-height: 60px;
+      opacity: 0.3;
+      @include transition(opacity 0.25s);
+    }
+    .allbirds-qty__adjust--plus {
+      border-left: none;
+    }
+    .allbirds-qty__adjust--minus {
+      border-right: none;
+    }
+  }
+}
+.cart-qty-wrapper {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: flex;
+  border: 2px solid $fw-black;
+  margin: 0 auto;
+}
+.cart-qty-adjust {
+  display: inline-block;
+  border: none;
+  background-color: transparent;
+  height: 55px;
+  padding: 0 15px;
+  cursor: pointer;
+  -webkit-appearance: none;
+  &:focus {
+    outline: none;
+  }
+  &:hover {
+    span {
+      opacity: 0.3;
+    }
+  }
+  span {
+    font-size: 30px;
+    line-height: 60px;
+    opacity: 1;
+    @include transition(opacity 0.25s);
+  }
+}
+.cart-qty-num {
+  display: inline-block;
+  background: transparent;
+  width: 100%;
+  height: 55px;
+  padding: 20px 5px 18px;
+  border: none;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 500;
+  &:focus {
+    outline: none;
+    border: none;
+  }
+}
+// Buttons
 .fw-btn {
   @include workSans-n5;
   background-color: transparent;
   border: 2px solid $fw-black;
   border-radius: 0px;
   color: $fw-black;
+  display: inline-block;
 	padding: 10px 15px;
   text-transform: uppercase;
-  transition: all .25s;
+  @include transition(all .25s);
   &:hover {
   	color: rgb(255,255,255);
   	background-color: $fw-black;
@@ -10920,13 +11192,39 @@ a {
   }
 }
 
+.fw-btn.btn-atc {
+  font-size: 1.15em;
+  margin-top: 3%;
+  width: 100%;
+}
+
 .fw-btn.btn-small {
   padding: 4px 10px;
 }
+
+.fw-btn.btn-lg {
+  width: 100%;
+  font-size: 1.5em;
+  letter-spacing: 0.2rem;
+  padding: 20px 30px;
+}
+
 .fw-btn.btn-align {
   vertical-align: 13%;
 }
-//Button Groups
+
+.fw-btn.disabled {
+  background-color: rgba(22,22,26,0.75);
+  border-color: rgba(22,22,26,0.75);
+  cursor: not-allowed;
+  &:hover {
+    color: rgb(255,255,255);
+    background-color: rgba(22,22,26,0.75);
+    border-color: rgba(22,22,26,0.75);
+  }
+}
+
+// Button Groups
 .fw-btn-group > .fw-btn {
 	margin: 0 1rem;
 }
@@ -10937,24 +11235,98 @@ a {
 	margin-right: 0;
 }
 
+// Images (Mostly for Pages)
+.bg-img-holder {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  background: $fw-black;
+  background-size: cover !important;
+  background-position: 50% 50% !important;
+  transition: all 0.5s ease;
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  opacity: 0;
+}
+.bg-img-holder img {
+  display: none;
+}
+.bg-img-holder.fadeIn {
+  opacity: 1;
+}
+
 /*============================================================================
   Theme Layout
 ==============================================================================*/
 
+//Flexbox
+.flex-container {
+	display: -webkit-flex;
+	display: flex;
+}
+
+.flex-row {
+	-webkit-flex-direction: row;
+	flex-direction: row;
+}
+
+.flex-row-reverse {
+	-webkit-flex-direction: row-reverse;
+	flex-direction: row-reverse;
+	justify-content: space-between;
+}
+
+.flex-column {
+	-webkit-flex-direction: column;
+	flex-direction: column; 
+}
+
+.flex-column-reverse {
+	-webkit-flex-direction: column-reverse;
+	flex-direction: column-reverse;
+}
+
 //Navbar
 // Logo, Search, and Cart // ------
+.navigation {
+	background: rgb(255,255,255);
+	@include transition (height 0.25s ease);
+	@media screen and (max-width: $screen-sm-max) {
+	  position: fixed;
+	  z-index: 999;
+	  width: 100%;
+  	height: 80px;
+	  top: 0px;
+	  box-shadow: 0px 1px 10px 0px rgba(0,0,0,0.1);
+	}
+}
+// Margin top for Main when navbar fixed for mobile. // ------
+main {
+	@media screen and (max-width: $screen-sm-max) {
+		margin-top: 80px;
+	}
+}
 
 // Logo // ---
 .nav-top {
 	background-color: rgb(255,255,255);
 	color: $fw-black;
-	font-size: 1.35em;
 }
 .nav-logo {
 	text-align: center;
 	line-height: 0;
 	margin: 30px auto;
 	max-width: 300px;
+	@media screen and (min-width: $screen-lg-min) {
+		height: 58px;
+	}
+	@media screen and (max-width: $screen-sm-max) {
+		margin: 20.5px auto; // AE: Keeps the height of the navbar a nice, clean 80px
+		max-width: 200px;
+	}
 }
 .nav-logo a, .nav-logo a:hover, .nav-logo a:focus{
 	text-decoration: none;
@@ -10963,22 +11335,168 @@ a {
 // Search and Cart Icons // ---
 .site-search--desktop {
 	float: left;
-	margin-left: 30px;
 	overflow: hidden;
   max-width: none;
+	font-size: 1.6em;
 }
 .site-search--desktop *:focus {
 	outline: none;
 }
 .site-cart--desktop {
 	float: right;
-	margin-right: 30px;
+	font-size: 1.2em;
 }
 .site-nav--mobile {
 	float: left;
+	font-size: 2em;
 }
 .site-cart--mobile {
 	float: right;
+}
+
+// Mobile Nav Toggle
+.navburger {
+	cursor: pointer	
+}
+.line-wrapper {
+	@include transition(all 0.25s ease);
+}
+.line {
+	width: 20px;
+	height: 2px;
+	background-color: $fw-black;
+	@include transition(all 0.25s ease);
+	&:nth-child(2) {
+		margin-top: 6px;
+		margin-bottom: 6px;
+	}
+}
+.navburger:hover {
+	.line {
+		background-color: $fw-accent;
+	}
+}
+// Nav Icon Active State 
+.navigation.is-open {
+	@media screen and (max-width: $screen-sm-max) {
+		height: 100vh;
+		overflow: scroll;
+	}
+}
+.navigation.is-open {
+	.line-wrapper {
+		@include transform(rotate(45deg));
+	}
+	.line:first-child {
+		@include transform(translateY(8px));
+	}
+	.line:nth-child(3) {
+		@include transform(translateY(-8px) rotate(90deg));
+	}
+}
+
+// Mobile Nav // ------
+.mobile-nav-wrapper {
+	max-height: 0;
+	overflow: hidden;
+	margin-top: 30px;
+	font-size: 1.25em;
+	text-align: center;
+	text-transform: uppercase;
+	letter-spacing: 0.1rem;
+	list-style: none;
+	@include transition(all 0.25 ease);
+}
+.navigation.is-open {
+	.mobile-nav-wrapper {
+		max-height: 1000px;
+		@media screen and (min-width: $screen-md-min) {
+			max-height: 0;
+		}
+	}
+}
+
+.mobile-nav--item {
+	position: relative;
+	display: block;
+	border-bottom: 1px solid $fw-accent;
+	&:last-child {
+		border-bottom: 0;
+	}
+}
+.mobile-nav--item a {
+	display: block;
+	padding: 15px;
+}
+li.mobile-nav--item {
+	margin-bottom: 0;
+}
+
+.mobile-nav--link {
+	color: $fw-black;
+	text-decoration: none;
+}
+
+// Mobile Nav Dropdowns
+.mobile-nav--has-sublist {
+	position: relative;
+	@include transition(all 0.25s cubic-bezier(0.57, 0.06, 0.05, 0.95));
+}
+.mobile-nav--expanded+.mobile-nav--sublist {
+	visibility: visible;
+	max-height: 100vh;
+	@include transition(all 0.25s cubic-bezier(0.57, 0.06, 0.05, 0.95));
+}
+.mobile-nav--has-sublist.mobile-nav--expanded {
+	background-color: $fw-black;
+}
+.mobile-nav--has-sublist.mobile-nav--expanded .mobile-nav--link {
+	color: rgb(255,255,255);
+}
+
+// Dropdown Toggle
+.mobile-nav--sublist-toggle {
+	position: absolute;
+	top: 5%;
+	right: 0;
+	button {
+		padding: 15px;
+		text-decoration: none;
+	}
+}
+.mobile-nav--toggle-open {
+	&:focus {
+		outline: none;
+	}
+  .mobile-nav--expanded & {
+    display: none;
+  }
+}
+
+.mobile-nav--toggle-close {
+  color: rgb(255,255,255);
+  display: none;
+	&:focus {
+		outline: none;
+	}
+  .mobile-nav--expanded & {
+    display: block;
+  }
+}
+
+.mobile-nav--sublist {
+	margin: 0;
+	max-height: 0;
+	visibility: hidden;
+	overflow: hidden;
+	@include transition(all 0.25s ease);
+	-webkit-backface-visibility: hidden;
+	backface-visibility: hidden;
+	font-size: .75em;
+}
+.mobile-nav--sublist .mobile-nav--item {
+	background-color: $fw-accent;
+	border-color: rgb(255,255,255);
 }
 
 // Desktop Search Animation // ---
@@ -10989,7 +11507,7 @@ a {
 	z-index: 10;
 }
 .search-toggle:hover {
-	color: $fw-orange;
+	color: $fw-accent;
 }
 .search-toggle:focus {
 	outline: none;
@@ -11033,32 +11551,61 @@ a {
   transition: color .25s;
 }
 .search-submit:hover {
-	color: $fw-orange;
+	color: $fw-accent;
 }
+
+// Cart Quantity Indicator // ------
+.cart-quantity {
+	display: inline-block;
+	background-color: $fw-black;
+	color: rgb(255,255,255);
+	border-radius: 50%;
+	font-size: 18.9px;
+	width: 30px;
+	height: 30px;
+	text-align: center;
+	vertical-align: middle;
+	line-height: 28px;
+	@include transition(all .25s ease);
+}
+.navbar-cart {
+	cursor: pointer;
+}
+.navbar-cart:hover {
+	.cart-quantity {
+		background-color: $fw-accent;
+	}
+}
+
 // Nav Links // ------
 .nav-linkbar {
 	background-color: $fw-black;
 	border-top: 1px solid $fw-grey;
 	text-align: center;
 }
-
 .site-nav {
-	@include workSans-n6;
+	@include workSans-n5;
 	margin: 0 auto;
 	display: inline-block;
 }
-
 .site-nav__link {
 	color: rgb(255,255,255);
+	letter-spacing: 0.1rem;
+	padding: 15px 0 13px 0;
+	margin: 0 15px;
+	border-bottom: 2px solid transparent;
+	@include transition(all 0.25s ease);
 	&:hover, &:focus {
-		color: $fw-orange;
+		color: $fw-accent;
+		border-color: $fw-accent
 	}
 }
-
-.collection-nav--active > .site-nav__link {
-	color: $fw-orange;
+.collection-nav--active > .site-nav__link, .site-nav--active > .site-nav__link {
+	color: $fw-accent;
+	border-color: $fw-accent;
 	&:hover {
-		color: $fw-orange;
+		color: $fw-accent;
+		border-color: $fw-accent;
 	}
 }
 
@@ -11085,17 +11632,83 @@ a {
   }
 }
 .sub-nav .site-nav__link {
-	padding: 10px 15px; 
+	padding: 10px 0px 8px 0px; 
 }
 
 //Footer
 .pre-footer {
 	border-top: 2px solid $fw-slate;
-	padding: 60px 0px 60px 0px;
+	background-color: $fw-black;
+	color: rgb(255,255,255);
+	padding: 60px 0px 30px 0px;
 }
+// Styles for GMap
 .pre-footer #map {
 	width: auto;
-	height: 500px;
+	height: 350px;
+}
+
+.footer-section {
+	margin-bottom: 50px;
+}
+
+// Styles for GCal
+.footer-cal {
+	text-align: right;
+	@media screen and (max-width: $screen-sm-max) {
+		text-align: left;
+		margin-bottom: 30px;
+	}
+}
+.calEvent {
+	text-align: right;
+	margin-bottom: 30px;
+}
+.calEvent a {
+	color: rgb(255,255,255);
+}
+.calEvent a:hover {
+	color: $fw-accent;
+}
+.calEvent a:hover	.calDateSquare {
+	background: $fw-accent;
+	color: rgb(255,255,255);
+}
+
+.calDateSquare {
+	float: left;
+	background: rgb(255,255,255);
+	color: $fw-black;
+	width: 50px;
+	height: 50px;
+	padding: 5px;
+	text-align: right;
+	text-transform: uppercase;
+	transition: all .25s ease;
+}
+.calDateSquare h4 {
+	font-size: 1.3em;
+	line-height: 1;
+	margin: 0;
+}
+.calDateDetails h4 {
+	font-weight: 500;
+	margin: 0;
+}
+.noCalEvents {
+	text-align: right;
+	@media screen and (max-width: $screen-sm-max) {
+		text-align: left;
+	}
+}
+.noCalEvents img {
+	max-height: 250px;
+	@media screen and (min-width: $screen-md-min) {
+		float: right;
+	}
+}
+.noCalEvents h4 {
+	display: inline-block;
 }
 
 .footer-content {
@@ -11104,18 +11717,56 @@ a {
 	font-weight: 500;
 }
 
+// Social Icons
+.footer-social {
+	text-align: right;
+	li {
+		font-size: 36px;
+		padding: 0px 15px;
+		&:first-child {
+			padding: 0px 15px 0px 0px; 
+		}
+		&:last-child {
+			padding: 0px 0px 0px 15px;
+		}
+	}
+
+	a {
+		color: rgb(255,255,255);
+		&:hover {
+			color: $fw-accent;
+		}
+	}
+	@media screen and (max-width: $screen-sm-max) {
+		text-align: left;
+	}
+}
+
+// Newsletter Signup Styling
+.newsletter-form {
+	display: flex;
+	@media screen and (max-width: $screen-sm-max) {
+		display: block;	
+	}
+}
 .newsletter-input {
 	background: transparent;
 	border: $border-default solid rgb(255,255,255);
 	color: rgb(255,255,255);
-	font-weight: 500;
+	@include workSans-n5;
+	font-size: 0.9em;
 	height: 37px;
 	margin-right: 5px;
 	padding: 8px 10px;
 	text-align: center;
 	text-transform: uppercase;
-	min-width: 300px;
+	min-width: 250px;
 	width: auto;
+	@media screen and (max-width: $screen-sm-max) {
+		height: 40px;
+		width: 100%;
+		margin-bottom: 5px; 
+	}
 }
 .newsletter-input:focus {
 	border: $border-default solid rgb(255,255,255);
@@ -11125,6 +11776,15 @@ a {
 	border: 3px solid rgb(255,255,255);
 	height: 37px;
 	line-height: 1.4;
+	@media screen and (max-width: $screen-sm-max) {
+		background-color: rgb(255,255,255);
+		color: $fw-black;
+		width: 100%;
+		&:focus {
+			background-color: $fw-accent;
+			color: rgb(255,255,255);
+		}
+	}
 }
 
 //Hero Subtiles
@@ -11143,6 +11803,7 @@ a {
 
 .hero-subtile--caption {
 	color: rgb(255,255,255);
+  text-transform: uppercase;
  	position: absolute;
   top: 50%;
   z-index: 2;
@@ -11168,15 +11829,35 @@ a {
 }
 
 //Product Partials
-//General 
+//General // ------
+
+// The container that holds the product partials on the homepage.
+.product-collection {
+	margin-top: 80px;
+	margin-bottom: 80px;
+}
+
 .product-partial {
 	padding: 50px;
 	@media (max-width: $screen-sm-max) {
 		padding: 10px;
 	}
+	&:hover {
+		.product-partial--title {
+			transition: all .25s ease;
+			color: $fw-accent;
+		}
+	}
+}
+.product-partial img {
+	max-height: 400px;
+	@media (max-width: $screen-xs-max) {
+		max-height: 30vh;
+	}
 }
 .product-partial--caption {
 	text-align: center;
+	transition: all .25s ease;
 	&:hover {
 		text-decoration: none;
 	}
@@ -11185,12 +11866,11 @@ a {
 	}
 }
 .product-partial--title {
-	font-weight: 700;
 	text-transform: uppercase;
+	letter-spacing: 0.2rem;
 }
 .product-partial--price {
 	color: $fw-black;
-	font-weight: 700;
 	text-transform: uppercase;
 }
 
@@ -11219,7 +11899,6 @@ a {
 	max-height: 280px;
 }
 .related-products .product-partial--caption {
-
 	text-align: right;
 	@media (max-width: $screen-sm-max) {
 		text-align: center;
@@ -11243,21 +11922,58 @@ a {
 .cart-wrapper {
 	background-color: $fw-black;
 	color: rgb(255,255,255);
-	margin-top: 60px;
-	margin-bottom: 60px;
+	margin-top: 100px;
+	margin-bottom: 100px;
 	padding: 30px 40px;
+	@media screen and (max-width: $screen-sm-max) {
+		margin: 0;
+	}
+}
+.cart-wrapper .cart-qty-wrapper {
+	background-color: rgb(255,255,255);
+	max-width: 190px;
+}
+.cart-header th {
+	@include workSans-n5;
+	font-size: 1.25em;
+	letter-spacing: 0.2rem;
+	text-transform: uppercase;
+	border-bottom: 1px solid $fw-accent;
 }
 
+.cart-row {
+	margin-top: 15px;
+	padding-top: 15px;
+	border-top: 1px solid $fw-accent;
+}
+.cart-row:first-child {
+	margin-top: 0px;
+	padding-top: 0px;
+	border-top: none;
+}
+
+.cart-row td:first-child, .cart-row th:first-child {
+	padding-left: 0;
+}
+.cart-row td:last-child {
+	padding-right: 0;
+}
 // This is an ugly hack, really. TODO AE: Find something nicer.
-td > span.h3 {
-	margin: 0;
+.cart__row > h4 {
+	margin-bottom: 0px;
+}
+
+// Cart Sidebar // -----
+
+.ajaxcart--footer {
+	position: absolute;
+	background-color: rgb(255,255,255);
 }
 
 //Products
 .product-wrapper {
   @media screen and (min-width: $screen-md-min) {
-    margin-top: 60px;
-    margin-bottom: 90px;
+    margin: 90px 0;
   }
   @media screen and (max-width: $screen-sm-max) {
     margin-bottom: 30px;
@@ -11270,6 +11986,7 @@ td > span.h3 {
   padding: 40px;
   @media screen and (max-width: $screen-sm-max) {
     text-align: center; 
+    padding: 15px;
   }
   @media screen and (min-width: $screen-md-min) {
     text-align: right;
@@ -11284,7 +12001,114 @@ td > span.h3 {
   letter-spacing: .3rem;
 }
 
-// Add to Cart Row // ------
+// Add to Cart Form// ------
+.form-atc {
+  position: relative;
+}
+
+// Quantity Selector
+.qty-wrapper {
+  text-align: right;
+  max-width: 33%;
+  width: 100%;
+  @media screen and (max-width: $screen-sm-max){
+    max-width: 48%;
+    width: 100%;
+  }
+}
+.qty-wrapper input {
+  max-width: calc(100% - 83px);
+  flex-grow: 2;
+  border: none;
+}
+.qty-adjust {
+  font-size: 20px;
+}
+.qty-num {
+  @media screen and (max-width: $screen-sm-max) {
+    max-width: 48%;
+  }
+}
+.quantity {
+  font-weight: 500;
+} 
+
+// Shopify Generated Selectors (Size, Color, Etc)
+.selector-wrapper {
+  text-align: left;
+  text-transform: uppercase;
+  width: 100%;
+  max-width: 63%;
+  @media screen and (max-width: $screen-sm-max) {
+    max-width: 48%;
+  }
+}
+.single-option-selector {
+  display: flex;
+  text-align-last: center;  
+  border: 2px solid $fw-black;
+  width: 100%;
+  transition: all 0.25s;
+  &:focus {
+    outline: none;
+    border: 2px solid $fw-slate;
+  }
+}
+
+// Coffee Details if product is Coffee
+.coffee-details {
+  color: rgb(255,255,255);
+  text-align: center;
+  text-transform: uppercase;
+}
+@media screen and (max-width: $screen-xs-max) {
+  .coffee-details--clear>*:nth-child(2n+1) {
+    clear: left;
+  }
+}
+@media screen and (min-width: $screen-sm-min) {
+  .coffee-details--clear>*:nth-child(3n+1) {
+    clear: left;
+  }
+}
+
+// Regional Background Colors
+.coffee-africa {
+  background-color: $coffee-africa;
+}
+.coffee-latinamerica {
+  background-color: $coffee-latinamerica;
+}
+.coffee-pacific {
+  background-color: $coffee-pacific;
+}
+.coffee-espresso {
+  background-color: $coffee-espresso;
+}
+
+// detail-section
+.coffee-details--section {
+  margin-bottom: 40px;
+}
+
+// Icons
+.coffee-details--icon {
+  margin-bottom: 20px;
+}
+.coffee-details--icon img {
+  max-height: 100px;
+}
+
+// Titles
+.coffee-details--title {
+  margin: 0;
+}
+
+// Copy
+.coffee-details--copy {
+  line-height: 1.2;
+}
+// General
 label {
   display: inline-block;
   max-width: 100%;
@@ -11294,33 +12118,165 @@ label {
 //Pages
 .page-intro {
   position: relative;
-  height: 720px;
+  height: 100vw;
+  padding: 0;
+  overflow: hidden;
+  @media screen and (min-width: $screen-md-min) {
+    max-height: 560px;
+  }
+  @media screen and (min-width: $screen-lg-min) {
+    max-height: 720px;
+  }
+}
+.intro-header {
+  position: relative; // This is necessary to make the color overlay not interfere with text.
+  @include workSans-n5;
+  font-size: 4em;
+  color: rgb(255,255,255);
+  letter-spacing: 0.5rem;
+  text-transform: uppercase;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+  margin-bottom: 0px;
+  @media screen and (max-width: $screen-sm-max) {
+    font-size: 2.5em;
+    padding: 0 15px;
+  }
+}
+
+
+// Page Components // ---
+// Rectangle Callout
+.rectangle {
+  border: $border-thin solid $fw-black;
+  background: transparent;
+  display: inline-block;
+  padding: 5.5px 24px;
+  margin-bottom: 45px;
+}
+.rectangle h5 {
+  @include workSans-n5;
+  font-size: 18px;
+  text-transform: uppercase;
+  letter-spacing: 0.3rem;
+  margin-bottom: 0;
+}
+
+
+// Page Layouts // ---
+// Halves Layout
+.halves {
+  position: relative;
+  padding: 0;
+  overflow: hidden;
+  @media screen and (min-width: $screen-md-min){
+    height: 70vw;
+    max-height: 570px;
+  }
+}
+.half {
+  @media screen and (min-width: $screen-md-min) {
+    position: absolute;   
+  }
+}
+.half:first-child {
+  left: 0;
+}
+.half:last-child {
+  right: 0;
+}
+
+.image-half {
+  position: relative;
+  height: 70vw;
+  max-height: 570px;
   padding: 0;
   overflow: hidden;
 }
-.bg-img-holder {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  z-index: 1;
+
+.text-half {
+  @media screen and (min-width: $screen-md-min) {
+    top: 50%;
+    transform: translate3d(0, -50%, 0);
+    -webkit-transform: translate3d(0, -50%, 0);
+    -moz-transform: translate3d(0, -50%, 0); 
+  }
+  @media screen and (max-width: $screen-sm-max) {
+    padding-top: 30px;
+    padding-bottom: 30px;
+  }
+}
+
+// Three-Up Layout
+.image-row-3 > div {
+  height: 400px;
+  border: $border-thick solid transparent;
+}
+
+
+// Learn Page // --- 
+// Brew Icons
+.icon-section {
+  @media screen and (max-width: $screen-sm-max) {
+    margin-bottom: 40px;
+  }
+}
+.brew-guide--icon {
+  margin-bottom: 20px;
+}
+.brew-guide--icon img {
+  max-height: 175px;
+}
+.brew-guide--method {
+  letter-spacing: 0.2rem;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+h4.brew-guide--method {
+  margin-top: 0;
+}
+
+// Brewing Instructions
+.brew-guide {
+  margin: 150px 0;
+}
+.brew-guide--header {
   background: $fw-black;
-  background-size: cover !important;
-  background-position: 50% 50% !important;
-  transition: all 0.3s ease;
-  -webkit-transition: all 0.3s ease;
-  -moz-transition: all 0.3s ease;
-  opacity: 0;
+  padding-top: 50px;
+  padding-bottom: 50px; 
+}
+.brew-guide--header img {
+  max-height: 275px;
+}
+.brew-guide--ingredients {
+  margin-bottom: 100px;
+}
+.brew-guide--ingredientSection {
+  @media screen and (max-width: $screen-sm-max) {
+    margin-bottom: 40px;
+  }
+}
+.brew-guide--items {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.brew-guide--items li {
+  font-size: 16px;
+  margin-bottom: 5px;
 }
 
-.bg-img-holder img {
-  display: none;
+//Login
+.login {
+	background: url(//cdn.shopify.com/s/files/1/1080/7300/files/Flywheel3-Opt.jpg) no-repeat center center;
+	background-size: cover;
+	-moz-background-size: cover;
+	-webkit-background-size: cover;
+	padding: 180px 0;
+}
+.login input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px white inset !important;
 }
 
-.bg-img-holder.fadeIn {
-  opacity: 1;
-}
 
 /*============================================================================
   Vendor & Vendor Extensions
@@ -11471,7 +12427,6 @@ label {
 .hero--full-height {
   // Height is set by JS on slider init. vh is a nice default for modern browsers.
   height: 100vh;
-  min-height: 550px;
 
   .slick-list,
   .slick-track {
@@ -11516,11 +12471,10 @@ label {
 }
 
 .hero__text-content {
+  position: relative;
+  text-align: center;
   opacity: 0;
-  display: table-cell;
-  vertical-align: middle;
-  padding: 15px 30px 0;
-  @include transition('color 0.2s ease');
+  @include transition(color 0.2s ease);
 
   .slick-initialized & {
     opacity: 1;
@@ -11539,7 +12493,8 @@ label {
 /*================ Extra specificity to override Timber defaults ================*/
 .hero__slide {
   .hero__title {
-    margin-bottom: 20px;
+    font-weight: 500;
+    letter-spacing: 0.3rem;
     line-height: 1.25;
   }
 
@@ -11552,6 +12507,8 @@ label {
   }
 
   a.hero__cta {
+    display: inline-block;
+    margin-top: 30px;
     margin-bottom: 0;
   }
 }
@@ -11787,6 +12744,12 @@ $slick-opacity-not-active: 0.25;
   opacity: $slick-opacity-default;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  @media screen and (max-width: $screen-md-max) {
+    font-size: 50px;
+  }
+  @media screen and (max-width: $screen-sm-max) {
+    font-size: 0px;
+  }
 }
 .slick-prev {
   left: -25px;
@@ -11891,6 +12854,14 @@ $slick-opacity-not-active: 0.25;
 		width: 90%;
 	}
 }
+.container-90-md {
+	@media screen and (min-width: $screen-md-min) {
+		width: 90%;
+	}
+}
+.container-90-xs {
+	width: 90%;
+}
 
 // Slick Slider // ------
 .hero__title {
@@ -11898,7 +12869,7 @@ $slick-opacity-not-active: 0.25;
 }
 .hero--full-height {
 	@media screen and (max-width: $screen-sm-max){
-		height: 40vh;
+		height: 80vh;
 	}
 	@media screen and (min-width: $screen-md-min) {
 		height: 60vh;

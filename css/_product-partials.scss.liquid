@@ -1,12 +1,32 @@
-//General 
+//General // ------
+
+// The container that holds the product partials on the homepage.
+.product-collection {
+	margin-top: 80px;
+	margin-bottom: 80px;
+}
+
 .product-partial {
 	padding: 50px;
 	@media (max-width: $screen-sm-max) {
 		padding: 10px;
 	}
+	&:hover {
+		.product-partial--title {
+			transition: all .25s ease;
+			color: $fw-accent;
+		}
+	}
+}
+.product-partial img {
+	max-height: 400px;
+	@media (max-width: $screen-xs-max) {
+		max-height: 30vh;
+	}
 }
 .product-partial--caption {
 	text-align: center;
+	transition: all .25s ease;
 	&:hover {
 		text-decoration: none;
 	}
@@ -15,12 +35,11 @@
 	}
 }
 .product-partial--title {
-	font-weight: 700;
 	text-transform: uppercase;
+	letter-spacing: 0.2rem;
 }
 .product-partial--price {
 	color: $fw-black;
-	font-weight: 700;
 	text-transform: uppercase;
 }
 
@@ -49,7 +68,6 @@
 	max-height: 280px;
 }
 .related-products .product-partial--caption {
-
 	text-align: right;
 	@media (max-width: $screen-sm-max) {
 		text-align: center;

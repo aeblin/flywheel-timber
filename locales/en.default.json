@@ -56,20 +56,20 @@
     "general": {
       "title": "Your Cart",
       "remove": "Remove",
-      "note": "Special instructions for seller",
+      "note": "Any notes about your order?",
       "subtotal": "Subtotal",
       "shipping_at_checkout": "Shipping & taxes calculated at checkout",
       "update": "Update Cart",
-      "checkout": "CheckOut",
+      "checkout": "Checkout",
       "empty": "Your cart is currently empty.",
       "continue_browsing_html": "Continue browsing <a href=\"/collections/all\">here</a>.",
       "close_cart": "Close Cart"
     },
     "label": {
-      "product": "Product",
+      "product": "Item",
       "price": "Price",
       "quantity": "Quantity",
-      "total": "Total"
+      "total": "Subtotal"
     }
   },
   "collections": {
@@ -206,7 +206,7 @@
       "submit": "Reset Password"
     },
     "register": {
-      "title": "Create Account",
+      "title": "Create An Account",
       "first_name": "First Name",
       "last_name": "Last Name",
       "email": "Email",

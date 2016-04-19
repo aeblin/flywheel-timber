@@ -95,7 +95,7 @@ timber.cacheSelectors = function () {
 
     // Navigation
     $navigation              : $('#AccessibleNav'),
-    $mobileSubNavToggle      : $('.mobile-nav__toggle'),
+    $mobileSubNavToggle      : $('.mobile-nav--sublist-toggle'),
 
     // Collection Pages
     $changeView              : $('.change-view'),
@@ -371,7 +371,7 @@ timber.Drawers = (function () {
     var defaults = {
       close: '.js-drawer-close',
       open: '.js-drawer-open-' + position,
-      openClass: 'js-drawer-open',
+      openClass: 'drawer-is-open js-drawer-close',
       dirOpenClass: 'js-drawer-open-' + position
     };
 

@@ -1,26 +1,72 @@
-<div class="pre-footer u-darkBg u-lightCopy">
+<div class="pre-footer">
   <div class="container container-90">
     <div class="row">
-      <div class="col-sm-12 col-md-6">
-        <h3 class="u-capitalize u-letterSpacing2">
-          Come on by.
+      <div class="col-sm-12 col-md-6 footer-section">
+        <h3 class="u-capitalize u-letterSpacing2 u-padding--3y">
+          Come have a cup
         </h3>
         <div id="map"></div>
       </div>
-      <div class="col-sm-12 col-md-4 col-md-offset-2">
-        <h3 class="text-right u-capitalize u-letterSpacing2">
-          What's happening?
-        </h3>
-        <div class="js-gcal-output text-right"></div>
+      <div class="col-sm-12 col-md-4 col-md-offset-2 footer-section">
+        <div class="footer-cal">
+          <h3 class="u-capitalize u-letterSpacing2 u-padding--3y">
+            What's happening?
+          </h3>
+          <div class="js-gcal-output"></div>
+        </div>
       </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12 col-sm-6 col-md-6 footer-section">
+        <h4 class="u-capitalize u-letterSpacing2">
+          972 STANYAN ST.<br/>
+          SAN FRANCISCO, CA 94117<br/>
+          6-7 M/F | 7-7 WEEKENDS
+        </h4>
+      </div>
+      {% if settings.footer_social_enable %}
+        <div class="col-xs-12 col-sm-6 col-md-4 col-md-offset-2 footer-section">
+          <div class="footer-social">
+            <h4 class="u-capitalize u-letterSpacing2">
+              Get Social
+            </h4>
+            <ul class="inline-list">
+              {% if settings.social_facebook_link %}
+                <li>
+                  <a class="icon-fallback-text" href="{{ settings.social_facebook_link }}" title="{{ shop.name }} on Facebook" target="_new">
+                    <span class="ion-social-facebook" aria-hidden="true"></span>
+                    <span class="fallback-text">Facebook</span>
+                  </a>
+                </li>
+              {% endif %}
+              {% if settings.social_instagram_link %}
+                <li>
+                  <a class="icon-fallback-text" href="{{ settings.social_instagram_link }}" title="{{ shop.name }} on Instagram" target="_new">
+                    <span class="ion-social-instagram-outline" aria-hidden="true"></span>
+                    <span class="fallback-text">Instagram</span>
+                  </a>
+                </li>
+              {% endif %}
+              {% if settings.social_twitter_link %}
+                <li>
+                  <a class="icon-fallback-text" href="{{ settings.social_twitter_link }}" title="{{ shop.name }} on Twitter" target="_new">
+                    <span class="ion-social-twitter" aria-hidden="true"></span>
+                    <span class="fallback-text">Twitter</span>
+                  </a>
+                </li>
+              {% endif %}
+            </ul>
+          </div>
+        </div>
+      {% endif %}
     </div>
   </div>
 </div>
 
-<footer class="footer-content u-darkBg u-lightCopy u-capitalize text-center" role="contentinfo">  
+<footer class="footer-content u-darkBg u-lightCopy u-capitalize u-textCenter" role="contentinfo">  
   <div class="container container-90">
-    <div class="row u-vertical-align">
-      <div class="col-md-4 text-center u-margincenter">
+    <div class="row">
+      <div class="col-md-4 u-textCenter u-margincenter">
         {% if settings.footer_newsletter_enable %}
           {% if settings.newsletter_form_action != blank %}
             {% assign form_action = settings.newsletter_form_action %}
@@ -28,19 +74,19 @@
             {% assign form_action = '#' %}
           {% endif %}
           <div class="mc-field-group">
-            <form action="{{ form_action }}" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" target="_blank" class="input-group">
+            <form action="{{ form_action }}" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" target="_blank" class="newsletter-form">
               <input type="email" value="{% if customer %}{{ customer.email }}{% endif %}" placeholder="{{ 'general.newsletter_form.newsletter_email' | t }}" name="EMAIL" id="mail" class="newsletter-input" aria-label="{{ 'general.newsletter_form.newsletter_email' | t }}" autocorrect="off" autocapitalize="off">
               <input type="submit" class="fw-btn btn-small btn-light" name="subscribe" id="subscribe" value="{{ 'general.newsletter_form.submit' | t }}">
             </form>
           </div>
         {% endif %}
       </div>
-      <div class="col-md-4 text-center">
+      <div class="col-md-4 u-textCenter">
         {% comment %}
           Loop through available payment methods and show their icons.
         {% endcomment %}
         {% unless shop.enabled_payment_types == empty %}
-          <h4 class="text-center">{{ 'layout.footer.accepted_payments' | t }}</h4>
+          <h4 class="u-textCenter">{{ 'layout.footer.accepted_payments' | t }}</h4>
           <ul class="inline-list payment-icons">
             {% for type in shop.enabled_payment_types %}
               <li>
@@ -54,7 +100,7 @@
         {% endunless %}
         <small>© {{ shop.name }} {{ 'now' | date: "%Y" }}</small>
       </div>
-      <div class="col-md-4 text-center">
+      <div class="col-md-4 u-textCenter">
         <small>Made by <a href="http://andyeblin.com">Andy Eblin</a></small>
       </div>
     </div>

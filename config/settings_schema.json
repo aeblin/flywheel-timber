@@ -522,18 +522,6 @@
         "label": "Show social media icons"
       },
       {
-        "type": "text",
-        "id": "social_twitter_link",
-        "label": "Twitter URL",
-        "info": "Example: https://twitter.com/shopify"
-      },
-      {
-        "type": "text",
-        "id": "social_facebook_link",
-        "label": "Facebook URL",
-        "info": "Example: https://www.facebook.com/shopify"
-      },
-      {
         "type": "checkbox",
         "id": "footer_newsletter_enable",
         "label": "Show newsletter field"
@@ -581,9 +569,21 @@
     "settings": [
       {
         "type": "text",
-        "id": "twittercard_handle",
-        "label": "Twitter handle",
-        "info": "Example: @shopify"
+        "id": "social_twitter_link",
+        "label": "Twitter URL",
+        "info": "Example: https://twitter.com/flywheelcoffee"
+      },
+      {
+        "type": "text",
+        "id": "social_facebook_link",
+        "label": "Facebook URL",
+        "info": "Example: https://www.facebook.com/shopify"
+      },
+      {
+        "type": "text",
+        "id": "social_instagram_link",
+        "label": "Instagram URL",
+        "info": "Example: https://www.facebook.com/shopify"
       }
     ]
   }

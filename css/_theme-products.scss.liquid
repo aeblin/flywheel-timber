@@ -1,7 +1,6 @@
 .product-wrapper {
   @media screen and (min-width: $screen-md-min) {
-    margin-top: 60px;
-    margin-bottom: 90px;
+    margin: 90px 0;
   }
   @media screen and (max-width: $screen-sm-max) {
     margin-bottom: 30px;
@@ -33,6 +32,7 @@
 .form-atc {
   position: relative;
 }
+
 // Quantity Selector
 .qty-wrapper {
   text-align: right;
@@ -44,11 +44,12 @@
   }
 }
 .qty-wrapper input {
-  width: 75%;
+  max-width: calc(100% - 83px);
+  flex-grow: 2;
   border: none;
 }
 .qty-adjust {
-  font-size: 1.15em;
+  font-size: 20px;
 }
 .qty-num {
   @media screen and (max-width: $screen-sm-max) {
@@ -58,6 +59,7 @@
 .quantity {
   font-weight: 500;
 } 
+
 // Shopify Generated Selectors (Size, Color, Etc)
 .selector-wrapper {
   text-align: left;
@@ -70,8 +72,68 @@
 }
 .single-option-selector {
   display: flex;
+  text-align-last: center;  
   border: 2px solid $fw-black;
   width: 100%;
+  transition: all 0.25s;
+  &:focus {
+    outline: none;
+    border: 2px solid $fw-slate;
+  }
+}
+
+// Coffee Details if product is Coffee
+.coffee-details {
+  color: rgb(255,255,255);
+  text-align: center;
+  text-transform: uppercase;
+}
+@media screen and (max-width: $screen-xs-max) {
+  .coffee-details--clear>*:nth-child(2n+1) {
+    clear: left;
+  }
+}
+@media screen and (min-width: $screen-sm-min) {
+  .coffee-details--clear>*:nth-child(3n+1) {
+    clear: left;
+  }
+}
+
+// Regional Background Colors
+.coffee-africa {
+  background-color: $coffee-africa;
+}
+.coffee-latinamerica {
+  background-color: $coffee-latinamerica;
+}
+.coffee-pacific {
+  background-color: $coffee-pacific;
+}
+.coffee-espresso {
+  background-color: $coffee-espresso;
+}
+
+// detail-section
+.coffee-details--section {
+  margin-bottom: 40px;
+}
+
+// Icons
+.coffee-details--icon {
+  margin-bottom: 20px;
+}
+.coffee-details--icon img {
+  max-height: 100px;
+}
+
+// Titles
+.coffee-details--title {
+  margin: 0;
+}
+
+// Copy
+.coffee-details--copy {
+  line-height: 1.2;
 }
 // General
 label {

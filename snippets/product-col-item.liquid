@@ -48,7 +48,7 @@
       <img src="{{ product.featured_image.src | img_url: 'large' }}" alt="{{ product.featured_image.alt | escape }}">
       
       <div class="product-partial--caption">
-        <h3 class="product-partial--title u-letterSpacing2 u-line-clamp u-line-clamp-1">{{ product.title }}</h3>
+        <h3 class="product-partial--title u-letterSpacing2 u-lineClamp">{{ product.title }}</h3>
         <h4 class="product-partial--price"> 
           {% comment %}
             You can show a leading 'from' or 'up to' by checking 'product.price_varies'
@@ -89,7 +89,7 @@
       
       <div class="product-partial--caption">
         <h3 class="product-partial--title">{{ product.title }}</h3>
-        <p class="product-partial--price"> 
+        <h4 class="product-partial--price"> 
           {% comment %}
             You can show a leading 'from' or 'up to' by checking 'product.price_varies'
             if your variants have different prices.
@@ -120,7 +120,7 @@
             <span class="visually-hidden">{{ 'products.general.regular_price' | t }}</span>
             <br><s>{{ product.compare_at_price | money }}</s>
           {% endif %}
-        </p>
+        </h4>
       </div>
     </a>
   {% endif %}

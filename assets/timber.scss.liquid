@@ -83,6 +83,7 @@
 
 /*============================================================================
   Layer promotion mixin for creating smoother animations with higher FPS.
+  AE: Has fun side-effect of breaking fixed positioning.
 ==============================================================================*/
 @mixin promote-layer($properties: transform) {
   -webkit-transform: translateZ(0); // translateZ hack
@@ -1016,8 +1017,6 @@ hr {
   #Rich Text Editor
 ==============================================================================*/
 .rte {
-  margin-bottom: $gutter / 2;
-
   a {
     text-decoration: underline;
   }
@@ -1056,11 +1055,6 @@ a,
   color: $colorLink;
   text-decoration: none;
   background: transparent;
-}
-
-a:hover,
-a:focus {
-  color: $colorLinkHover;
 }
 
 button {
@@ -1360,12 +1354,12 @@ form {
 }
 
 /*================ Prevent zoom on touch devices in active inputs ================*/
-@include at-query($max, $medium) {
-  input,
-  textarea {
-    font-size: 16px;
-  }
-}
+// @include at-query($max, $medium) {
+//   input,
+//   textarea {
+//     font-size: 16px;
+//   }
+// }
 
 input,
 textarea,
@@ -2060,7 +2054,6 @@ label.error {
 ==============================================================================*/
 .js-drawer-open {
   overflow: hidden;
-  height: 100%;
 }
 
 .drawer {
@@ -2129,7 +2122,6 @@ label.error {
 }
 
 .is-moved-by-drawer {
-  @include promote-layer();
   transition: $drawerTransition;
 
   .js-drawer-open-left & {
@@ -2268,8 +2260,8 @@ label.error {
   margin-bottom: $gutter / 2;
   border: 1px solid transparent;
   font-size: 0.9em;
-  text-align: left;
-
+  text-align: center;
+  text-transform: uppercase;
   ul,
   ol {
     margin-top: 0;
@@ -2513,8 +2505,7 @@ label.error {
 /*================ Quantity Selectors in Ajax Cart ================*/
 .ajaxcart__qty {
   @extend .js-qty;
-  margin: 0;
-
+  margin-bottom: 0;
   .is-loading & {
     opacity: 0.5;
     transition: none;

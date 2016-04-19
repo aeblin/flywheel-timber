@@ -1,18 +1,13 @@
 {% unless page.metafields.c_f.page_header_img == blank %}
 	<section class="page-intro image-bg">
-		<div class="bg-img-holder" style="background: url({{ page.metafields.c_f.page_header_img }});">
-			<img alt="header-image" class="bg-img" src="{{ page.metafields.c_f.page_header_img }}">
+		<div class="bg-img-holder js-fadeIn u-verticalAlign" style="background: url({{ page.metafields.c_f.page_header_img }});">
+      {% if page.metafields.c_f.page_header_copy %}
+        <h1 class="u-capitalize u-textCenter intro-header">{{ page.metafields.c_f.page_header_copy }}</h1>
+      {% endif %}
 		</div>
 	</section>
 {% endunless %}
 
-<section class="container">
-  <div class="grid__item large--two-thirds push--large--one-sixth">
-    {% comment %}
-      Regular page content goes here.
-    {% endcomment %}
-    <div class="rte">
-      {{ page.content }}
-    </div>
-  </div>
+<section class="page-content">
+  {{ page.content }}
 </section>

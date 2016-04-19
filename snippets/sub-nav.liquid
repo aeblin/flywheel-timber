@@ -1,37 +1,34 @@
-<nav class="sub-navbar nav-linkbar" role="navigation">
-  <div class="wrapper">
-    <div class="medium-down--hide">
-      {% comment %}
-        First check if any product collections contain Coffee or Gear, if we're on a product page, we'll set the subnav that way.
+<nav class="sub-navbar nav-linkbar hidden-xs hidden-sm" role="navigation">
+  <div class="container container-90">
+    {% comment %}
+      First check if any product collections contain Coffee or Gear, if we're on a product page, we'll set the subnav that way.
 
-        If we're on a collection page and in any of the coffee-related collections, use the coffee linklist in the subnav. 
-        If we're on a collection page and in any of the gear-related collections, use the gear linklist in the subnav.
+      If we're on a collection page and in any of the coffee-related collections, use the coffee linklist in the subnav. 
+      If we're on a collection page and in any of the gear-related collections, use the gear linklist in the subnav.
 
-        or collection.title == 'Gear'
-      {% endcomment %}
- 
-      {% if in_coffee_collection or collection.title == 'Coffee' or collection.title == 'Africa' or collection.title == 'Latin America' or collection.title == 'Pacific' or collection.title == 'Gesha' or collection.title == 'Espresso' %}
-        <ul class="sub-nav" id="AccessibleNav">
-          {% for link in linklists.coffee-menu.links %}
-            {% unless link.type == 'collection_link' and link.object.products_count == 0 %}
-              <li {% if link.active %}class="collection-nav--active"{% endif %}>
-                <a href="{{ link.url }}" class="site-nav__link">{{ link.title }}</a>
-              </li>
-            {% endunless %}
-          {% endfor %}
-        </ul>
-      {% elsif in_gear_collection or collection.title == 'Gear' %}
-        <ul class="sub-nav" id="AccessibleNav">
-          {% for link in linklists.gear-menu.links %}
-            {% unless link.type == 'collection_link' and link.object.products_count == 0 %}
-              <li {% if link.active %}class="collection-nav--active"{% endif %}>
-                <a href="{{ link.url }}" class="site-nav__link">{{ link.title }}</a>
-              </li>
-            {% endunless %}
-          {% endfor %}
-        </ul>
-      {% endif %}
+      or collection.title == 'Gear'
+    {% endcomment %}
 
-    </div>
+    {% if in_coffee_collection or collection.title == 'Coffee' or collection.title == 'Africa' or collection.title == 'Latin America' or collection.title == 'Pacific' or collection.title == 'Gesha' or collection.title == 'Espresso' %}
+      <ul class="sub-nav" id="AccessibleNav">
+        {% for link in linklists.coffee-menu.links %}
+          {% unless link.type == 'collection_link' and link.object.products_count == 0 %}
+            <li {% if link.active %}class="collection-nav--active"{% endif %}>
+              <a href="{{ link.url }}" class="site-nav__link">{{ link.title }}</a>
+            </li>
+          {% endunless %}
+        {% endfor %}
+      </ul>
+    {% elsif in_gear_collection or collection.title == 'Gear' or collection.title == 'Brewing Tools' or collection.title == 'Apparel' or collection.title == 'Goods' %}
+      <ul class="sub-nav" id="AccessibleNav">
+        {% for link in linklists.gear-menu.links %}
+          {% unless link.type == 'collection_link' and link.object.products_count == 0 %}
+            <li {% if link.active %}class="collection-nav--active"{% endif %}>
+              <a href="{{ link.url }}" class="site-nav__link">{{ link.title }}</a>
+            </li>
+          {% endunless %}
+        {% endfor %}
+      </ul>
+    {% endif %}
   </div>
 </nav>

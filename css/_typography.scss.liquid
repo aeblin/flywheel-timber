@@ -35,14 +35,28 @@ body {
   line-height: $lineHeight--default;
 }
 
+h1 {
+  @media screen and (max-width: $screen-sm-max) {
+    font-size: 2.5em;
+  }
+}
+
+p {
+  font-size: 16px;
+}
+
 a {
 	color: $fw-black;
 	transition: all 0.25s ease;
 	-webkit-transition: all 0.25s ease;
 	-moz-transition: all 0.25s ease;
 	cursor: pointer;
-	&:hover, &:focus {
-		color: $fw-orange;
+	&:hover {
+		color: $fw-accent;
 		text-decoration: none;
 	}
+  &:focus {
+    color: $fw-black;
+    text-decoration: none;
+  }
 }

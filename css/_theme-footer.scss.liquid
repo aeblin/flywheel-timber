@@ -1,25 +1,42 @@
-
 .pre-footer {
 	border-top: 2px solid $fw-slate;
-	padding: 60px 0px 60px 0px;
+	background-color: $fw-black;
+	color: rgb(255,255,255);
+	padding: 60px 0px 30px 0px;
 }
 // Styles for GMap
 .pre-footer #map {
 	width: auto;
-	height: 500px;
+	height: 350px;
+}
+
+.footer-section {
+	margin-bottom: 50px;
 }
 
 // Styles for GCal
+.footer-cal {
+	text-align: right;
+	@media screen and (max-width: $screen-sm-max) {
+		text-align: left;
+		margin-bottom: 30px;
+	}
+}
+.calEvent {
+	text-align: right;
+	margin-bottom: 30px;
+}
 .calEvent a {
 	color: rgb(255,255,255);
 }
 .calEvent a:hover {
-	color: $fw-orange;
-	.calDateSquare {
-		background: $fw-orange;
-		color: rgb(255,255,255);
-	}
+	color: $fw-accent;
 }
+.calEvent a:hover	.calDateSquare {
+	background: $fw-accent;
+	color: rgb(255,255,255);
+}
+
 .calDateSquare {
 	float: left;
 	background: rgb(255,255,255);
@@ -36,6 +53,25 @@
 	line-height: 1;
 	margin: 0;
 }
+.calDateDetails h4 {
+	font-weight: 500;
+	margin: 0;
+}
+.noCalEvents {
+	text-align: right;
+	@media screen and (max-width: $screen-sm-max) {
+		text-align: left;
+	}
+}
+.noCalEvents img {
+	max-height: 250px;
+	@media screen and (min-width: $screen-md-min) {
+		float: right;
+	}
+}
+.noCalEvents h4 {
+	display: inline-block;
+}
 
 .footer-content {
 	border-top: 2px solid rgba(255,255,255, 0.4);
@@ -43,18 +79,56 @@
 	font-weight: 500;
 }
 
+// Social Icons
+.footer-social {
+	text-align: right;
+	li {
+		font-size: 36px;
+		padding: 0px 15px;
+		&:first-child {
+			padding: 0px 15px 0px 0px; 
+		}
+		&:last-child {
+			padding: 0px 0px 0px 15px;
+		}
+	}
+
+	a {
+		color: rgb(255,255,255);
+		&:hover {
+			color: $fw-accent;
+		}
+	}
+	@media screen and (max-width: $screen-sm-max) {
+		text-align: left;
+	}
+}
+
+// Newsletter Signup Styling
+.newsletter-form {
+	display: flex;
+	@media screen and (max-width: $screen-sm-max) {
+		display: block;	
+	}
+}
 .newsletter-input {
 	background: transparent;
 	border: $border-default solid rgb(255,255,255);
 	color: rgb(255,255,255);
-	font-weight: 500;
+	@include workSans-n5;
+	font-size: 0.9em;
 	height: 37px;
 	margin-right: 5px;
 	padding: 8px 10px;
 	text-align: center;
 	text-transform: uppercase;
-	min-width: 300px;
+	min-width: 250px;
 	width: auto;
+	@media screen and (max-width: $screen-sm-max) {
+		height: 40px;
+		width: 100%;
+		margin-bottom: 5px; 
+	}
 }
 .newsletter-input:focus {
 	border: $border-default solid rgb(255,255,255);
@@ -64,4 +138,13 @@
 	border: 3px solid rgb(255,255,255);
 	height: 37px;
 	line-height: 1.4;
+	@media screen and (max-width: $screen-sm-max) {
+		background-color: rgb(255,255,255);
+		color: $fw-black;
+		width: 100%;
+		&:focus {
+			background-color: $fw-accent;
+			color: rgb(255,255,255);
+		}
+	}
 }
