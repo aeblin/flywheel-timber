@@ -1,7 +1,7 @@
-<section class="js-height-sync js-fadeIn product-image product-image-carousel" data-fullscreen="false">
+<section class="js-fadeIn product-image-carousel" data-fullscreen="false">
   {% for image in product.images %}
     <div class="product-slide">
-      <img src="{{ image.src | product_img_url: 'large' }}" data-image="{{ image.src | product_img_url: 'large' }}">
+      <img class="js-height-sync product-image" src="{{ image.src | product_img_url: 'grande' }}" data-image="{{ image.src | product_img_url: 'grande' }}">
     </div>
   {% endfor %}
 </section>

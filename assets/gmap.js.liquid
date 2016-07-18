@@ -5,11 +5,11 @@ function initMap() {
     null, /* size is determined at runtime */
     null, /* origin is 0,0 */
     null, /* anchor is bottom center of the scaled image */
-    new google.maps.Size(40, 60)
+    new google.maps.Size(33, 50)
   ); 
   var map = new google.maps.Map(mapDiv, {
     // Center on Flywheel Coffee Roasters
-    center: {lat: 37.769, lng: -122.453},
+    center: {lat: 37.7696774, lng: -122.453318},
     // Zoom to Street Level
     zoom: 15,
     // Style it in a nice monochrome
@@ -33,7 +33,7 @@ function initMap() {
     disableDefaultUI: true
   });
   var flywheelMarker = new google.maps.Marker({
-    position: {lat: 37.769, lng: -122.453},
+    position: {lat: 37.7696774, lng: -122.453318},
     map: map,
     title: 'Here we are.',
     icon: markerImg,

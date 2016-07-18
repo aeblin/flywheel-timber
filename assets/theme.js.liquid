@@ -52,6 +52,7 @@ jQuery(document).ready(function($) {
   var heightSet = $(".js-height-sync.product-details-container").height();
   if ($(window).width() > 991) {
     $(".js-height-sync.product-image").css('max-height', [(heightSet), 'px'].join(''));
+    $(".js-height-sync.product-image").css('display', 'block');
   }
 
   // Smooth-Scroll for links with class

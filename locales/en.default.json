@@ -18,7 +18,7 @@
     },
     "search": {
       "no_results_html": "Didn't find anything for \"{{ terms }}\". Search for something else?",
-      "results_for_html": "Here are your search results",
+      "results_for_html": "Search results",
       "title": "Looking for something?",
       "placeholder": "Search our store",
       "submit": "Search"

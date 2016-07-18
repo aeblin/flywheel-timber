@@ -19,9 +19,10 @@
     <div class="row">
       <div class="col-xs-12 col-sm-6 col-md-6 footer-section">
         <h4 class="u-capitalize u-letterSpacing2">
-          972 STANYAN ST.<br/>
+          672 STANYAN ST.<br/>
           SAN FRANCISCO, CA 94117<br/>
-          6-7 M/F | 7-7 WEEKENDS
+          6-7 M/F | 7-7 WEEKENDS<br/>
+          <a class="footerlink" href="tel:+14156824023">415-682-4023</a>
         </h4>
       </div>
       {% if settings.footer_social_enable %}
@@ -83,21 +84,21 @@
       </div>
       <div class="col-md-4 copyright">
         {% comment %}
-          Loop through available payment methods and show their icons.
+          Loop through available payment methods and show their icons. (This is ugly as sin and makes the store look cheap - AE 05/16)
+          {% unless shop.enabled_payment_types == empty %}
+            <h4 class="u-textCenter">{{ 'layout.footer.accepted_payments' | t }}</h4>
+            <ul class="inline-list payment-icons">
+              {% for type in shop.enabled_payment_types %}
+                <li>
+                  <span class="icon-fallback-text">
+                    <span class="icon icon-{{type}}" aria-hidden="true"></span>
+                    <span class="fallback-text">{{ type | replace: '_',' '}}</span>
+                  </span>
+                </li>
+              {% endfor %}
+            </ul>
+          {% endunless %}
         {% endcomment %}
-        {% unless shop.enabled_payment_types == empty %}
-          <h4 class="u-textCenter">{{ 'layout.footer.accepted_payments' | t }}</h4>
-          <ul class="inline-list payment-icons">
-            {% for type in shop.enabled_payment_types %}
-              <li>
-                <span class="icon-fallback-text">
-                  <span class="icon icon-{{type}}" aria-hidden="true"></span>
-                  <span class="fallback-text">{{ type | replace: '_',' '}}</span>
-                </span>
-              </li>
-            {% endfor %}
-          </ul>
-        {% endunless %}
         <small>© {{ shop.name }} {{ 'now' | date: "%Y" }}</small>
       </div>
       <div class="col-md-4 dev-by">

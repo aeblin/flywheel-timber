@@ -24,9 +24,9 @@
 {% comment %} Looking for a relevant collection. {% endcomment %}
 
 {% comment %} If Related Products are specified via product metafields, get those. 
-  { if product.metafields.c_f['Related Products'] %}
+  {% if product.metafields.c_f['Related Products'] %}
     {% assign collection = collections[product.metafields.c_f['Related Products']] %}
-  { endif %}
+  {% endif %}
 {% endcomment %}
 
 {% assign found_a_collection = false %}
