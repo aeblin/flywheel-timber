@@ -1,6 +1,6 @@
 Flywheel Timber [![Circle CI](https://circleci.com/gh/Shopify/Timber.svg?style=svg)](https://circleci.com/gh/Shopify/Timber)
 =====================
-This is a heavy customization of Timber, moving it much more to Bootstrap for use by Flywheel Coffee, in San Francisco, CA.
+This is a heavy customization of Timber, moving it much more to Bootstrap for use by [Flywheel Coffee](https://flywheelcoffee.com), in San Francisco, CA.
 
 Documentation
 ---------------------
